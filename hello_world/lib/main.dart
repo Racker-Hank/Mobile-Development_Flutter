@@ -29,9 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            MyCustomForm()
-          ],
+          children: const <Widget>[MyCustomForm()],
         ),
       ),
     );
@@ -50,13 +48,11 @@ class MyCustomForm extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: TextField(
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter a search term'
-            ),
+                border: OutlineInputBorder(), hintText: 'Enter a search term'),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
           child: TextFormField(
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
@@ -96,22 +92,21 @@ class _MyCheckboxWidgetState extends State<MyCheckboxWidget> {
         MaterialState.focused
       };
 
-      if(states.any(interactiveStates.contains)) {
+      if (states.any(interactiveStates.contains)) {
         return Colors.blue;
       }
       return Colors.red;
     }
 
     return Checkbox(
-      checkColor: Colors.white,
-      fillColor: MaterialStateProperty.resolveWith(getColor),
-      value: isChecked,
-      onChanged: (bool? value) {
-        setState(() {
-          isChecked = value!;
+        checkColor: Colors.white,
+        fillColor: MaterialStateProperty.resolveWith(getColor),
+        value: isChecked,
+        onChanged: (bool? value) {
+          setState(() {
+            isChecked = value!;
+          });
         });
-      }
-    );
   }
 }
 
@@ -123,30 +118,31 @@ class MyDropdownWidget extends StatefulWidget {
 }
 
 class _MyDropdownWidgetState extends State<MyDropdownWidget> {
-  static const List<String> list = <String>['Freshman', 'Sophomore', 'Junior', 'Senior'];
+  static const List<String> list = <String>[
+    'Freshman',
+    'Sophomore',
+    'Junior',
+    'Senior'
+  ];
   String dropdownValue = list.first;
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_drop_down),
-      elevation: 16,
-      underline: Container(
-        height: 2,
-        color: Colors.blue,
-      ),
-      items: list.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value)
-        );
-      }).toList(),
-      onChanged: (String? value) {
-        setState(() {
-          dropdownValue = value!;
+        value: dropdownValue,
+        icon: const Icon(Icons.arrow_drop_down),
+        elevation: 16,
+        underline: Container(
+          height: 2,
+          color: Colors.blue,
+        ),
+        items: list.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(value: value, child: Text(value));
+        }).toList(),
+        onChanged: (String? value) {
+          setState(() {
+            dropdownValue = value!;
+          });
         });
-      }
-    );
   }
 }
