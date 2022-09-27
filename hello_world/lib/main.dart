@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/my_flutter_app_icons.dart';
 import 'view/explore_view.dart';
 import 'view/profile_view.dart';
 import 'view/saved_view.dart';
@@ -9,6 +8,7 @@ void main() {
   runApp(MaterialApp(
     title: 'Traveloka',
     theme: ThemeData(
+      useMaterial3: true,
       primarySwatch: Colors.blue,
     ),
     home: const MyBottomNavigationBar(),
@@ -31,7 +31,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
     MySavedPage(),
     MyProfilePage()
   ];
-  
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -47,28 +47,17 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'Explore'
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(MyFlutterApp.hotel),
-            label: 'Booking'
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: 'Saved'
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile'
-          )
+              icon: Icon(Icons.maps_home_work), label: 'Booking'),
+          BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: 'Saved'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
         ],
         currentIndex: _selectedIndex,
         selectedFontSize: 12,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         selectedItemColor: Colors.black,
-        selectedIconTheme: const IconThemeData(color: Color(0xFF1ca0e3)),
+        selectedIconTheme: const IconThemeData(color: Color(0xFF1CA0E3)),
         unselectedItemColor: const Color(0xFF79747E),
         onTap: _onItemTapped,
       ),
