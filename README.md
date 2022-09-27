@@ -15,3 +15,7 @@
 ### Week 2: Hello World
 
 ![hello_world_screenshot](./hello_world/res/img/hello_world.png)
+
+### Week 3: Hello World
+
+![w3 screenshot](./hello_world/res/img/w3.png)
