@@ -1,4 +1,5 @@
 class Hotel {
+  final int id;
   final String? imageURL;
   final String hotelName;
   final String location;
@@ -6,6 +7,6 @@ class Hotel {
   final int price;
   final String description;
 
-  const Hotel(this.imageURL, this.hotelName, this.location, this.ratings,
-      this.price, this.description);
+  const Hotel(this.id, this.imageURL, this.hotelName, this.location,
+      this.ratings, this.price, this.description);
 }
