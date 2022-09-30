@@ -85,9 +85,9 @@ class LocationCard extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(maxWidth: 330, minWidth: 300),
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: hMargin ?? 16),
-        clipBehavior: Clip.antiAlias,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(UIConfig.borderRadius),
+          borderRadius: UIConfig.borderRadius,
           boxShadow: const [
             BoxShadow(
               color: Color.fromARGB(30, 0, 0, 0),
@@ -248,7 +248,7 @@ class Price extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 2, 16, 4),
       decoration: BoxDecoration(
         color: UIConfig.accentColor,
-        borderRadius: BorderRadius.circular(UIConfig.borderRadius),
+        borderRadius: UIConfig.borderRadius,
       ),
       child: Text(
         '\$$price',

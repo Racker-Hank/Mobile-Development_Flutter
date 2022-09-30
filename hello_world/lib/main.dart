@@ -10,6 +10,7 @@ void main() {
     title: 'Traveloka',
     theme: ThemeData(
       useMaterial3: true,
+      scaffoldBackgroundColor: UIConfig.screenBackgroundColor,
       primarySwatch: Colors.blue,
     ),
     home: const Home(),

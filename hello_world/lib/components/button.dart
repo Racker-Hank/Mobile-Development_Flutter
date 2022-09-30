@@ -19,7 +19,7 @@ class Button extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 4),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(UIConfig.borderRadius),
+        borderRadius: UIConfig.borderRadius,
         gradient: LinearGradient(
           colors: [UIConfig.accentColor, UIConfig.primaryColor],
           transform: const GradientRotation(math.pi / 4),

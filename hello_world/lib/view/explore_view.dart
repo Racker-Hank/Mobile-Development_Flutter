@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/components/button.dart';
-import 'package:hello_world/components/icon_button.dart';
+import 'package:hello_world/components/round_icon_button.dart';
 import 'package:hello_world/config/UI_configs.dart';
 
 import '../components/location_card.dart';
+import '../components/search_bar.dart';
 import '../entity/hotel.dart';
 
 class MyExplorePage extends StatefulWidget {
@@ -54,8 +55,10 @@ class _MyExplorePageState extends State<MyExplorePage> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const MyHeader(),
+        const SearchBar(),
+        const SizedBox(height: 16),
         Expanded(
+<<<<<<< HEAD
             child: ListView.separated(
                 itemCount: hotels.length,
                 separatorBuilder: (context, index) => const SizedBox(
@@ -142,8 +145,61 @@ class _MyHeaderState extends State<MyHeader> {
                     color: UIConfig.unselectedColor,
                   ),
                 )
+=======
+          child: ListView.separated(
+            itemCount: hotels.length,
+            separatorBuilder: (context, index) => const SizedBox(
+              height: 16,
+>>>>>>> 419f03dfd9cf49bb93a361cc6da54e101a2764f4
             ),
+            addAutomaticKeepAlives: false,
+            cacheExtent: 100,
+            // padding: const EdgeInsets.symmetric(vertical: 30),
+            padding: const EdgeInsets.only(bottom: 16),
+            itemBuilder: ((context, i) {
+              return Column(
+                children: [
+                  LocationCard(
+                    hotelID: hotels[i].id,
+                    imageURL: hotels[i].imageURL,
+                    hotelName: hotels[i].hotelName,
+                    location: hotels[i].location,
+                    ratings: hotels[i].ratings,
+                    price: hotels[i].price,
+                    description: hotels[i].description,
+                  ),
+                  // const Button(),
+                  // const SizedBox(
+                  //   height: 8,
+                  // ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     print('test');
+                  //   },
+                  //   child: Button(
+                  //     label: 'Book Now',
+                  //     icon: Icon(
+                  //       Icons.arrow_forward_rounded,
+                  //       color: UIConfig.white,
+                  //     ),
+                  //     showIcon: true,
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 8,
+                  // ),
+                  // RoundIconButton(
+                  //   icon: Icon(
+                  //     Icons.arrow_back_rounded,
+                  //     color: UIConfig.darkGrey,
+                  //     size: 24,
+                  //   ),
+                  // ),
+                ],
+              );
+            }),
           ),
+<<<<<<< HEAD
           Expanded(
               child: TextFormField(
                 decoration: const InputDecoration(
@@ -174,7 +230,10 @@ class _MyHeaderState extends State<MyHeader> {
           )
         ],
       ),
+=======
+        ),
+      ],
+>>>>>>> 419f03dfd9cf49bb93a361cc6da54e101a2764f4
     );
   }
 }
-
