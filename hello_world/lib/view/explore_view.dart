@@ -58,99 +58,10 @@ class _MyExplorePageState extends State<MyExplorePage> {
         const SearchBar(),
         const SizedBox(height: 16),
         Expanded(
-<<<<<<< HEAD
-            child: ListView.separated(
-                itemCount: hotels.length,
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 32,
-                ),
-                addAutomaticKeepAlives: false,
-                cacheExtent: 100,
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                itemBuilder: ((context, i) {
-                  return Column(
-                    children: [
-                      LocationCard(
-                        imageURL: hotels[i].imageURL,
-                        hotelName: hotels[i].hotelName,
-                        location: hotels[i].location,
-                        ratings: hotels[i].ratings,
-                        price: hotels[i].price,
-                        description: hotels[i].description,
-                      ),
-                    ],
-                  );
-                })
-            )
-        ),
-        const Button(),
-        const SizedBox(
-              height: 8,
-            ),
-        GestureDetector(
-              onTap: () {
-                print('test');
-              },
-              child: Button(
-                label: 'Book Now',
-                icon: Icon(
-                  Icons.arrow_forward_rounded,
-                  color: UIConfig.white,
-                ),
-                showIcon: true,
-              ),
-            ),
-        const SizedBox(
-              height: 8,
-            ),
-        RoundIconButton(
-              icon: Icon(
-                Icons.arrow_back_rounded,
-                color: UIConfig.darkGrey,
-                size: 24,
-              ),
-            ),
-      ],
-    );
-  }
-}
-
-class MyHeader extends StatefulWidget {
-  const MyHeader({Key? key}) : super(key: key);
-
-  @override
-  State<MyHeader> createState() => _MyHeaderState();
-}
-
-class _MyHeaderState extends State<MyHeader> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 28),
-      margin: const EdgeInsets.only(bottom: 30),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            padding: const EdgeInsets.only(right: 16),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: const CircleBorder()
-              ),
-              onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(7),
-                  child: Icon(
-                    Icons.notifications,
-                    color: UIConfig.unselectedColor,
-                  ),
-                )
-=======
           child: ListView.separated(
             itemCount: hotels.length,
             separatorBuilder: (context, index) => const SizedBox(
               height: 16,
->>>>>>> 419f03dfd9cf49bb93a361cc6da54e101a2764f4
             ),
             addAutomaticKeepAlives: false,
             cacheExtent: 100,
@@ -199,41 +110,8 @@ class _MyHeaderState extends State<MyHeader> {
               );
             }),
           ),
-<<<<<<< HEAD
-          Expanded(
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: "Search for a place or location",
-                  prefixIcon: Padding(
-                    padding: EdgeInsets.only(left: 6, top: 7, bottom: 7, right: 10),
-                    child: Icon(Icons.search)
-                  )
-                ),
-              )
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 16),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: const CircleBorder(),
-              ),
-              onPressed: () {},
-              child: Padding(
-                padding: const EdgeInsets.all(7),
-                child: Icon(
-                  Icons.chat_bubble,
-                  color: UIConfig.unselectedColor,
-                ),
-              )
-            ),
-          )
-        ],
-      ),
-=======
         ),
       ],
->>>>>>> 419f03dfd9cf49bb93a361cc6da54e101a2764f4
     );
   }
 }
