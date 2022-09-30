@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/config/UI_configs.dart';
+
+import '../view/search_view.dart';
 // import 'package:hello_world/entity/Hotel.dart';
 
 class LocationCard extends StatelessWidget {
@@ -10,6 +12,7 @@ class LocationCard extends StatelessWidget {
     this.hMargin,
     this.vMargin,
     // this.hotel,
+    required this.hotelID,
     this.imageURL =
         'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
     this.hotelName = 'Florida Getaway',
@@ -40,6 +43,8 @@ class LocationCard extends StatelessWidget {
 
   // final Hotel? hotel;
 
+  final int hotelID;
+
   final String imageURL;
 
   final String hotelName;
@@ -55,9 +60,28 @@ class LocationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        print('Tapped');
-      },
+      // onTap: () {
+      //   print('Tapped');
+      // },
+      // onTap: () => {
+      //   // debugPrint('$hotelID'),
+      //   Navigator.of(context).push(
+      //     PageRouteBuilder(
+      //       pageBuilder: (context, animation, secondaryAnimation) =>
+      //           const MySearchPage(),
+      //       transitionsBuilder:
+      //           (context, animation, secondaryAnimation, child) {
+      //         return child;
+      //       },
+      //     ),
+      //   ),
+      // },
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MySearchPage(),
+        ),
+      ),
       child: Container(
         constraints: const BoxConstraints(maxWidth: 330, minWidth: 300),
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: hMargin ?? 16),
@@ -84,22 +108,7 @@ class LocationCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 150,
-                    foregroundDecoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: NetworkImage(imageURL),
-                      fit: BoxFit.cover,
-                    )),
-                  ),
-                ),
-              ],
-            ),
+            HeroImage(hotelID: hotelID, imageURL: imageURL),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -121,6 +130,40 @@ class LocationCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class HeroImage extends StatelessWidget {
+  const HeroImage({
+    Key? key,
+    required this.hotelID,
+    required this.imageURL,
+  }) : super(key: key);
+
+  final String imageURL;
+  final int hotelID;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(
+          flex: 1,
+          child: Hero(
+            tag: 'hotel${hotelID}_image',
+            child: Container(
+              height: 150,
+              foregroundDecoration: BoxDecoration(
+                  image: DecorationImage(
+                image: NetworkImage(imageURL),
+                fit: BoxFit.cover,
+              )),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
