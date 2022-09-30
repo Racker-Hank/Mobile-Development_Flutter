@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_world/config/UI_configs.dart';
 import 'view/explore_view.dart';
 import 'view/profile_view.dart';
 import 'view/saved_view.dart';
@@ -9,6 +10,7 @@ void main() {
     title: 'Traveloka',
     theme: ThemeData(
       useMaterial3: true,
+      scaffoldBackgroundColor: UIConfig.screenBackgroundColor,
       primarySwatch: Colors.blue,
     ),
     home: const Home(),
