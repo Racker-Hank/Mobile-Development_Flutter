@@ -7,7 +7,11 @@ class UIConfig {
   static Color accentColor = const Color(0xFF086FCC);
   static Color white = const Color(0xFFFFFFFF);
   static Color screenBackgroundColor = const Color(0xFFF2F5FA);
+<<<<<<< HEAD
   static Color unselectedColor = const Color(0xFF79747E);
+=======
+  static Color darkGrey = const Color(0xFF79747E);
+>>>>>>> fb56d86aa064fb309e3e05c809ee398be29bf526
 
   static TextStyle titleLargeTextStyle = const TextStyle(
     fontFamily: 'Roboto',
