@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_world/config/UI_configs.dart';
 import 'view/explore_view.dart';
 import 'view/profile_view.dart';
 import 'view/saved_view.dart';
@@ -57,8 +58,8 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         selectedFontSize: 12,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         selectedItemColor: Colors.black,
-        selectedIconTheme: const IconThemeData(color: Color(0xFF1CA0E3)),
-        unselectedItemColor: const Color(0xFF79747E),
+        selectedIconTheme: IconThemeData(color: UIConfig.primaryColor),
+        unselectedItemColor: UIConfig.unselectedColor,
         onTap: _onItemTapped,
       ),
     );

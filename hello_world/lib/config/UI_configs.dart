@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class UIConfig {
   static double borderRadius = 8;
 
-  static Color primaryColor = Color(0xFF1CA0E3);
-  static Color accentColor = Color(0xFF086FCC);
-  static Color white = Color(0xFFFFFFFF);
-  static Color screenBackgroundColor = Color(0xFFF2F5FA);
+  static Color primaryColor = const Color(0xFF1CA0E3);
+  static Color accentColor = const Color(0xFF086FCC);
+  static Color white = const Color(0xFFFFFFFF);
+  static Color screenBackgroundColor = const Color(0xFFF2F5FA);
+  static Color unselectedColor = const Color(0xFF79747E);
 
   static TextStyle titleLargeTextStyle = const TextStyle(
     fontFamily: 'Roboto',

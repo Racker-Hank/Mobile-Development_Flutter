@@ -46,9 +46,6 @@ class _MyExplorePageState extends State<MyExplorePage> {
 
   @override
   Widget build(BuildContext context) {
-    // return const Text(
-    //   'Index 0: Explore'
-    // );
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -111,14 +108,24 @@ class _MyHeaderState extends State<MyHeader> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 28),
+      margin: const EdgeInsets.only(bottom: 30),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             padding: const EdgeInsets.only(right: 16),
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: const CircleBorder()
+              ),
               onPressed: () {},
-              child: const Icon(Icons.notifications)
+                child: Padding(
+                  padding: const EdgeInsets.all(7),
+                  child: Icon(
+                    Icons.notifications,
+                    color: UIConfig.unselectedColor,
+                  ),
+                )
             ),
           ),
           Expanded(
@@ -136,8 +143,17 @@ class _MyHeaderState extends State<MyHeader> {
           Container(
             padding: const EdgeInsets.only(left: 16),
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: const CircleBorder(),
+              ),
               onPressed: () {},
-              child: const Icon(Icons.chat_bubble),
+              child: Padding(
+                padding: const EdgeInsets.all(7),
+                child: Icon(
+                  Icons.chat_bubble,
+                  color: UIConfig.unselectedColor,
+                ),
+              )
             ),
           )
         ],
