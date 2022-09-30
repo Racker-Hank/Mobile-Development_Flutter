@@ -54,70 +54,36 @@ class _MyExplorePageState extends State<MyExplorePage> {
     // return const Text(
     //   'Index 0: Explore'
     // );
-
-    // return Scaffold(
-    //   // appBar: AppBar(title: const Text('Explore')),
-    //   body: ListView.separated(
-    //       itemCount: hotels.length,
-    //       separatorBuilder: (context, index) => const SizedBox(
-    //             height: 32,
-    //           ),
-    //       addAutomaticKeepAlives: false,
-    //       cacheExtent: 100,
-    //       padding: const EdgeInsets.symmetric(vertical: 30),
-    //       itemBuilder: ((context, i) {
-    //         return Column(
-    //           children: [
-    //             LocationCard(
-    //               hotelID: hotels[i].id,
-    //               imageURL: hotels[i].imageURL,
-    //               hotelName: hotels[i].hotelName,
-    //               location: hotels[i].location,
-    //               ratings: hotels[i].ratings,
-    //               price: hotels[i].price,
-    //               description: hotels[i].description,
-    //             ),
-    //             const Button(),
-    //             const SizedBox(
-    //               height: 8,
-    //             ),
-    //             GestureDetector(
-    //               onTap: () {
-    //                 print('test');
-    //               },
-    //               child: Button(
-    //                 label: 'Book Now',
-    //                 icon: Icon(Icons.arrow_forward_rounded,
-    //                     color: UIConfig.white),
-    //                 showIcon: true,
-    //               ),
-    //             ),
-    //           ],
-    //         );
-    //       })),
-    // );
-
-    return ListView.separated(
-      itemCount: hotels.length,
-      separatorBuilder: (context, index) => const SizedBox(
-        height: 32,
-      ),
-      addAutomaticKeepAlives: false,
-      cacheExtent: 100,
-      padding: const EdgeInsets.symmetric(vertical: 30),
-      itemBuilder: ((context, i) {
-        return Column(
-          children: [
-            LocationCard(
-              hotelID: hotels[i].id,
-              imageURL: hotels[i].imageURL,
-              hotelName: hotels[i].hotelName,
-              location: hotels[i].location,
-              ratings: hotels[i].ratings,
-              price: hotels[i].price,
-              description: hotels[i].description,
-            ),
-            const Button(),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const MyHeader(),
+        Expanded(
+            child: ListView.separated(
+                itemCount: hotels.length,
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 32,
+                ),
+                addAutomaticKeepAlives: false,
+                cacheExtent: 100,
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                itemBuilder: ((context, i) {
+                  return Column(
+                    children: [
+                      LocationCard(
+                        imageURL: hotels[i].imageURL,
+                        hotelName: hotels[i].hotelName,
+                        location: hotels[i].location,
+                        ratings: hotels[i].ratings,
+                        price: hotels[i].price,
+                        description: hotels[i].description,
+                      ),
+                    ],
+                  );
+                })
+            )
+        ),
+        const Button(),
             const SizedBox(
               height: 8,
             ),
@@ -148,9 +114,71 @@ class _MyExplorePageState extends State<MyExplorePage> {
                 size: 24,
               ),
             ),
-          ],
-        );
-      }),
+      ],
+              // const Button(),
+              // const SizedBox(
+              //   height: 8,
+              // ),
+              // GestureDetector(
+              //   onTap: () {
+              //     print('test');
+              //   },
+              //   child: Button(
+              //     label: 'Book Now',
+              //     icon: Icon(Icons.arrow_forward_rounded,
+              //         color: UIConfig.white),
+              //     showIcon: true,
+              //   ),
+              // ),
+
     );
   }
 }
+
+class MyHeader extends StatefulWidget {
+  const MyHeader({Key? key}) : super(key: key);
+
+  @override
+  State<MyHeader> createState() => _MyHeaderState();
+}
+
+class _MyHeaderState extends State<MyHeader> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 28),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.only(right: 16),
+            child: ElevatedButton(
+              onPressed: () {},
+              child: const Icon(Icons.notifications)
+            ),
+          ),
+          Expanded(
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: "Search for a place or location",
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.only(left: 6, top: 7, bottom: 7, right: 10),
+                    child: Icon(Icons.search)
+                  )
+                ),
+              )
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 16),
+            child: ElevatedButton(
+              onPressed: () {},
+              child: const Icon(Icons.chat_bubble),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
