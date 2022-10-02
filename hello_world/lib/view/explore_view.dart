@@ -65,7 +65,6 @@ class _MyExplorePageState extends State<MyExplorePage> {
             ),
             addAutomaticKeepAlives: false,
             cacheExtent: 100,
-            // padding: const EdgeInsets.symmetric(vertical: 30),
             padding: const EdgeInsets.only(bottom: 16),
             itemBuilder: ((context, i) {
               return Column(
@@ -79,33 +78,6 @@ class _MyExplorePageState extends State<MyExplorePage> {
                     price: hotels[i].price,
                     description: hotels[i].description,
                   ),
-                  // const Button(),
-                  // const SizedBox(
-                  //   height: 8,
-                  // ),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     print('test');
-                  //   },
-                  //   child: Button(
-                  //     label: 'Book Now',
-                  //     icon: Icon(
-                  //       Icons.arrow_forward_rounded,
-                  //       color: UIConfig.white,
-                  //     ),
-                  //     showIcon: true,
-                  //   ),
-                  // ),
-                  // const SizedBox(
-                  //   height: 8,
-                  // ),
-                  // RoundIconButton(
-                  //   icon: Icon(
-                  //     Icons.arrow_back_rounded,
-                  //     color: UIConfig.darkGrey,
-                  //     size: 24,
-                  //   ),
-                  // ),
                 ],
               );
             }),

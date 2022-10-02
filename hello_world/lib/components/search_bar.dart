@@ -14,38 +14,8 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   padding: const EdgeInsets.only(left: 16, right: 16, top: 28),
-    //   child: Row(
-    //     mainAxisSize: MainAxisSize.min,
-    //     children: [
-    //       Container(
-    //         padding: const EdgeInsets.only(right: 16),
-    //         child: ElevatedButton(
-    //             onPressed: () {}, child: const Icon(Icons.notifications)),
-    //       ),
-    //       Expanded(
-    //           child: TextFormField(
-    //         decoration: const InputDecoration(
-    //             border: UnderlineInputBorder(),
-    //             labelText: "Search for a place or location",
-    //             prefixIcon: Padding(
-    //                 padding:
-    //                     EdgeInsets.only(left: 6, top: 7, bottom: 7, right: 10),
-    //                 child: Icon(Icons.search))),
-    //       )),
-    //       Container(
-    //         padding: const EdgeInsets.only(left: 16),
-    //         child: ElevatedButton(
-    //           onPressed: () {},
-    //           child: const Icon(Icons.chat_bubble),
-    //         ),
-    //       )
-    //     ],
-    //   ),
-    // );
     return Container(
-      margin: EdgeInsets.only(top: 32),
+      margin: const EdgeInsets.only(top: 32),
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
