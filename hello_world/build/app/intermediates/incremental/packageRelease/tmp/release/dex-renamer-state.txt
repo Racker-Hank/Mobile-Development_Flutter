@@ -1,0 +1,4 @@
+#Fri Sep 16 14:03:51 ICT 2022
+base.0=C\:\\Users\\surface book\\AndroidStudioProjects\\Mobile-Development_Flutter\\hello_world\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
