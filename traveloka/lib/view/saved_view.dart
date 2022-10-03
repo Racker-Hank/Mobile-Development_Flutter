@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../components/readonly_search_bar.dart';
+
 class MySavedPage extends StatefulWidget {
   const MySavedPage({Key? key}) : super(key: key);
 
@@ -10,6 +12,11 @@ class MySavedPage extends StatefulWidget {
 class _MySavedPageState extends State<MySavedPage> {
   @override
   Widget build(BuildContext context) {
-    return const Text('Index 2: Saved');
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: const [
+        ReadOnlySearchBar(),
+      ],
+    );
   }
 }

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD:hello_world/lib/components/location_card.dart
-import 'package:hello_world/config/UI_configs.dart';
-
-import '../view/search_view.dart';
-=======
 import 'package:traveloka/config/UI_configs.dart';
->>>>>>> 2f41fd95893f77ce30e5e554304730c92d52e02c:traveloka/lib/components/location_card.dart
+
+import '../view/hotel_details_view.dart';
+import 'package:traveloka/config/UI_configs.dart';
 // import 'package:hello_world/entity/Hotel.dart';
 
 class LocationCard extends StatelessWidget {
@@ -83,10 +80,11 @@ class LocationCard extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const MySearchPage(),
+          builder: (context) => const MyHotelDetailsPage(),
         ),
       ),
       child: Container(
+        height: 335,
         constraints: const BoxConstraints(maxWidth: 330, minWidth: 300),
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: hMargin ?? 16),
         clipBehavior: Clip.antiAliasWithSaveLayer,

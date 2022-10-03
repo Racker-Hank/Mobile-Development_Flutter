@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD:hello_world/lib/view/explore_view.dart
-import 'package:hello_world/components/button.dart';
-import 'package:hello_world/components/round_icon_button.dart';
-import 'package:hello_world/config/UI_configs.dart';
-=======
+import 'package:traveloka/components/button.dart';
+import 'package:traveloka/components/round_icon_button.dart';
+import 'package:traveloka/config/UI_configs.dart';
 import 'package:traveloka/components/button.dart';
 import 'package:traveloka/config/UI_configs.dart';
->>>>>>> 2f41fd95893f77ce30e5e554304730c92d52e02c:traveloka/lib/view/explore_view.dart
 
 import '../components/location_card.dart';
-import '../components/search_bar.dart';
+import '../components/readonly_search_bar.dart';
 import '../entity/hotel.dart';
 
 class MyExplorePage extends StatefulWidget {
@@ -60,7 +57,7 @@ class _MyExplorePageState extends State<MyExplorePage> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const SearchBar(),
+        const ReadOnlySearchBar(),
         const SizedBox(height: 16),
         Expanded(
           child: ListView.separated(

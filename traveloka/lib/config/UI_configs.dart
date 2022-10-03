@@ -6,14 +6,9 @@ class UIConfig {
   static Color primaryColor = const Color(0xFF1CA0E3);
   static Color accentColor = const Color(0xFF086FCC);
   static Color white = const Color(0xFFFFFFFF);
-<<<<<<< HEAD:hello_world/lib/config/UI_configs.dart
   static Color black = const Color(0xFF000000);
   static Color screenBackgroundColor = const Color(0xFFF2F5FA);
-  static Color unselectedColor = const Color(0xFF79747E);
   static Color darkGrey = const Color(0xFF79747E);
-=======
-  static Color screenBackgroundColor = const Color(0xFFF2F5FA);
->>>>>>> 2f41fd95893f77ce30e5e554304730c92d52e02c:traveloka/lib/config/UI_configs.dart
 
   static TextStyle titleLargeTextStyle = const TextStyle(
     fontFamily: 'Roboto',

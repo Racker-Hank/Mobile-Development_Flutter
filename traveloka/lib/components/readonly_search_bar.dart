@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:traveloka/components/button.dart';
 import 'package:traveloka/components/round_icon_button.dart';
+import 'package:traveloka/view/booking_view.dart';
+import 'package:traveloka/view/hotel_details_view.dart';
+import 'package:traveloka/view/search_view.dart';
 
 import '../config/UI_configs.dart';
-import 'button.dart';
 
-class SearchBar extends StatefulWidget {
-  const SearchBar({Key? key}) : super(key: key);
+class ReadOnlySearchBar extends StatefulWidget {
+  const ReadOnlySearchBar({Key? key}) : super(key: key);
 
   @override
-  State<SearchBar> createState() => _SearchBarState();
+  State<ReadOnlySearchBar> createState() => _ReadOnlySearchBarState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _ReadOnlySearchBarState extends State<ReadOnlySearchBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,12 +26,7 @@ class _SearchBarState extends State<SearchBar> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                child: const LeftRoundIconButton(),
-                onTap: () {
-                  Navigator.pop(context);
-                }
-              ),
+              const LeftRoundIconButton(),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -80,9 +78,16 @@ class SearchBox extends StatelessWidget {
             ),
           ]),
       child: TextField(
-        autofocus: true,
-        onTap: () {},
+        readOnly: true,
+        //autofocus: false,
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MySearchPage(),
+          ),
+        ),
         decoration: InputDecoration(
+          hintText: 'traveloka',
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: UIConfig.borderRadius,
@@ -120,11 +125,10 @@ class LeftRoundIconButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 3),
       child: RoundIconButton(
-        icon: Icon(
-          Icons.arrow_back,
-          color: UIConfig.darkGrey,
-        )
-      ),
+          icon: Icon(
+        Icons.notifications_rounded,
+        color: UIConfig.darkGrey,
+      )),
     );
   }
 }
@@ -140,10 +144,10 @@ class RightRoundIconButton extends StatelessWidget {
       padding: const EdgeInsets.only(top: 3),
       child: RoundIconButton(
           icon: Icon(
-            Icons.filter_alt,
-            color: UIConfig.primaryColor,
-            size: 20,
-          )),
+        Icons.chat_rounded,
+        color: UIConfig.darkGrey,
+        size: 20,
+      )),
     );
   }
 }
