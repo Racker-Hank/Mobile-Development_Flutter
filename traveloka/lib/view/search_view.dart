@@ -139,7 +139,7 @@ class _MySearchPageState extends State<MySearchPage> {
                           SearchBox(
                             controller: _hotel,
                             prefixIcon: Icon(
-                              Icons.place_rounded,
+                              Icons.pin_drop,
                               color: UIConfig.primaryColor,
                               size: 20,
                             ),
@@ -161,21 +161,7 @@ class _MySearchPageState extends State<MySearchPage> {
                             hintText: 'traveloka🚀',
                             labelText: 'Search for a location',
                             focusNode: hotelBoxFocusNode,
-                            focussed: () {
-                              // print("test");
-                              // setState(() {
-                              //   leftIcon = Icon(
-                              //     Icons.arrow_back_rounded,
-                              //     color: UIConfig.darkGrey,
-                              //   );
-                              //   rightIcon = Icon(
-                              //     Icons.tune_rounded,
-                              //     color: UIConfig.primaryColor,
-                              //     size: 20,
-                              //   );
-                              //   // print(searchBoxFocusNode.hasFocus);
-                              // });
-                            },
+                            focussed: () {},
                           ),
                           Visibility(
                             visible: isAdvancedSearch,
@@ -248,7 +234,6 @@ class _MySearchPageState extends State<MySearchPage> {
                                       ),
                                     ],
                                   ),
-                                  // focusNode: guestsBoxFocusNode,
                                   focussed: () {},
                                 ),
                               ],
@@ -261,20 +246,18 @@ class _MySearchPageState extends State<MySearchPage> {
                     RightRoundIconButton(
                       icon: rightIcon,
                       function: () {
-                        // rightIconButtonFocusNode.requestFocus();
                         setState(() {
                           isAdvancedSearch = !isAdvancedSearch;
                         });
                         hotelBoxFocusNode.requestFocus();
                       },
-                      // focusNode: rightIconButtonFocusNode,
                     ),
                   ],
                 ),
                 const SizedBox(height: 24),
                 Button(
                   function: () {
-                    print('${_hotel.text} ${_guests.text}');
+                    print('${_hotel.text} ${_dateRange.text} ${_guests.text}');
                   },
                 ),
               ],
@@ -283,7 +266,7 @@ class _MySearchPageState extends State<MySearchPage> {
           const SizedBox(height: 64),
           Expanded(
             child: PageView.builder(
-              controller: PageController(viewportFraction: .78),
+              controller: PageController(viewportFraction: .8),
               itemCount: hotels.length,
               // separatorBuilder: (context, index) => const SizedBox(
               //   width: 16,
@@ -308,35 +291,8 @@ class _MySearchPageState extends State<MySearchPage> {
                       description: hotels[i].description,
                       width: 284,
                       height: 420,
-                      hMargin: 0,
+                      hMargin: 8,
                     ),
-                    // const Button(),
-                    // const SizedBox(
-                    //   height: 8,
-                    // ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     print('test');
-                    //   },
-                    //   child: Button(
-                    //     label: 'Book Now',
-                    //     icon: Icon(
-                    //       Icons.arrow_forward_rounded,
-                    //       color: UIConfig.white,
-                    //     ),
-                    //     showIcon: true,
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 8,
-                    // ),
-                    // RoundIconButton(
-                    //   icon: Icon(
-                    //     Icons.arrow_back_rounded,
-                    //     color: UIConfig.darkGrey,
-                    //     size: 24,
-                    //   ),
-                    // ),
                   ],
                 );
               }),

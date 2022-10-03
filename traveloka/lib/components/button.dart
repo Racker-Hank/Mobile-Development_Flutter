@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/config/UI_configs.dart';
+import '../config/UI_configs.dart';
 import 'dart:math' as math;
 
 class Button extends StatelessWidget {

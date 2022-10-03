@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/config/UI_configs.dart';
+import '../config/UI_configs.dart';
 
 import '../view/booking_view.dart';
 import '../view/search_view.dart';

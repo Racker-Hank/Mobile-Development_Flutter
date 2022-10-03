@@ -15,14 +15,16 @@ class _MyBookingPageState extends State<MyBookingPage> {
   Widget build(BuildContext context) {
     // return const Text('Index 1: Booking');
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const Home(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return child;
-          },
-        ),
-      ),
+      // onTap: () => Navigator.of(context).push(
+      //   PageRouteBuilder(
+      //     pageBuilder: (context, animation, secondaryAnimation) => const Home(),
+      //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      //       return child;
+      //     },
+      //   ),
+      // ),
+
+      onTap: () => Navigator.pop(context),
       child: Scaffold(
         // appBar: AppBar(title: const Text('Search')),
         body: Column(

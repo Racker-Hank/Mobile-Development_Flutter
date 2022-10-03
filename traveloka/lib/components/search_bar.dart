@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/components/button.dart';
-import 'package:hello_world/components/round_icon_button.dart';
+import './button.dart';
+import './round_icon_button.dart';
 
 import '../config/UI_configs.dart';
 import '../view/search_view.dart';
