@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD:traveloka/lib/main.dart
 import 'package:traveloka/view/booking_view.dart';
 import 'package:traveloka/view/search_view.dart';
 import 'config/UI_configs.dart';
+=======
+import 'config/UI_configs.dart';
+import 'view/booking_view.dart';
+>>>>>>> 8aaf43333c559ca83d58acd9b5768590b130f863:hello_world/lib/main.dart
 import 'view/explore_view.dart';
 import 'view/profile_view.dart';
 import 'view/saved_view.dart';
@@ -32,7 +37,10 @@ class _HomeState extends State<Home> {
   static const List<Widget> _viewOption = <Widget>[
     MyExplorePage(),
     MyBookingPage(),
+<<<<<<< HEAD:traveloka/lib/main.dart
     //MySearchPage(),
+=======
+>>>>>>> 8aaf43333c559ca83d58acd9b5768590b130f863:hello_world/lib/main.dart
     MySavedPage(),
     MyProfilePage()
   ];

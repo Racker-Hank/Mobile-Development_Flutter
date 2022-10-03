@@ -19,7 +19,10 @@
 ### Week 3: Hello World
 
 ![w3 screenshot](./res/img/w3.png)
+<<<<<<< HEAD
 
 ### Week 4: Explore Page
 
 ![w4 screenshot](./res/img/w4.png)
+=======
+>>>>>>> 8aaf43333c559ca83d58acd9b5768590b130f863
