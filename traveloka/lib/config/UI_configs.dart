@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class UIConfig {
-  static double borderRadius = 8;
+  static BorderRadius borderRadius = BorderRadius.circular(8);
 
   static Color primaryColor = const Color(0xFF1CA0E3);
   static Color accentColor = const Color(0xFF086FCC);
   static Color white = const Color(0xFFFFFFFF);
+  static Color black = const Color(0xFF000000);
   static Color screenBackgroundColor = const Color(0xFFF2F5FA);
+  static Color darkGrey = const Color(0xFF79747E);
 
   static TextStyle titleLargeTextStyle = const TextStyle(
     fontFamily: 'Roboto',
@@ -25,5 +27,11 @@ class UIConfig {
     fontSize: 18,
     height: 1.6,
     color: Color(0xFFFFFFFF),
+  );
+  static TextStyle textFieldInputTextStyle = TextStyle(
+    fontFamily: 'Nunito Sans',
+    fontSize: 18,
+    height: 1.6,
+    color: black,
   );
 }
