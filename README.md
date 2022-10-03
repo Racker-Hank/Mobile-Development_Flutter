@@ -20,9 +20,15 @@
 
 ![w3 screenshot](./res/img/w3.png)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e08f1369ac9638a28c51d44a694c6e4f20937ac0
 
 ### Week 4: Explore Page
 
 ![w4 screenshot](./res/img/w4.png)
+<<<<<<< HEAD
 =======
 >>>>>>> 8aaf43333c559ca83d58acd9b5768590b130f863
+=======
+>>>>>>> e08f1369ac9638a28c51d44a694c6e4f20937ac0

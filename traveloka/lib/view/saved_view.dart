@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../components/readonly_search_bar.dart';
+import '../components/search_bar.dart';
 
 class MySavedPage extends StatefulWidget {
   const MySavedPage({Key? key}) : super(key: key);
@@ -15,7 +14,7 @@ class _MySavedPageState extends State<MySavedPage> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: const [
-        ReadOnlySearchBar(),
+        SearchBar(),
       ],
     );
   }

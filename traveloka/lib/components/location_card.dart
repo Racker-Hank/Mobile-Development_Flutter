@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:traveloka/config/UI_configs.dart';
-
-import '../view/hotel_details_view.dart';
-import 'package:traveloka/config/UI_configs.dart';
+import 'package:traveloka/view/hotel_details_view.dart';
 import '../config/UI_configs.dart';
 
-import '../view/booking_view.dart';
-import '../view/search_view.dart';
 // import 'package:hello_world/entity/Hotel.dart';
 
 class HotelCard extends StatelessWidget {
@@ -19,13 +14,13 @@ class HotelCard extends StatelessWidget {
     // this.hotel,
     required this.hotelID,
     this.imageURL =
-        'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
+    'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
     this.hotelName = 'Florida Getaway',
     this.location = 'Florida villa',
     this.ratings = 3.8,
     this.price = 200,
     this.description =
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
   });
 
   final double? width;
@@ -88,16 +83,9 @@ class HotelCard extends StatelessWidget {
         ),
       ),
       child: Container(
-        height: 335,
-        constraints: const BoxConstraints(maxWidth: 330, minWidth: 300),
-          builder: (context) => const MyBookingPage(),
-        ),
-      ),
-      child: Container(
         width: width,
         height: height,
         constraints: const BoxConstraints(maxWidth: 330, minWidth: 284),
->>>>>>> 8aaf43333c559ca83d58acd9b5768590b130f863:hello_world/lib/components/location_card.dart
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: hMargin ?? 16),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
@@ -171,9 +159,9 @@ class HeroImage extends StatelessWidget {
               height: 150,
               foregroundDecoration: BoxDecoration(
                   image: DecorationImage(
-                image: NetworkImage(imageURL),
-                fit: BoxFit.cover,
-              )),
+                    image: NetworkImage(imageURL),
+                    fit: BoxFit.cover,
+                  )),
             ),
           ),
         ),
