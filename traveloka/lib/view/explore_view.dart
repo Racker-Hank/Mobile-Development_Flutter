@@ -3,7 +3,7 @@ import '../components/button.dart';
 import '../components/round_icon_button.dart';
 import '../config/UI_configs.dart';
 
-import '../components/location_card.dart';
+import '../components/hotel_card.dart';
 import '../components/search_bar.dart';
 import '../entity/hotel.dart';
 
@@ -18,7 +18,7 @@ class _MyExplorePageState extends State<MyExplorePage> {
   final double hPadding = 16;
 
   List hotels = Hotel.hotels;
-  
+
   @override
   Widget build(BuildContext context) {
     // return const Text(

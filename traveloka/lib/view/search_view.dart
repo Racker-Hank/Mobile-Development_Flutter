@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../components/button.dart';
-import '../components/location_card.dart';
+import '../components/hotel_card.dart';
 import '../components/search_bar.dart';
 import '../config/UI_configs.dart';
 import '../entity/hotel.dart';
