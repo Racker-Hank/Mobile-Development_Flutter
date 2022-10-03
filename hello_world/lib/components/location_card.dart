@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/config/UI_configs.dart';
 
+import '../view/booking_view.dart';
 import '../view/search_view.dart';
 // import 'package:hello_world/entity/Hotel.dart';
 
-class LocationCard extends StatelessWidget {
-  const LocationCard({
+class HotelCard extends StatelessWidget {
+  const HotelCard({
     super.key,
     this.width,
     this.height,
@@ -79,11 +80,13 @@ class LocationCard extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const MySearchPage(),
+          builder: (context) => const MyBookingPage(),
         ),
       ),
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 330, minWidth: 300),
+        width: width,
+        height: height,
+        constraints: const BoxConstraints(maxWidth: 330, minWidth: 284),
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: hMargin ?? 16),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
@@ -92,14 +95,14 @@ class LocationCard extends StatelessWidget {
             BoxShadow(
               color: Color.fromARGB(30, 0, 0, 0),
               offset: Offset(0, 1),
-              blurRadius: 2,
-              spreadRadius: 0,
-            ),
-            BoxShadow(
-              color: Color.fromARGB(15, 0, 0, 0),
-              offset: Offset(0, 1),
               blurRadius: 3,
               spreadRadius: 1,
+            ),
+            BoxShadow(
+              color: Color.fromARGB(50, 0, 0, 0),
+              offset: Offset(0, 1),
+              blurRadius: 2,
+              spreadRadius: 0,
             ),
           ],
           color: UIConfig.white,

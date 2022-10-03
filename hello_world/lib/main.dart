@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/config/UI_configs.dart';
+import 'view/booking_view.dart';
 import 'view/explore_view.dart';
 import 'view/profile_view.dart';
 import 'view/saved_view.dart';
@@ -29,7 +30,7 @@ class _HomeState extends State<Home> {
 
   static const List<Widget> _viewOption = <Widget>[
     MyExplorePage(),
-    MySearchPage(),
+    MyBookingPage(),
     MySavedPage(),
     MyProfilePage()
   ];

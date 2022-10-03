@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/components/location_card.dart';
-import 'package:hello_world/main.dart';
-import 'package:hello_world/view/explore_view.dart';
+import 'package:intl/intl.dart';
+
+import '../components/button.dart';
+import '../components/location_card.dart';
+import '../components/search_bar.dart';
+import '../config/UI_configs.dart';
+import '../entity/hotel.dart';
 
 class MySearchPage extends StatefulWidget {
   const MySearchPage({Key? key}) : super(key: key);
@@ -11,53 +15,334 @@ class MySearchPage extends StatefulWidget {
 }
 
 class _MySearchPageState extends State<MySearchPage> {
+  bool isAdvancedSearch = false;
+
+  FocusNode hotelBoxFocusNode = FocusNode();
+
+  Icon leftIcon = Icon(
+    Icons.arrow_back_rounded,
+    color: UIConfig.darkGrey,
+    size: 20,
+  );
+  Icon rightIcon = Icon(
+    Icons.tune_rounded,
+    color: UIConfig.primaryColor,
+    size: 20,
+  );
+
+  late final TextEditingController _hotel;
+  late final TextEditingController _dateRange;
+  late final TextEditingController _guests;
+
+  List hotels = Hotel.hotels;
+
+  @override
+  void initState() {
+    super.initState();
+
+    hotelBoxFocusNode.requestFocus();
+    _hotel = TextEditingController();
+    _dateRange = TextEditingController();
+    _guests = TextEditingController();
+  }
+
+  DateTimeRange dateRange = DateTimeRange(
+    start: DateTime.now(),
+    end: DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day + 7,
+    ),
+  );
+
+  Future pickDateRange() async {
+    DateTimeRange? newDateRange = await showDateRangePicker(
+        context: context,
+        initialDateRange: dateRange,
+        firstDate: DateTime.now(),
+        lastDate: DateTime(
+          DateTime.now().year + 2,
+          DateTime.now().month,
+          DateTime.now().day,
+        ),
+        builder: (context, child) {
+          return Column(
+            children: <Widget>[
+              Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: ColorScheme.light(
+                    primary: UIConfig.accentColor,
+                    onPrimary: UIConfig.white,
+                    onSurface: UIConfig.primaryColor,
+                    surface: UIConfig.accentColor,
+                  ),
+                  textButtonTheme: TextButtonThemeData(
+                    style: TextButton.styleFrom(
+                      foregroundColor: UIConfig.white,
+                    ),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 80.0),
+                  child: Container(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    decoration: BoxDecoration(
+                      borderRadius: UIConfig.borderRadius,
+                      color: Colors.transparent,
+                    ),
+                    height: 520,
+                    width: MediaQuery.of(context).size.width * .9,
+                    child: child,
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+    if (newDateRange == null) return;
+
+    setState(() {
+      dateRange = newDateRange;
+    });
+
+    String dateFormat =
+        dateRange.start.year == dateRange.end.year ? 'MMMd' : 'MMM d, yy';
+    _dateRange.text =
+        '${DateFormat(dateFormat).format(dateRange.start)} - ${DateFormat(dateFormat).format(dateRange.end)}';
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.of(context).push(
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const Home(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return child;
-          },
-        ),
-      ),
-      child: Scaffold(
-        // appBar: AppBar(title: const Text('Search')),
-        body: Column(
-          children: [
-            Hero(
-              tag: 'hotel3_image',
-              child: Container(
-                height: 300,
-                foregroundDecoration: const BoxDecoration(
-                    image: DecorationImage(
-                  image: NetworkImage(
-                      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'),
-                  fit: BoxFit.cover,
-                )),
-              ),
+    return Scaffold(
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 32),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LeftRoundIconButton(
+                      icon: leftIcon,
+                      function: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SearchBox(
+                            controller: _hotel,
+                            prefixIcon: Icon(
+                              Icons.place_rounded,
+                              color: UIConfig.primaryColor,
+                              size: 20,
+                            ),
+                            suffix: Align(
+                              alignment: Alignment.centerRight,
+                              widthFactor: 1,
+                              // heightFactor: 1,
+                              child: GestureDetector(
+                                onTap: () {
+                                  _hotel.text = '';
+                                },
+                                child: const Icon(
+                                  Icons.cancel_rounded,
+                                  color: Color(0xFF79747e),
+                                  size: 16,
+                                ),
+                              ),
+                            ),
+                            hintText: 'traveloka🚀',
+                            labelText: 'Search for a location',
+                            focusNode: hotelBoxFocusNode,
+                            focussed: () {
+                              // print("test");
+                              // setState(() {
+                              //   leftIcon = Icon(
+                              //     Icons.arrow_back_rounded,
+                              //     color: UIConfig.darkGrey,
+                              //   );
+                              //   rightIcon = Icon(
+                              //     Icons.tune_rounded,
+                              //     color: UIConfig.primaryColor,
+                              //     size: 20,
+                              //   );
+                              //   // print(searchBoxFocusNode.hasFocus);
+                              // });
+                            },
+                          ),
+                          Visibility(
+                            visible: isAdvancedSearch,
+                            // replacement: ,
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 24),
+                                SearchBox(
+                                  controller: _dateRange,
+                                  focussed: pickDateRange,
+                                  prefixIcon: Icon(
+                                    Icons.calendar_month_rounded,
+                                    color: UIConfig.primaryColor,
+                                    size: 20,
+                                  ),
+                                  labelText: 'Pick a date',
+                                  hintText:
+                                      '${DateFormat('MMMd').format(dateRange.start)} - ${DateFormat('MMMd').format(dateRange.end)}',
+                                ),
+                                const SizedBox(height: 24),
+                                SearchBox(
+                                  controller: _guests,
+                                  prefixIcon: Icon(
+                                    Icons.people_rounded,
+                                    color: UIConfig.primaryColor,
+                                    size: 20,
+                                  ),
+                                  labelText: 'Guests',
+                                  hintText: 2,
+                                  keyboardType: TextInputType.number,
+                                  suffix: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          int guests = int.parse(
+                                              _guests.text.isNotEmpty
+                                                  ? _guests.text
+                                                  : '0');
+                                          guests++;
+                                          _guests.text = '$guests';
+                                        },
+                                        child: Icon(
+                                          Icons.add_rounded,
+                                          color: UIConfig.primaryColor,
+                                          size: 20,
+                                        ),
+                                      ),
+                                      Text(
+                                        '|',
+                                        style:
+                                            TextStyle(color: UIConfig.darkGrey),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          int guests = int.parse(
+                                              _guests.text.isNotEmpty
+                                                  ? _guests.text
+                                                  : '0');
+                                          if (guests > 1) {
+                                            guests--;
+                                            _guests.text = '$guests';
+                                          } else {}
+                                        },
+                                        child: Icon(
+                                          Icons.remove_rounded,
+                                          color: UIConfig.primaryColor,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  // focusNode: guestsBoxFocusNode,
+                                  focussed: () {},
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    RightRoundIconButton(
+                      icon: rightIcon,
+                      function: () {
+                        // rightIconButtonFocusNode.requestFocus();
+                        setState(() {
+                          isAdvancedSearch = !isAdvancedSearch;
+                        });
+                        hotelBoxFocusNode.requestFocus();
+                      },
+                      // focusNode: rightIconButtonFocusNode,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                Button(
+                  function: () {
+                    print('${_hotel.text} ${_guests.text}');
+                  },
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const HeadLine(hotelName: 'asdf', location: 'asdfdfdfa'),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Ratings(ratings: 2),
-                      const Price(price: 4574),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  const Description(description: 'awegaweg'),
-                ],
-              ),
-            )
-          ],
-        ),
+          ),
+          const SizedBox(height: 64),
+          Expanded(
+            child: PageView.builder(
+              controller: PageController(viewportFraction: .78),
+              itemCount: hotels.length,
+              // separatorBuilder: (context, index) => const SizedBox(
+              //   width: 16,
+              // ),
+              // addAutomaticKeepAlives: false,
+              // cacheExtent: 100,
+              // padding: const EdgeInsets.symmetric(vertical: 30),
+              // padding: EdgeInsets.fromLTRB(39, 16, 39, 16),
+
+              // scrollDirection: Axis.horizontal,
+              itemBuilder: ((context, i) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    HotelCard(
+                      hotelID: hotels[i].id,
+                      imageURL: hotels[i].imageURL,
+                      hotelName: hotels[i].hotelName,
+                      location: hotels[i].location,
+                      ratings: hotels[i].ratings,
+                      price: hotels[i].price,
+                      description: hotels[i].description,
+                      width: 284,
+                      height: 420,
+                      hMargin: 0,
+                    ),
+                    // const Button(),
+                    // const SizedBox(
+                    //   height: 8,
+                    // ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     print('test');
+                    //   },
+                    //   child: Button(
+                    //     label: 'Book Now',
+                    //     icon: Icon(
+                    //       Icons.arrow_forward_rounded,
+                    //       color: UIConfig.white,
+                    //     ),
+                    //     showIcon: true,
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 8,
+                    // ),
+                    // RoundIconButton(
+                    //   icon: Icon(
+                    //     Icons.arrow_back_rounded,
+                    //     color: UIConfig.darkGrey,
+                    //     size: 24,
+                    //   ),
+                    // ),
+                  ],
+                );
+              }),
+            ),
+          ),
+        ],
       ),
     );
   }
