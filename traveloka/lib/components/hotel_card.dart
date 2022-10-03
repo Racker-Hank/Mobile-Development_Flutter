@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:traveloka/view/hotel_view.dart';
 import '../config/UI_configs.dart';
 
 import '../view/booking_view.dart';
@@ -80,7 +81,7 @@ class HotelCard extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const MyBookingPage(),
+          builder: (context) => const MyHotelPage(),
         ),
       ),
       child: Container(
