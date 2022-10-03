@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:traveloka/components/location_card.dart';
 import 'package:traveloka/view/hotel_details_view.dart';
 
 import '../components/search_bar.dart';
-=======
 import 'package:intl/intl.dart';
 
 import '../components/button.dart';
 import '../components/location_card.dart';
 import '../components/search_bar.dart';
 import '../config/UI_configs.dart';
->>>>>>> 8aaf43333c559ca83d58acd9b5768590b130f863
 import '../entity/hotel.dart';
 
 class MySearchPage extends StatefulWidget {
@@ -22,7 +19,6 @@ class MySearchPage extends StatefulWidget {
 }
 
 class _MySearchPageState extends State<MySearchPage> {
-<<<<<<< HEAD
   // dummy data
   static Hotel hotel1 = const Hotel(
       1,
@@ -58,7 +54,6 @@ class _MySearchPageState extends State<MySearchPage> {
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor');
 
   final List hotels = [hotel4, hotel3, hotel1, hotel2];
-=======
   bool isAdvancedSearch = false;
 
   FocusNode hotelBoxFocusNode = FocusNode();
@@ -154,7 +149,6 @@ class _MySearchPageState extends State<MySearchPage> {
     _dateRange.text =
         '${DateFormat(dateFormat).format(dateRange.start)} - ${DateFormat(dateFormat).format(dateRange.end)}';
   }
->>>>>>> 8aaf43333c559ca83d58acd9b5768590b130f863
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +156,6 @@ class _MySearchPageState extends State<MySearchPage> {
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-<<<<<<< HEAD
           const SearchBar(),
           const SizedBox(height: 16,),
           Expanded(
@@ -186,8 +179,7 @@ class _MySearchPageState extends State<MySearchPage> {
                   separatorBuilder: (context, index) => const SizedBox(height: 16,),
                   itemCount: hotels.length
               )
-          )
-=======
+          ),
           Container(
             margin: const EdgeInsets.only(top: 32),
             padding: const EdgeInsets.symmetric(horizontal: 16),

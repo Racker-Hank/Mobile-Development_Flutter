@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD:traveloka/lib/components/location_card.dart
 import 'package:traveloka/config/UI_configs.dart';
 
 import '../view/hotel_details_view.dart';
 import 'package:traveloka/config/UI_configs.dart';
-=======
 import '../config/UI_configs.dart';
 
 import '../view/booking_view.dart';
 import '../view/search_view.dart';
->>>>>>> 8aaf43333c559ca83d58acd9b5768590b130f863:hello_world/lib/components/location_card.dart
 // import 'package:hello_world/entity/Hotel.dart';
 
 class HotelCard extends StatelessWidget {
@@ -87,14 +84,12 @@ class HotelCard extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-<<<<<<< HEAD:traveloka/lib/components/location_card.dart
           builder: (context) => const MyHotelDetailsPage(),
         ),
       ),
       child: Container(
         height: 335,
         constraints: const BoxConstraints(maxWidth: 330, minWidth: 300),
-=======
           builder: (context) => const MyBookingPage(),
         ),
       ),

@@ -440,10 +440,8 @@ class SearchBox extends StatelessWidget {
 class LeftRoundIconButton extends StatelessWidget {
   const LeftRoundIconButton({
     Key? key,
-<<<<<<< HEAD
   }) : super(key: key);
 
-=======
     required this.icon,
     required this.function,
     this.focusNode,
@@ -453,21 +451,17 @@ class LeftRoundIconButton extends StatelessWidget {
   final Function() function;
   final FocusNode? focusNode;
 
->>>>>>> 8aaf43333c559ca83d58acd9b5768590b130f863
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 3),
       child: RoundIconButton(
-<<<<<<< HEAD
         icon: Icon(
           Icons.arrow_back,
           color: UIConfig.darkGrey,
         )
-=======
         icon: icon,
         function: function,
->>>>>>> 8aaf43333c559ca83d58acd9b5768590b130f863
       ),
     );
   }
@@ -476,10 +470,8 @@ class LeftRoundIconButton extends StatelessWidget {
 class RightRoundIconButton extends StatelessWidget {
   const RightRoundIconButton({
     Key? key,
-<<<<<<< HEAD
   }) : super(key: key);
 
-=======
     required this.icon,
     required this.function,
     this.focusNode,
@@ -489,13 +481,11 @@ class RightRoundIconButton extends StatelessWidget {
   final Function() function;
   final FocusNode? focusNode;
 
->>>>>>> 8aaf43333c559ca83d58acd9b5768590b130f863
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 3),
       child: RoundIconButton(
-<<<<<<< HEAD
           icon: Icon(
             Icons.filter_alt,
             color: UIConfig.primaryColor,
@@ -504,7 +494,6 @@ class RightRoundIconButton extends StatelessWidget {
     );
   }
 }
-=======
         icon: icon,
         function: function,
         focusNode: focusNode,
@@ -512,4 +501,3 @@ class RightRoundIconButton extends StatelessWidget {
     );
   }
 }
->>>>>>> 8aaf43333c559ca83d58acd9b5768590b130f863
