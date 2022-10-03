@@ -80,8 +80,7 @@ class SearchBox extends StatelessWidget {
       child: TextField(
         readOnly: true,
         //autofocus: false,
-        onTap: () => Navigator.push(
-          context,
+        onTap: () => Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => const MySearchPage(),
           ),
