@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'config/UI_configs.dart';
+import 'config/ui_configs.dart';
 import 'view/booking_view.dart';
 import 'view/explore_view.dart';
 import 'view/profile_view.dart';
@@ -44,6 +44,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: _viewOption.elementAt(_selectedIndex),
       ),
