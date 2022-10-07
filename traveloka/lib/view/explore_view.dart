@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import '../components/button.dart';
-import '../components/round_icon_button.dart';
-import '../config/UI_configs.dart';
 
 import '../components/location_card.dart';
 import '../components/search_bar.dart';

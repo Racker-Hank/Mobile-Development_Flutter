@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:traveloka/view/hotel_details_view.dart';
 import '../components/search_bar.dart';
 
 class MyBookingPage extends StatefulWidget {

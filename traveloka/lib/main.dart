@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:traveloka/view/search_view.dart';
 import 'config/UI_configs.dart';
 import 'view/booking_view.dart';
 import 'view/explore_view.dart';
 import 'view/profile_view.dart';
 import 'view/saved_view.dart';
-import 'view/search_view.dart';
+
 
 void main() {
   runApp(MaterialApp(
@@ -51,8 +52,7 @@ class _HomeState extends State<Home> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.maps_home_work), label: 'Booking'),
+          BottomNavigationBarItem(icon: Icon(Icons.maps_home_work), label: 'Booking'),
           BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: 'Saved'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
         ],

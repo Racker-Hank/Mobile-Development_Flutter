@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:traveloka/main.dart';
 import './button.dart';
 import './round_icon_button.dart';
 
@@ -152,9 +153,7 @@ class _SearchBarState extends State<SearchBar> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MySearchPage(
-                              // animationController: _animationController,
-                            ),
+                            builder: (context) => const MySearchPage(),
                           ),
                         );
                       },
