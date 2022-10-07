@@ -5,7 +5,7 @@ import 'package:traveloka/main.dart';
 import './button.dart';
 import './round_icon_button.dart';
 
-import '../config/UI_configs.dart';
+import '../config/ui_configs.dart';
 import '../view/search_view.dart';
 
 class SearchBar extends StatefulWidget {
@@ -71,38 +71,38 @@ class _SearchBarState extends State<SearchBar> {
     _guests.dispose();
   }
 
-  void _onFocusChange() {
-    // print(searchBarFocusNode.hasFocus);
-    // print(searchBarFocusNode.traversalChildren);
+  // void _onFocusChange() {
+  //   // print(searchBarFocusNode.hasFocus);
+  //   // print(searchBarFocusNode.traversalChildren);
 
-    // setState(() {
-    //   isSearchFocussed =
-    //       // hotelBoxFocusNode.hasFocus || guestsBoxFocusNode.hasFocus;
-    //       searchBarFocusNode.hasFocus;
+  //   // setState(() {
+  //   //   isSearchFocussed =
+  //   //       // hotelBoxFocusNode.hasFocus || guestsBoxFocusNode.hasFocus;
+  //   //       searchBarFocusNode.hasFocus;
 
-    //   if (isSearchFocussed) {
-    leftIcon = Icon(
-      Icons.arrow_back_rounded,
-      color: UIConfig.darkGrey,
-      size: 20,
-    );
-    rightIcon = Icon(
-      Icons.tune_rounded,
-      color: UIConfig.primaryColor,
-      size: 20,
-    );
-    // } else {
-    leftIcon = Icon(
-      Icons.notifications_rounded,
-      color: UIConfig.darkGrey,
-      size: 20,
-    );
-    rightIcon = Icon(
-      Icons.chat_rounded,
-      color: UIConfig.darkGrey,
-      size: 20,
-    );
-  }
+  //   //   if (isSearchFocussed) {
+  //   leftIcon = Icon(
+  //     Icons.arrow_back_rounded,
+  //     color: UIConfig.darkGrey,
+  //     size: 20,
+  //   );
+  //   rightIcon = Icon(
+  //     Icons.tune_rounded,
+  //     color: UIConfig.primaryColor,
+  //     size: 20,
+  //   );
+  //   // } else {
+  //   leftIcon = Icon(
+  //     Icons.notifications_rounded,
+  //     color: UIConfig.darkGrey,
+  //     size: 20,
+  //   );
+  //   rightIcon = Icon(
+  //     Icons.chat_rounded,
+  //     color: UIConfig.darkGrey,
+  //     size: 20,
+  //   );
+  // }
   // });
   // }
 
@@ -172,11 +172,11 @@ class _SearchBarState extends State<SearchBar> {
             ],
           ),
           const SizedBox(height: 24),
-          Button(
-            function: () {
-              print('${_hotel.text} ${_guests.text}');
-            },
-          ),
+          // Button(
+          //   function: () {
+          //     print('${_hotel.text} ${_guests.text}');
+          //   },
+          // ),
         ],
       ),
     );

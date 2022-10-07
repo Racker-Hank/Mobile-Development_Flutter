@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../components/button.dart';
-import '../components/location_card.dart';
+import '../components/hotel_card.dart';
 import '../components/search_bar.dart';
-import '../config/UI_configs.dart';
+import '../config/ui_configs.dart';
 import '../entity/hotel.dart';
 
 class MySearchPage extends StatefulWidget {
@@ -20,6 +20,7 @@ class MySearchPage extends StatefulWidget {
 
 class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderStateMixin{
   bool isAdvancedSearch = false;
+  bool isShowResult = false;
 
   FocusNode hotelBoxFocusNode = FocusNode();
 
@@ -42,6 +43,8 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
 
   List hotels = Hotel.hotels;
 
+  double cardWidth = 284;
+
   @override
   void initState() {
     _animationController = AnimationController(
@@ -55,6 +58,8 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
     _hotel = TextEditingController();
     _dateRange = TextEditingController();
     _guests = TextEditingController();
+
+    isShowResult = false;
   }
 
   @override
@@ -130,6 +135,7 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return SlideTransition(
       position: Tween<Offset>(
         begin: const Offset(1, 0),
@@ -164,6 +170,54 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
                                 Icons.pin_drop,
                                 color: UIConfig.primaryColor,
                                 size: 20,
+=======
+    return Scaffold(
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 32),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LeftRoundIconButton(
+                      icon: leftIcon,
+                      function: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SearchBox(
+                            controller: _hotel,
+                            prefixIcon: Icon(
+                              Icons.pin_drop,
+                              color: UIConfig.primaryColor,
+                              size: 20,
+                            ),
+                            suffix: Align(
+                              alignment: Alignment.centerRight,
+                              widthFactor: 1,
+                              // heightFactor: 1,
+                              child: GestureDetector(
+                                onTap: () {
+                                  _hotel.text = '';
+                                  setState(() {
+                                    isShowResult = false;
+                                  });
+                                },
+                                child: const Icon(
+                                  Icons.cancel_rounded,
+                                  color: Color(0xFF79747e),
+                                  size: 16,
+                                ),
+>>>>>>> 170e505a62222c79cae30e4239ca3258511b983a
                               ),
                               suffix: Align(
                                 alignment: Alignment.centerRight,
@@ -179,6 +233,7 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
                                     size: 16,
                                   ),
                                 ),
+<<<<<<< HEAD
                               ),
                               hintText: 'traveloka🚀',
                               labelText: 'Search for a location',
@@ -202,6 +257,16 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
                                     labelText: 'Pick a date',
                                     hintText:
                                     '${DateFormat('MMMd').format(dateRange.start)} - ${DateFormat('MMMd').format(dateRange.end)}',
+=======
+                                const SizedBox(height: 24),
+                                SearchBox(
+                                  controller: _guests,
+                                  focussed: () {},
+                                  prefixIcon: Icon(
+                                    Icons.people_rounded,
+                                    color: UIConfig.primaryColor,
+                                    size: 20,
+>>>>>>> 170e505a62222c79cae30e4239ca3258511b983a
                                   ),
                                   const SizedBox(height: 24),
                                   SearchBox(
@@ -258,12 +323,18 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
                                     ),
                                     focussed: () {},
                                   ),
+<<<<<<< HEAD
                                 ],
                               ),
+=======
+                                ),
+                              ],
+>>>>>>> 170e505a62222c79cae30e4239ca3258511b983a
                             ),
                           ],
                         ),
                       ),
+<<<<<<< HEAD
                       const SizedBox(width: 16),
                       RightRoundIconButton(
                         icon: rightIcon,
@@ -318,6 +389,111 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
                     ],
                   );
                 }),
+=======
+                    ),
+                    const SizedBox(width: 16),
+                    RightRoundIconButton(
+                      icon: rightIcon,
+                      function: () {
+                        setState(() {
+                          isAdvancedSearch = !isAdvancedSearch;
+                        });
+                        hotelBoxFocusNode.requestFocus();
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                Button(
+                  function: () {
+                    debugPrint(
+                        '${_hotel.text} ${_dateRange.text} ${_guests.text}');
+                    setState(() {
+                      isShowResult = true;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 64),
+          Expanded(
+            child: Visibility(
+              visible: isShowResult,
+              replacement: Column(
+                children: [
+                  SizedBox(
+                    width: cardWidth,
+                    child: Text(
+                      'Recommended',
+                      style: UIConfig.indicationTextStyle,
+                    ),
+                  ),
+                  HotelCard(
+                    hotel: hotels[0],
+                    // hotelID: hotels[0].id,
+                    // imageURL: hotels[0].imageURL,
+                    // hotelName: hotels[0].name,
+                    // location: hotels[0].location,
+                    // ratings: hotels[0].ratings,
+                    // price: hotels[0].price,
+                    // description: hotels[0].description,
+                    width: cardWidth,
+                    // width: 328,
+                    height: 420,
+                    hMargin: 8,
+                    showFacilities: true,
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: cardWidth,
+                    child: Text(
+                      'Search results (${hotels.length})',
+                      style: UIConfig.indicationTextStyle,
+                    ),
+                  ),
+                  Expanded(
+                    child: PageView.builder(
+                      controller: PageController(viewportFraction: .77),
+                      itemCount: hotels.length,
+                      // separatorBuilder: (context, index) => const SizedBox(
+                      //   width: 16,
+                      // ),
+                      // addAutomaticKeepAlives: false,
+                      // cacheExtent: 100,
+                      // padding: const EdgeInsets.symmetric(vertical: 30),
+                      // padding: EdgeInsets.fromLTRB(39, 16, 39, 16),
+
+                      // scrollDirection: Axis.horizontal,
+                      itemBuilder: ((context, i) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            HotelCard(
+                              hotel: hotels[i],
+                              // hotelID: hotels[i].id,
+                              // imageURL: hotels[i].imageURL,
+                              // hotelName: hotels[i].name,
+                              // location: hotels[i].location,
+                              // ratings: hotels[i].ratings,
+                              // price: hotels[i].price,
+                              // description: hotels[i].description,
+                              width: cardWidth,
+                              // width: 328,
+                              height: 420,
+                              hMargin: 8,
+                              showFacilities: true,
+                            ),
+                          ],
+                        );
+                      }),
+                    ),
+                  ),
+                ],
+>>>>>>> 170e505a62222c79cae30e4239ca3258511b983a
               ),
             ),
           ],

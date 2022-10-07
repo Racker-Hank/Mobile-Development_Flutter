@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './button.dart';
 import './round_icon_button.dart';
 
-import '../config/UI_configs.dart';
+import '../config/ui_configs.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
@@ -61,8 +61,8 @@ class _SearchBarState extends State<SearchBar> {
   }
 
   void _onFocusChange() {
-    print(searchBarFocusNode.hasFocus);
-    print(searchBarFocusNode.traversalChildren);
+    // print(searchBarFocusNode.hasFocus);
+    // print(searchBarFocusNode.traversalChildren);
 
     setState(() {
       isSearchFocussed =
@@ -258,7 +258,7 @@ class _SearchBarState extends State<SearchBar> {
                     icon: rightIcon,
                     function: () {
                       // rightIconButtonFocusNode.requestFocus();
-                      print('test');
+                      // print('test');
                       setState(() {
                         isAdvancedSearch = !isAdvancedSearch;
                       });
@@ -279,7 +279,7 @@ class _SearchBarState extends State<SearchBar> {
           const SizedBox(height: 24),
           Button(
             function: () {
-              print('${_hotel.text} ${_guests.text}');
+              // print('${_hotel.text} ${_guests.text}');
             },
           ),
         ],

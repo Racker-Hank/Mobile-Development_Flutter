@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+import '../components/button.dart';
+import '../components/round_icon_button.dart';
+import '../config/ui_configs.dart';
+>>>>>>> 170e505a62222c79cae30e4239ca3258511b983a
 
-import '../components/location_card.dart';
+import '../components/hotel_card.dart';
 import '../components/search_bar.dart';
 import '../entity/hotel.dart';
 
@@ -40,13 +46,15 @@ class _MyExplorePageState extends State<MyExplorePage> {
               return Column(
                 children: [
                   HotelCard(
-                    hotelID: hotels[i].id,
-                    imageURL: hotels[i].imageURL,
-                    hotelName: hotels[i].hotelName,
-                    location: hotels[i].location,
-                    ratings: hotels[i].ratings,
-                    price: hotels[i].price,
-                    description: hotels[i].description,
+                    hotel: hotels[i],
+                    // hotelID: hotels[i].id,
+                    // imageURL: hotels[i].imageURL,
+                    // hotelName: hotels[i].name,
+                    // location: hotels[i].location,
+                    // ratings: hotels[i].ratings,
+                    // price: hotels[i].price,
+                    // description: hotels[i].description,
+                    showFacilities: false,
                   ),
                 ],
               );

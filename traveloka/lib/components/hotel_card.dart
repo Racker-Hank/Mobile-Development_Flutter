@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD:traveloka/lib/components/location_card.dart
 import 'package:traveloka/view/hotel_details_view.dart';
 import '../config/UI_configs.dart';
 
+=======
+import 'package:traveloka/view/hotel_view.dart';
+import '../config/ui_configs.dart';
+
+import '../entity/hotel.dart';
+import '../view/booking_view.dart';
+import '../view/search_view.dart';
+>>>>>>> 170e505a62222c79cae30e4239ca3258511b983a:traveloka/lib/components/hotel_card.dart
 // import 'package:hello_world/entity/Hotel.dart';
 
 class HotelCard extends StatelessWidget {
-  const HotelCard({
+  HotelCard({
     super.key,
     this.width,
     this.height,
     this.hMargin,
     this.vMargin,
     // this.hotel,
+<<<<<<< HEAD:traveloka/lib/components/location_card.dart
     required this.hotelID,
     this.imageURL =
     'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
@@ -21,6 +31,19 @@ class HotelCard extends StatelessWidget {
     this.price = 200,
     this.description =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
+=======
+    // required this.hotelID,
+    // this.imageURL =
+    //     'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
+    // this.hotelName = 'Florida Getaway',
+    // this.location = 'Florida villa',
+    // this.ratings = 3.8,
+    // this.price = 200,
+    // this.description =
+    //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
+    required this.hotel,
+    required this.showFacilities,
+>>>>>>> 170e505a62222c79cae30e4239ca3258511b983a:traveloka/lib/components/hotel_card.dart
   });
 
   final double? width;
@@ -41,21 +64,46 @@ class HotelCard extends StatelessWidget {
   //     200,
   //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor');
 
-  // final Hotel? hotel;
+  final Hotel hotel;
 
-  final int hotelID;
+  // final int hotelID;
 
-  final String imageURL;
+  // final String imageURL;
 
-  final String hotelName;
+  // final String hotelName;
 
-  final String location;
+  // final String location;
 
-  final double? ratings;
+  // final double? ratings;
 
-  final int price;
+  // final int price;
 
-  final String description;
+  // final String description;
+
+  final bool showFacilities;
+
+  static var facilities = {
+    'Pool': Icon(
+      Icons.pool_rounded,
+      color: UIConfig.darkGrey,
+      // size: 24,
+    ),
+    'Breakfast': Icon(
+      Icons.restaurant_rounded,
+      color: UIConfig.darkGrey,
+      // size: 24,
+    ),
+    'Wifi': Icon(
+      Icons.wifi_rounded,
+      color: UIConfig.darkGrey,
+      // size: 24,
+    ),
+    'Bar': Icon(
+      Icons.nightlife_rounded,
+      color: UIConfig.darkGrey,
+      // size: 24,
+    ),
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -79,12 +127,18 @@ class HotelCard extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
+<<<<<<< HEAD:traveloka/lib/components/location_card.dart
           builder: (context) => const MyHotelDetailsPage(),
+=======
+          builder: (context) => MyHotelPage(hotel: hotel),
+>>>>>>> 170e505a62222c79cae30e4239ca3258511b983a:traveloka/lib/components/hotel_card.dart
         ),
       ),
-      child: Container(
+      child: AnimatedContainer(
         width: width,
         height: height,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInQuart,
         constraints: const BoxConstraints(maxWidth: 330, minWidth: 284),
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: hMargin ?? 16),
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -110,22 +164,25 @@ class HotelCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HeroImage(hotelID: hotelID, imageURL: imageURL),
+            HeroImage(hotelID: hotel.id, imageURL: hotel.imageURL),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  HeadLine(hotelName: hotelName, location: location),
+                  HeadLine(hotelName: hotel.name, location: hotel.location),
                   SizedBox(height: columnSpacing),
                   Row(
                     children: [
-                      Ratings(ratings: ratings),
-                      Price(price: price),
+                      Expanded(child: Ratings(ratings: hotel.ratings)),
+                      Price(price: hotel.price),
                     ],
                   ),
                   SizedBox(height: columnSpacing),
-                  Description(description: description),
+                  Description(description: hotel.description),
+                  const SizedBox(height: 16),
+                  Facilities(
+                      showFacilities: showFacilities, facilities: facilities)
                 ],
               ),
             )
@@ -158,10 +215,18 @@ class HeroImage extends StatelessWidget {
             child: Container(
               height: 150,
               foregroundDecoration: BoxDecoration(
+<<<<<<< HEAD:traveloka/lib/components/location_card.dart
                   image: DecorationImage(
                     image: NetworkImage(imageURL),
                     fit: BoxFit.cover,
                   )),
+=======
+                image: DecorationImage(
+                  image: NetworkImage(imageURL),
+                  fit: BoxFit.cover,
+                ),
+              ),
+>>>>>>> 170e505a62222c79cae30e4239ca3258511b983a:traveloka/lib/components/hotel_card.dart
             ),
           ),
         ),
@@ -211,28 +276,25 @@ class Ratings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: Row(children: [
-        Text(
-          '$ratings',
-          style: const TextStyle(
-            fontFamily: 'Roboto',
-            fontSize: 14,
-            height: 1.4,
-            fontWeight: FontWeight.bold,
-            letterSpacing: .25,
-            color: Colors.black,
-          ),
+    return Row(children: [
+      Text(
+        '$ratings',
+        style: const TextStyle(
+          fontFamily: 'Roboto',
+          fontSize: 14,
+          height: 1.4,
+          fontWeight: FontWeight.bold,
+          letterSpacing: .25,
+          color: Colors.black,
         ),
-        const SizedBox(width: 2),
-        Icon(
-          Icons.star_rounded,
-          color: UIConfig.accentColor,
-          size: 20,
-        ),
-      ]),
-    );
+      ),
+      const SizedBox(width: 2),
+      Icon(
+        Icons.star_rounded,
+        color: UIConfig.accentColor,
+        size: 20,
+      ),
+    ]);
   }
 }
 
@@ -281,4 +343,51 @@ class Description extends StatelessWidget {
       child: Text(description),
     );
   }
+<<<<<<< HEAD:traveloka/lib/components/location_card.dart
 }
+=======
+}
+
+class Facilities extends StatelessWidget {
+  const Facilities({
+    Key? key,
+    required this.showFacilities,
+    required this.facilities,
+  }) : super(key: key);
+
+  final bool showFacilities;
+  final Map<String, Icon> facilities;
+
+  @override
+  Widget build(BuildContext context) {
+    return Visibility(
+      visible: showFacilities,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: facilities.entries
+              .map((e) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Column(
+                      children: [
+                        e.value,
+                        Text(
+                          e.key,
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: UIConfig.darkGrey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ))
+              .toList(),
+        ),
+      ),
+    );
+  }
+}
+>>>>>>> 170e505a62222c79cae30e4239ca3258511b983a:traveloka/lib/components/hotel_card.dart
