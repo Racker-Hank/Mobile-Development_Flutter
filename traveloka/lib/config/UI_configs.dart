@@ -34,4 +34,10 @@ class UIConfig {
     height: 1.6,
     color: black,
   );
+  static TextStyle indicationTextStyle = TextStyle(
+    fontFamily: 'Roboto',
+    fontWeight: FontWeight.bold,
+    fontSize: 14,
+    color: primaryColor,
+  );
 }
