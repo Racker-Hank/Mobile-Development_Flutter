@@ -4,7 +4,6 @@ import 'view/booking_view.dart';
 import 'view/explore_view.dart';
 import 'view/profile_view.dart';
 import 'view/saved_view.dart';
-import 'view/search_view.dart';
 
 void main() {
   runApp(MaterialApp(

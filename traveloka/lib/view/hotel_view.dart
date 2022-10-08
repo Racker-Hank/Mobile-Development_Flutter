@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../components/hotel_card.dart';
-import '../main.dart';
 
 class MyHotelPage extends StatefulWidget {
   const MyHotelPage({Key? key}) : super(key: key);
