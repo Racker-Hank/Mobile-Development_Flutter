@@ -1,9 +1,12 @@
+import 'package:traveloka/entity/review.dart';
+
 class Hotel {
   late String id;
   late List<String> imageURLs;
   late String name;
   late String location;
   late double? ratings;
+  late List<Review?> reviews;
   late int price;
   late String description;
   late Map<String, String> contacts;
@@ -16,6 +19,7 @@ class Hotel {
     this.name,
     this.location,
     this.ratings,
+    this.reviews,
     this.price,
     this.description,
     this.mapURL,
@@ -25,12 +29,19 @@ class Hotel {
     List<String> imageURLs =
         (json['imageURLs'] as List).map((e) => e as String).toList();
 
+    List<Review> reviews = (json['reviews'] as List)
+        .map((e) => Review(e['content'], e['rate']))
+        .toList();
+
+    print(reviews[0].content);
+
     return Hotel(
       id,
       imageURLs,
       json['name'],
       json['location'],
       json['ratings'],
+      reviews,
       json['price'],
       json['description'],
       json['mapURL'],
