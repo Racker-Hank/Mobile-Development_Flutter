@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:traveloka/repositories/hotel_firebase.dart';
 
 import '../components/button.dart';
 import '../components/hotel_card.dart';
@@ -35,7 +36,7 @@ class _MySearchPageState extends State<MySearchPage> {
   late final TextEditingController _dateRange;
   late final TextEditingController _guests;
 
-  List hotels = Hotel.hotels;
+  // List hotels = Hotel.hotels;
 
   double cardWidth = 284;
 
@@ -277,83 +278,77 @@ class _MySearchPageState extends State<MySearchPage> {
           ),
           const SizedBox(height: 64),
           Expanded(
-            child: Visibility(
-              visible: isShowResult,
-              replacement: Column(
-                children: [
-                  SizedBox(
-                    width: cardWidth,
-                    child: Text(
-                      'Recommended',
-                      style: UIConfig.indicationTextStyle,
-                    ),
-                  ),
-                  HotelCard(
-                    hotel: hotels[0],
-                    // hotelID: hotels[0].id,
-                    // imageURL: hotels[0].imageURL,
-                    // hotelName: hotels[0].name,
-                    // location: hotels[0].location,
-                    // ratings: hotels[0].ratings,
-                    // price: hotels[0].price,
-                    // description: hotels[0].description,
-                    width: cardWidth,
-                    // width: 328,
-                    height: 420,
-                    hMargin: 8,
-                    showFacilities: true,
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: cardWidth,
-                    child: Text(
-                      'Search results (${hotels.length})',
-                      style: UIConfig.indicationTextStyle,
-                    ),
-                  ),
-                  Expanded(
-                    child: PageView.builder(
-                      controller: PageController(viewportFraction: .77),
-                      itemCount: hotels.length,
-                      // separatorBuilder: (context, index) => const SizedBox(
-                      //   width: 16,
-                      // ),
-                      // addAutomaticKeepAlives: false,
-                      // cacheExtent: 100,
-                      // padding: const EdgeInsets.symmetric(vertical: 30),
-                      // padding: EdgeInsets.fromLTRB(39, 16, 39, 16),
+            child: StreamBuilder<List<Hotel>>(
+                stream: HotelFirebase.readHotels(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    // print(snapshot.error.toString());
+                    return Text(snapshot.error.toString());
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.active) {
+                    final hotels = snapshot.data!;
 
-                      // scrollDirection: Axis.horizontal,
-                      itemBuilder: ((context, i) {
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            HotelCard(
-                              hotel: hotels[i],
-                              // hotelID: hotels[i].id,
-                              // imageURL: hotels[i].imageURL,
-                              // hotelName: hotels[i].name,
-                              // location: hotels[i].location,
-                              // ratings: hotels[i].ratings,
-                              // price: hotels[i].price,
-                              // description: hotels[i].description,
-                              width: cardWidth,
-                              // width: 328,
-                              height: 420,
-                              hMargin: 8,
-                              showFacilities: true,
+                    return Visibility(
+                      visible: isShowResult,
+                      replacement: Column(
+                        children: [
+                          SizedBox(
+                            width: cardWidth,
+                            child: Text(
+                              'Recommended',
+                              style: UIConfig.indicationTextStyle,
                             ),
-                          ],
-                        );
-                      }),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                          ),
+                          HotelCard(
+                            hotel: hotels[0],
+                            width: cardWidth,
+                            // width: 328,
+                            height: 420,
+                            hMargin: 8,
+                            showFacilities: true,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            width: cardWidth,
+                            child: Text(
+                              'Search results (${hotels.length})',
+                              style: UIConfig.indicationTextStyle,
+                            ),
+                          ),
+                          Expanded(
+                            child: PageView.builder(
+                              controller: PageController(viewportFraction: .77),
+                              itemCount: hotels.length,
+                              itemBuilder: ((context, i) {
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    HotelCard(
+                                      hotel: hotels[i],
+                                      width: cardWidth,
+                                      // width: 328,
+                                      height: 420,
+                                      hMargin: 8,
+                                      showFacilities: true,
+                                    ),
+                                  ],
+                                );
+                              }),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator.adaptive(),
+                      // child: Text(snapshot.connectionState.toString()),
+                    );
+                  }
+                }),
           ),
         ],
       ),

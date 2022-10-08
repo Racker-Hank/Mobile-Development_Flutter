@@ -117,7 +117,8 @@ class HotelCard extends StatelessWidget {
         height: height,
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInQuart,
-        constraints: const BoxConstraints(maxWidth: 330, minWidth: 284),
+        constraints: const BoxConstraints(maxWidth: 350, minWidth: 284),
+        // constraints: const BoxConstraints(minWidth: 284),
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: hMargin ?? 16),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
@@ -142,7 +143,7 @@ class HotelCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HeroImage(hotelID: hotel.id, imageURL: hotel.imageURL),
+            HeroImage(hotelID: hotel.id, imageURL: hotel.imageURLs[0]),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -179,7 +180,7 @@ class HeroImage extends StatelessWidget {
   }) : super(key: key);
 
   final String imageURL;
-  final int hotelID;
+  final String hotelID;
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +190,7 @@ class HeroImage extends StatelessWidget {
         Expanded(
           flex: 1,
           child: Hero(
-            tag: 'hotel${hotelID}_image',
+            tag: 'hotel_${hotelID}_image',
             child: Container(
               height: 150,
               foregroundDecoration: BoxDecoration(
@@ -280,7 +281,7 @@ class Price extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(16, 2, 16, 4),
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
       decoration: BoxDecoration(
         color: UIConfig.accentColor,
         borderRadius: UIConfig.borderRadius,
@@ -303,14 +304,16 @@ class Description extends StatelessWidget {
   const Description({
     Key? key,
     required this.description,
+    this.maxHeight = 60,
   }) : super(key: key);
 
   final String description;
+  final double maxHeight;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(maxHeight: 60),
+      constraints: BoxConstraints(maxHeight: maxHeight),
       child: Text(description),
     );
   }

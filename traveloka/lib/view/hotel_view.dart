@@ -74,7 +74,7 @@ class _MyHotelPageState extends State<MyHotelPage> {
                       height: 250,
                       foregroundDecoration: BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(widget.hotel.imageURL),
+                          image: NetworkImage(widget.hotel.imageURLs[0]),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -158,7 +158,7 @@ class _MyHotelPageState extends State<MyHotelPage> {
                             );
                           },
                           child: Container(
-                            padding: const EdgeInsets.fromLTRB(16, 2, 16, 4),
+                            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                             decoration: BoxDecoration(
                               color: UIConfig.accentColor,
                               borderRadius: UIConfig.borderRadius,
@@ -204,7 +204,7 @@ class _MyHotelPageState extends State<MyHotelPage> {
                             );
                           },
                           child: Container(
-                            padding: const EdgeInsets.fromLTRB(16, 2, 16, 4),
+                            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                             decoration: BoxDecoration(
                               color: UIConfig.white,
                               borderRadius: UIConfig.borderRadius,
@@ -322,18 +322,20 @@ class _MyHotelPageState extends State<MyHotelPage> {
                       children: [
                         TextSpan(
                           text: '\$${widget.hotel.price}',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: 'Roboto',
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
+                            color: UIConfig.white,
                           ),
                         ),
-                        const TextSpan(
+                        TextSpan(
                           text: '/Night',
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
+                            color: UIConfig.white,
                           ),
                         ),
                       ],
@@ -372,45 +374,46 @@ class Reviews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      key: reviewsKey,
-      children: widget.hotel.reviews
-          .map((e) => ListTile(
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                leading: const CircleAvatar(radius: 20),
-                title: Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          for (var i = 0; i < 4; i++)
-                            Icon(
-                              Icons.star_rounded,
-                              color: UIConfig.accentColor,
-                              size: 20,
-                            ),
-                          for (var i = 4; i < 5; i++)
-                            Icon(
-                              Icons.star_rounded,
-                              color: UIConfig.darkGrey,
-                              size: 20,
-                            ),
-                        ],
-                      ),
-                      const Text('UserName'),
-                    ],
-                  ),
-                ),
-                subtitle: Text(
-                  e,
-                  style: UIConfig.bodyMediumTextStyle,
-                ),
-              ))
-          .toList(),
-    );
+    // return Column(
+    //   key: reviewsKey,
+    //   children: widget.hotel.reviews
+    //       .map((e) => ListTile(
+    //             contentPadding:
+    //                 const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+    //             leading: const CircleAvatar(radius: 20),
+    //             title: Padding(
+    //               padding: const EdgeInsets.only(bottom: 4),
+    //               child: Column(
+    //                 crossAxisAlignment: CrossAxisAlignment.start,
+    //                 children: [
+    //                   Row(
+    //                     children: [
+    //                       for (var i = 0; i < 4; i++)
+    //                         Icon(
+    //                           Icons.star_rounded,
+    //                           color: UIConfig.accentColor,
+    //                           size: 20,
+    //                         ),
+    //                       for (var i = 4; i < 5; i++)
+    //                         Icon(
+    //                           Icons.star_rounded,
+    //                           color: UIConfig.darkGrey,
+    //                           size: 20,
+    //                         ),
+    //                     ],
+    //                   ),
+    //                   const Text('UserName'),
+    //                 ],
+    //               ),
+    //             ),
+    //             subtitle: Text(
+    //               e,
+    //               style: UIConfig.bodyMediumTextStyle,
+    //             ),
+    //           ))
+    //       .toList(),
+    // );
+    return const Text('Reviews');
   }
 }
 
