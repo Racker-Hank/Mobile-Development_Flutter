@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:traveloka/view/search_view.dart';
-import 'config/UI_configs.dart';
-=======
 import 'config/ui_configs.dart';
->>>>>>> 170e505a62222c79cae30e4239ca3258511b983a
 import 'view/booking_view.dart';
 import 'view/explore_view.dart';
 import 'view/profile_view.dart';
 import 'view/saved_view.dart';
-
+import 'view/search_view.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -30,14 +25,16 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
+int _selectedIndex = 0;
+
 class _HomeState extends State<Home> {
-  int _selectedIndex = 0;
 
   static const List<Widget> _viewOption = <Widget>[
     MyExplorePage(),
     MyBookingPage(),
     MySavedPage(),
-    MyProfilePage()
+    MyProfilePage(),
+    MySearchPage()
   ];
 
   void _onItemTapped(int index) {
@@ -57,7 +54,8 @@ class _HomeState extends State<Home> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
-          BottomNavigationBarItem(icon: Icon(Icons.maps_home_work), label: 'Booking'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.maps_home_work), label: 'Booking'),
           BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: 'Saved'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
         ],
@@ -72,7 +70,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 170e505a62222c79cae30e4239ca3258511b983a

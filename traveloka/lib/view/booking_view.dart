@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import '../components/search_bar.dart';
-=======
 
 import '../components/hotel_card.dart';
 import '../main.dart';
->>>>>>> 170e505a62222c79cae30e4239ca3258511b983a
 
 class MyBookingPage extends StatefulWidget {
   const MyBookingPage({Key? key}) : super(key: key);
@@ -17,14 +14,12 @@ class MyBookingPage extends StatefulWidget {
 class _MyBookingPageState extends State<MyBookingPage> {
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: const [
         SearchBar(),
       ],
     );
-=======
     return const Text('Index 1: Booking');
     // return GestureDetector(
     //   // onTap: () => Navigator.of(context).push(
@@ -75,6 +70,5 @@ class _MyBookingPageState extends State<MyBookingPage> {
     //     ),
     //   ),
     // );
->>>>>>> 170e505a62222c79cae30e4239ca3258511b983a
   }
 }

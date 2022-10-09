@@ -34,9 +34,6 @@ class UIConfig {
     height: 1.6,
     color: black,
   );
-<<<<<<< HEAD
-}
-=======
   static TextStyle indicationTextStyle = TextStyle(
     fontFamily: 'Roboto',
     fontWeight: FontWeight.bold,
@@ -44,4 +41,3 @@ class UIConfig {
     color: primaryColor,
   );
 }
->>>>>>> 170e505a62222c79cae30e4239ca3258511b983a

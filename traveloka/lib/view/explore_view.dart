@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
 import '../components/button.dart';
 import '../components/round_icon_button.dart';
 import '../config/ui_configs.dart';
->>>>>>> 170e505a62222c79cae30e4239ca3258511b983a
 
 import '../components/hotel_card.dart';
 import '../components/search_bar.dart';

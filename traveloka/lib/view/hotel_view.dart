@@ -376,39 +376,39 @@ class Reviews extends StatelessWidget {
       key: reviewsKey,
       children: widget.hotel.reviews
           .map((e) => ListTile(
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                leading: const CircleAvatar(radius: 20),
-                title: Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          for (var i = 0; i < 4; i++)
-                            Icon(
-                              Icons.star_rounded,
-                              color: UIConfig.accentColor,
-                              size: 20,
-                            ),
-                          for (var i = 4; i < 5; i++)
-                            Icon(
-                              Icons.star_rounded,
-                              color: UIConfig.darkGrey,
-                              size: 20,
-                            ),
-                        ],
-                      ),
-                      const Text('UserName'),
-                    ],
-                  ),
-                ),
-                subtitle: Text(
-                  e,
-                  style: UIConfig.bodyMediumTextStyle,
-                ),
-              ))
+        contentPadding:
+        const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+        leading: const CircleAvatar(radius: 20),
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  for (var i = 0; i < 4; i++)
+                    Icon(
+                      Icons.star_rounded,
+                      color: UIConfig.accentColor,
+                      size: 20,
+                    ),
+                  for (var i = 4; i < 5; i++)
+                    Icon(
+                      Icons.star_rounded,
+                      color: UIConfig.darkGrey,
+                      size: 20,
+                    ),
+                ],
+              ),
+              const Text('UserName'),
+            ],
+          ),
+        ),
+        subtitle: Text(
+          e,
+          style: UIConfig.bodyMediumTextStyle,
+        ),
+      ))
           .toList(),
     );
   }
