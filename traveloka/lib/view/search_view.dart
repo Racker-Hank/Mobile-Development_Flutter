@@ -2,7 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+<<<<<<< HEAD
 import 'package:traveloka/config/ui_configs.dart';
+=======
+import 'package:traveloka/repositories/hotel_firebase.dart';
+>>>>>>> 682e5ba8f811be49b3519aab5851a7a413297309
 
 import '../components/button.dart';
 import '../components/hotel_card.dart';
@@ -38,7 +42,7 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
   late final TextEditingController _guests;
   late final AnimationController _animationController;
 
-  List hotels = Hotel.hotels;
+  // List hotels = Hotel.hotels;
 
   double cardWidth = 284;
 
@@ -265,6 +269,7 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
                           ],
                         ),
                       ),
+<<<<<<< HEAD
                       const SizedBox(width: 16),
                       RightRoundIconButton(
                         icon: rightIcon,
@@ -372,6 +377,109 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
             ),
           ],
         ),
+=======
+                    ),
+                    const SizedBox(width: 16),
+                    RightRoundIconButton(
+                      icon: rightIcon,
+                      function: () {
+                        setState(() {
+                          isAdvancedSearch = !isAdvancedSearch;
+                        });
+                        hotelBoxFocusNode.requestFocus();
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                Button(
+                  function: () {
+                    debugPrint(
+                        '${_hotel.text} ${_dateRange.text} ${_guests.text}');
+                    setState(() {
+                      isShowResult = true;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 64),
+          Expanded(
+            child: StreamBuilder<List<Hotel>>(
+                stream: HotelFirebase.readHotels(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    // print(snapshot.error.toString());
+                    return Text(snapshot.error.toString());
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.active) {
+                    final hotels = snapshot.data!;
+
+                    return Visibility(
+                      visible: isShowResult,
+                      replacement: Column(
+                        children: [
+                          SizedBox(
+                            width: cardWidth,
+                            child: Text(
+                              'Recommended',
+                              style: UIConfig.indicationTextStyle,
+                            ),
+                          ),
+                          HotelCard(
+                            hotel: hotels[0],
+                            width: cardWidth,
+                            // width: 328,
+                            height: 420,
+                            hMargin: 8,
+                            showFacilities: true,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            width: cardWidth,
+                            child: Text(
+                              'Search results (${hotels.length})',
+                              style: UIConfig.indicationTextStyle,
+                            ),
+                          ),
+                          Expanded(
+                            child: PageView.builder(
+                              controller: PageController(viewportFraction: .77),
+                              itemCount: hotels.length,
+                              itemBuilder: ((context, i) {
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    HotelCard(
+                                      hotel: hotels[i],
+                                      width: cardWidth,
+                                      // width: 328,
+                                      height: 420,
+                                      hMargin: 8,
+                                      showFacilities: true,
+                                    ),
+                                  ],
+                                );
+                              }),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator.adaptive(),
+                      // child: Text(snapshot.connectionState.toString()),
+                    );
+                  }
+                }),
+          ),
+        ],
+>>>>>>> 682e5ba8f811be49b3519aab5851a7a413297309
       ),
     );
   }

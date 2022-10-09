@@ -1,5 +1,5 @@
 class Hotel {
-  final int id;
+  /* final int id;
   final String imageURL;
   final String name;
   final String location;
@@ -60,5 +60,48 @@ class Hotel {
     'https://www.google.com/maps/d/thumbnail?mid=1xuVn-8pB6LncSXkLnGD5veeGboA&hl=en_US',
   );
 
+<<<<<<< HEAD
   static final List hotels = [hotel4, hotel3, hotel1, hotel2];
 }
+=======
+  static final List hotels = [hotel4, hotel3, hotel1, hotel2]; */
+  late String id;
+  late List<String> imageURLs;
+  // late String heroImage;
+  late String name;
+  late String location;
+  late double? ratings;
+  late int price;
+  late String description;
+  late Map<String, String> contacts;
+  late Map<String, bool> facilities;
+  late String mapURL;
+
+  Hotel(
+    this.id,
+    this.imageURLs,
+    this.name,
+    this.location,
+    this.ratings,
+    this.price,
+    this.description,
+    this.mapURL,
+  );
+
+  static Hotel fromJson(Map<String, dynamic> json, String id) {
+    List<String> imageURLs =
+        (json['imageURLs'] as List).map((e) => e as String).toList();
+
+    return Hotel(
+      id,
+      imageURLs,
+      json['name'],
+      json['location'],
+      json['ratings'],
+      json['price'],
+      json['description'],
+      json['mapURL'],
+    );
+  }
+}
+>>>>>>> 682e5ba8f811be49b3519aab5851a7a413297309

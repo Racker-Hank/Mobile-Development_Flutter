@@ -1,12 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'config/ui_configs.dart';
+import 'firebase_options.dart';
 import 'view/booking_view.dart';
 import 'view/explore_view.dart';
 import 'view/profile_view.dart';
 import 'view/saved_view.dart';
 import 'view/search_view.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MaterialApp(
     title: 'Traveloka',
     theme: ThemeData(
@@ -54,8 +60,7 @@ class _HomeState extends State<Home> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.maps_home_work), label: 'Booking'),
+          BottomNavigationBarItem(icon: Icon(Icons.maps_home_work), label: 'Booking'),
           BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: 'Saved'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
         ],

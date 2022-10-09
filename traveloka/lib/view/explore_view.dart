@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:traveloka/repositories/hotel_firebase.dart';
 import '../components/button.dart';
 import '../components/round_icon_button.dart';
 import '../config/ui_configs.dart';
@@ -17,45 +18,52 @@ class MyExplorePage extends StatefulWidget {
 class _MyExplorePageState extends State<MyExplorePage> {
   final double hPadding = 16;
 
-  List hotels = Hotel.hotels;
+  // List hotels = Hotel.hotels;
 
   @override
   Widget build(BuildContext context) {
-    // return const Text(
-    //   'Index 0: Explore'
-    // );
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         const SearchBar(),
         const SizedBox(height: 16),
         Expanded(
-          child: ListView.separated(
-            itemCount: hotels.length,
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 16,
-            ),
-            addAutomaticKeepAlives: false,
-            cacheExtent: 100,
-            // padding: const EdgeInsets.symmetric(vertical: 30),
-            padding: const EdgeInsets.only(bottom: 16),
-            itemBuilder: ((context, i) {
-              return Column(
-                children: [
-                  HotelCard(
-                    hotel: hotels[i],
-                    // hotelID: hotels[i].id,
-                    // imageURL: hotels[i].imageURL,
-                    // hotelName: hotels[i].name,
-                    // location: hotels[i].location,
-                    // ratings: hotels[i].ratings,
-                    // price: hotels[i].price,
-                    // description: hotels[i].description,
-                    showFacilities: false,
+          child: StreamBuilder<List<Hotel>>(
+            stream: HotelFirebase.readHotels(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                // print(snapshot.error.toString());
+                return Text(snapshot.error.toString());
+              } else if (snapshot.connectionState == ConnectionState.active) {
+                final hotels = snapshot.data!;
+                // return Text(hotels.length.toString());
+                return ListView.separated(
+                  itemCount: hotels.length,
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 16,
                   ),
-                ],
-              );
-            }),
+                  addAutomaticKeepAlives: false,
+                  cacheExtent: 100,
+                  // padding: const EdgeInsets.symmetric(vertical: 30),
+                  padding: const EdgeInsets.only(bottom: 16),
+                  itemBuilder: ((context, i) {
+                    return Column(
+                      children: [
+                        HotelCard(
+                          hotel: hotels[i],
+                          showFacilities: false,
+                        ),
+                      ],
+                    );
+                  }),
+                );
+              } else {
+                return Center(
+                  // child: CircularProgressIndicator.adaptive(),
+                  child: Text(snapshot.connectionState.toString()),
+                );
+              }
+            },
           ),
         ),
       ],
