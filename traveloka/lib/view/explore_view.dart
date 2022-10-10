@@ -25,7 +25,8 @@ class _MyExplorePageState extends State<MyExplorePage> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const SearchBar(),
+        const SearchBar(
+        ),
         const SizedBox(height: 16),
         Expanded(
           child: StreamBuilder<List<Hotel>>(

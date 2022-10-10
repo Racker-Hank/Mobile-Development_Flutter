@@ -71,41 +71,6 @@ class _SearchBarState extends State<SearchBar> {
     _guests.dispose();
   }
 
-  // void _onFocusChange() {
-  //   // print(searchBarFocusNode.hasFocus);
-  //   // print(searchBarFocusNode.traversalChildren);
-
-  //   // setState(() {
-  //   //   isSearchFocussed =
-  //   //       // hotelBoxFocusNode.hasFocus || guestsBoxFocusNode.hasFocus;
-  //   //       searchBarFocusNode.hasFocus;
-
-  //   //   if (isSearchFocussed) {
-  //   leftIcon = Icon(
-  //     Icons.arrow_back_rounded,
-  //     color: UIConfig.darkGrey,
-  //     size: 20,
-  //   );
-  //   rightIcon = Icon(
-  //     Icons.tune_rounded,
-  //     color: UIConfig.primaryColor,
-  //     size: 20,
-  //   );
-  //   // } else {
-  //   leftIcon = Icon(
-  //     Icons.notifications_rounded,
-  //     color: UIConfig.darkGrey,
-  //     size: 20,
-  //   );
-  //   rightIcon = Icon(
-  //     Icons.chat_rounded,
-  //     color: UIConfig.darkGrey,
-  //     size: 20,
-  //   );
-  // }
-  // });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -149,14 +114,14 @@ class _SearchBarState extends State<SearchBar> {
                       hintText: 'traveloka🚀',
                       labelText: 'Search for a location',
                       // focusNode: hotelBoxFocusNode,
-                      focussed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MySearchPage(),
-                          ),
-                        );
-                      },
+                      // focussed: () {
+                      //   Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => const MySearchPage(),
+                      //     ),
+                      //   );
+                      // },
                     ),
                   ],
                 ),
