@@ -9,6 +9,7 @@ import 'dart:math' as math;
 import '../components/hotel_card.dart';
 import '../config/ui_configs.dart';
 import '../entity/hotel.dart';
+import '../entity/review.dart';
 import '../main.dart';
 
 class MyHotelPage extends StatefulWidget {
@@ -142,7 +143,14 @@ class _MyHotelPageState extends State<MyHotelPage> {
                               hotelName: widget.hotel.name,
                               location: widget.hotel.location),
                         ),
-                        Ratings(ratings: widget.hotel.ratings),
+                        Ratings(
+                          ratings: widget.hotel.reviews.isNotEmpty
+                              ? widget.hotel.reviews
+                                      .map((e) => e.ratings)
+                                      .reduce((a, b) => a + b) /
+                                  widget.hotel.reviews.length
+                              : 0,
+                        ),
                       ],
                     ),
                     const SizedBox(height: 16),
@@ -250,7 +258,8 @@ class _MyHotelPageState extends State<MyHotelPage> {
                     const SizedBox(height: 16),
                     Facilities(
                       showFacilities: true,
-                      facilities: HotelCard.facilities,
+                      facilitiesUI: HotelCard.facilitiesUI,
+                      facilities: widget.hotel.facilities,
                     ),
                     const SizedBox(height: 16),
                     // const GoogleMap(
@@ -291,7 +300,10 @@ class _MyHotelPageState extends State<MyHotelPage> {
                         //   height: 1,
                         //   color: UIConfig.primaryColor,
                         // ),
-                        Reviews(reviewsKey: reviewsKey, widget: widget),
+                        Reviews(
+                          reviewsKey: reviewsKey,
+                          widget: widget,
+                        ),
                       ],
                     )
                   ],
@@ -374,46 +386,59 @@ class Reviews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Column(
-    //   key: reviewsKey,
-    //   children: widget.hotel.reviews
-    //       .map((e) => ListTile(
-    //             contentPadding:
-    //                 const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-    //             leading: const CircleAvatar(radius: 20),
-    //             title: Padding(
-    //               padding: const EdgeInsets.only(bottom: 4),
-    //               child: Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   Row(
-    //                     children: [
-    //                       for (var i = 0; i < 4; i++)
-    //                         Icon(
-    //                           Icons.star_rounded,
-    //                           color: UIConfig.accentColor,
-    //                           size: 20,
-    //                         ),
-    //                       for (var i = 4; i < 5; i++)
-    //                         Icon(
-    //                           Icons.star_rounded,
-    //                           color: UIConfig.darkGrey,
-    //                           size: 20,
-    //                         ),
-    //                     ],
-    //                   ),
-    //                   const Text('UserName'),
-    //                 ],
-    //               ),
-    //             ),
-    //             subtitle: Text(
-    //               e,
-    //               style: UIConfig.bodyMediumTextStyle,
-    //             ),
-    //           ))
-    //       .toList(),
-    // );
-    return const Text('Reviews');
+    return Visibility(
+      visible: widget.hotel.reviews.isNotEmpty,
+      replacement: Center(
+        child: Text(
+          '🤷‍♂️ No review yet 🤷‍♀️',
+          style: TextStyle(
+            color: UIConfig.accentColor,
+            fontSize: 20,
+            fontFamily: 'Roboto',
+          ),
+        ),
+      ),
+      child: Column(
+        key: reviewsKey,
+        children: widget.hotel.reviews
+            .map((e) => ListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+                  leading: const CircleAvatar(radius: 20),
+                  title: Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            for (var i = 0; i < e.ratings; i++)
+                              Icon(
+                                Icons.star_rounded,
+                                color: UIConfig.accentColor,
+                                size: 20,
+                              ),
+                            for (var i = e.ratings; i < 5; i++)
+                              Icon(
+                                Icons.star_rounded,
+                                color: UIConfig.darkGrey,
+                                size: 20,
+                              ),
+                          ],
+                        ),
+                        const Text('UserName'),
+                      ],
+                    ),
+                  ),
+                  subtitle: Text(
+                    e.content,
+                    style: UIConfig.bodyMediumTextStyle,
+                  ),
+                ))
+            .toList(),
+      ),
+    );
+    // return const Text('Reviews');
   }
 }
 

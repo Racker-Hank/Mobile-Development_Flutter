@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:traveloka/repositories/hotel_firebase.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:traveloka/repositories/hotel_data.dart';
 
 import '../components/button.dart';
 import '../components/hotel_card.dart';
@@ -40,7 +42,9 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
   late final AnimationController _animationController;
   final Stream<List<Hotel>> _hotelStream = HotelFirebase.readHotels();
   late List<Hotel> _hotelsSnapshot;
-  late List<Hotel> hotels;
+  late List<Hotel> hotels = List.from(_hotelsSnapshot);
+
+  late final PageController _pageController;
 
   // List hotels = Hotel.hotels;
 
@@ -59,6 +63,7 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
     _hotel = TextEditingController();
     _dateRange = TextEditingController();
     _guests = TextEditingController();
+    _pageController = PageController(viewportFraction: .77);
 
     _hotel.addListener(_searchByName);
 
@@ -68,8 +73,19 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
   void _searchByName() {
     //print(_hotel.text);
     setState(() {
-      hotels = _hotelsSnapshot.where((element) => element.name!.toLowerCase().contains(_hotel.text.toLowerCase())).toList();
+      hotels = _hotelsSnapshot.where((element) =>
+          element.name.toLowerCase().contains(_hotel.text.toLowerCase()))
+          .toList();
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _hotel.dispose();
+    _dateRange.dispose();
+    _guests.dispose();
+    _pageController.dispose();
   }
 
   DateTimeRange dateRange = DateTimeRange(
@@ -137,8 +153,6 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
     '${DateFormat(dateFormat).format(dateRange.start)} - ${DateFormat(dateFormat).format(dateRange.end)}';
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return SlideTransition(
@@ -147,8 +161,8 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
         end: Offset.zero
       ).animate(_animationController),
       child: Scaffold(
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
+        body: ListView(
+          // mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               margin: const EdgeInsets.only(top: 32),
@@ -162,7 +176,6 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
                       LeftRoundIconButton(
                         icon: leftIcon,
                         function: () {
-                          _animationController.reverse();
                           Navigator.pop(context);
                         },
                       ),
@@ -294,7 +307,8 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
                   const SizedBox(height: 24),
                   Button(
                     function: () {
-                      debugPrint('${_hotel.text} ${_dateRange.text} ${_guests.text}');
+                      debugPrint(
+                          '${_hotel.text} ${_dateRange.text} ${_guests.text}');
                       setState(() {
                         isShowResult = true;
                       });
@@ -304,7 +318,9 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
               ),
             ),
             const SizedBox(height: 64),
-            Expanded(
+            // Expanded(
+            SizedBox(
+              height: 500,
               child: StreamBuilder<List<Hotel>>(
                   stream: _hotelStream,
                   builder: (context, snapshot) {
@@ -313,14 +329,26 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
                       return Text(snapshot.error.toString());
                     } else if (snapshot.connectionState == ConnectionState.active) {
                       _hotelsSnapshot = snapshot.data!;
-                      hotels = List.from(_hotelsSnapshot);
+                      //hotels = List.from(_hotelsSnapshot);
 
                       return Visibility(
                         visible: isShowResult,
-                        replacement: Column(
+                        replacement: hotels.isEmpty ?
+                          Center(
+                            child: Text(
+                              "Sorry, we've got no recommendation for you.",
+                              style: TextStyle(
+                                color: UIConfig.black,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ) :
+                          Column(
                           children: [
                             SizedBox(
-                              width: cardWidth,
+                              width: min(cardWidth,
+                                  .77 * MediaQuery.of(context).size.width),
                               child: Text(
                                 'Recommended',
                                 style: UIConfig.indicationTextStyle,
@@ -328,7 +356,8 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
                             ),
                             HotelCard(
                               hotel: hotels[0],
-                              width: cardWidth,
+                              width: min(cardWidth,
+                                  .77 * MediaQuery.of(context).size.width),
                               // width: 328,
                               height: 420,
                               hMargin: 8,
@@ -336,18 +365,32 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
                             ),
                           ],
                         ),
-                        child: Column(
+                        child: hotels.isEmpty ?
+                          Center(
+                            child: Text(
+                              "Sorry, we've got no item matching your search.",
+                              style: TextStyle(
+                                  color: UIConfig.black,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ) :
+                          Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             SizedBox(
-                              width: cardWidth,
+                              width: min(cardWidth,
+                                  .77 * MediaQuery.of(context).size.width - 16),
                               child: Text(
                                 'Search results (${hotels.length})',
                                 style: UIConfig.indicationTextStyle,
                               ),
                             ),
                             Expanded(
+                              flex: 1,
                               child: PageView.builder(
-                                controller: PageController(viewportFraction: .77),
+                                controller: _pageController,
                                 itemCount: hotels.length,
                                 itemBuilder: ((context, i) {
                                   return Column(
@@ -366,6 +409,20 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
                                 }),
                               ),
                             ),
+                            const SizedBox(height: 16),
+                            SmoothPageIndicator(
+                              controller: _pageController,
+                              count: hotels.length,
+                              effect: WormEffect(
+                                dotColor: UIConfig.primaryColor.withAlpha(100),
+                                activeDotColor: UIConfig.accentColor,
+                              ),
+                              onDotClicked: (index) {
+                                _pageController.animateToPage(index,
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeInOutCubic);
+                              },
+                            )
                           ],
                         ),
                       );
@@ -381,6 +438,5 @@ class _MySearchPageState extends State<MySearchPage> with SingleTickerProviderSt
         ),
       ),
     );
-
   }
 }

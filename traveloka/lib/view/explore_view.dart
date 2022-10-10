@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:traveloka/repositories/hotel_firebase.dart';
+import 'package:traveloka/repositories/hotel_data.dart';
 import '../components/button.dart';
 import '../components/round_icon_button.dart';
 import '../config/ui_configs.dart';
@@ -25,15 +25,14 @@ class _MyExplorePageState extends State<MyExplorePage> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const SearchBar(
-        ),
+        const SearchBar(),
         const SizedBox(height: 16),
         Expanded(
           child: StreamBuilder<List<Hotel>>(
             stream: HotelFirebase.readHotels(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                // print(snapshot.error.toString());
+                print(snapshot.error.toString());
                 return Text(snapshot.error.toString());
               } else if (snapshot.connectionState == ConnectionState.active) {
                 final hotels = snapshot.data!;
@@ -59,9 +58,9 @@ class _MyExplorePageState extends State<MyExplorePage> {
                   }),
                 );
               } else {
-                return Center(
-                  // child: CircularProgressIndicator.adaptive(),
-                  child: Text(snapshot.connectionState.toString()),
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                  // child: Text(snapshot.connectionState.toString()),
                 );
               }
             },

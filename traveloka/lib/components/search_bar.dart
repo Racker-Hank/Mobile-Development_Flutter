@@ -114,14 +114,14 @@ class _SearchBarState extends State<SearchBar> {
                       hintText: 'traveloka🚀',
                       labelText: 'Search for a location',
                       // focusNode: hotelBoxFocusNode,
-                      // focussed: () {
-                      //   Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => const MySearchPage(),
-                      //     ),
-                      //   );
-                      // },
+                      focussed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MySearchPage(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
