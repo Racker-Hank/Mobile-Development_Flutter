@@ -1,3 +1,5 @@
+import 'review.dart';
+
 class Hotel {
   /* final int id;
   final String imageURL;
@@ -67,6 +69,7 @@ class Hotel {
   late String name;
   late String location;
   late double? ratings;
+  late List<Review> reviews;
   late int price;
   late String description;
   late Map<String, String> contacts;
@@ -79,8 +82,10 @@ class Hotel {
     this.name,
     this.location,
     this.ratings,
+    this.reviews,
     this.price,
     this.description,
+    this.facilities,
     this.mapURL,
   );
 
@@ -88,14 +93,25 @@ class Hotel {
     List<String> imageURLs =
         (json['imageURLs'] as List).map((e) => e as String).toList();
 
+    List<Review> reviews = (json['reviews'] as List)
+        .map((e) => Review(e['content'], e['ratings']))
+        .toList();
+
+    Map<String, bool> facilities = {};
+    for (var e in (json['facilities'] as Map).entries) {
+      facilities[e.key] = e.value as bool;
+    }
+
     return Hotel(
       id,
       imageURLs,
       json['name'],
       json['location'],
       json['ratings'],
+      reviews,
       json['price'],
       json['description'],
+      facilities,
       json['mapURL'],
     );
   }

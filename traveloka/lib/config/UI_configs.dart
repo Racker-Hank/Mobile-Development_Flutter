@@ -5,6 +5,7 @@ class UIConfig {
 
   static Color primaryColor = const Color(0xFF1CA0E3);
   static Color accentColor = const Color(0xFF086FCC);
+  static Color tertiaryColor = const Color(0xFF5FFBF1);
   static Color white = const Color(0xFFFFFFFF);
   static Color black = const Color(0xFF000000);
   static Color screenBackgroundColor = const Color(0xFFF2F5FA);

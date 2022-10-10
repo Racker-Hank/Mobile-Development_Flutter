@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:traveloka/repositories/hotel_firebase.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:traveloka/repositories/hotel_data.dart';
 
 import '../components/button.dart';
 import '../components/hotel_card.dart';
@@ -36,6 +39,8 @@ class _MySearchPageState extends State<MySearchPage> {
   late final TextEditingController _dateRange;
   late final TextEditingController _guests;
 
+  late final PageController _pageController;
+
   // List hotels = Hotel.hotels;
 
   double cardWidth = 284;
@@ -48,8 +53,18 @@ class _MySearchPageState extends State<MySearchPage> {
     _hotel = TextEditingController();
     _dateRange = TextEditingController();
     _guests = TextEditingController();
+    _pageController = PageController(viewportFraction: .77);
 
     isShowResult = false;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _hotel.dispose();
+    _dateRange.dispose();
+    _guests.dispose();
+    _pageController.dispose();
   }
 
   DateTimeRange dateRange = DateTimeRange(
@@ -120,8 +135,8 @@ class _MySearchPageState extends State<MySearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
+      body: ListView(
+        // mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             margin: const EdgeInsets.only(top: 32),
@@ -277,7 +292,9 @@ class _MySearchPageState extends State<MySearchPage> {
             ),
           ),
           const SizedBox(height: 64),
-          Expanded(
+          // Expanded(
+          SizedBox(
+            height: 500,
             child: StreamBuilder<List<Hotel>>(
                 stream: HotelFirebase.readHotels(),
                 builder: (context, snapshot) {
@@ -293,7 +310,8 @@ class _MySearchPageState extends State<MySearchPage> {
                       replacement: Column(
                         children: [
                           SizedBox(
-                            width: cardWidth,
+                            width: min(cardWidth,
+                                .77 * MediaQuery.of(context).size.width),
                             child: Text(
                               'Recommended',
                               style: UIConfig.indicationTextStyle,
@@ -301,7 +319,8 @@ class _MySearchPageState extends State<MySearchPage> {
                           ),
                           HotelCard(
                             hotel: hotels[0],
-                            width: cardWidth,
+                            width: min(cardWidth,
+                                .77 * MediaQuery.of(context).size.width),
                             // width: 328,
                             height: 420,
                             hMargin: 8,
@@ -310,17 +329,20 @@ class _MySearchPageState extends State<MySearchPage> {
                         ],
                       ),
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(
-                            width: cardWidth,
+                            width: min(cardWidth,
+                                .77 * MediaQuery.of(context).size.width - 16),
                             child: Text(
                               'Search results (${hotels.length})',
                               style: UIConfig.indicationTextStyle,
                             ),
                           ),
                           Expanded(
+                            flex: 1,
                             child: PageView.builder(
-                              controller: PageController(viewportFraction: .77),
+                              controller: _pageController,
                               itemCount: hotels.length,
                               itemBuilder: ((context, i) {
                                 return Column(
@@ -339,6 +361,20 @@ class _MySearchPageState extends State<MySearchPage> {
                               }),
                             ),
                           ),
+                          const SizedBox(height: 16),
+                          SmoothPageIndicator(
+                            controller: _pageController,
+                            count: hotels.length,
+                            effect: WormEffect(
+                              dotColor: UIConfig.primaryColor.withAlpha(100),
+                              activeDotColor: UIConfig.accentColor,
+                            ),
+                            onDotClicked: (index) {
+                              _pageController.animateToPage(index,
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeInOutCubic);
+                            },
+                          )
                         ],
                       ),
                     );
