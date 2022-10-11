@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:traveloka/components/new_page_route.dart';
 import 'package:traveloka/view/hotel_view.dart';
 import '../config/ui_configs.dart';
 
@@ -90,28 +91,19 @@ class HotelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () {
-      //   print('Tapped');
-      // },
-      // onTap: () => {
-      //   // debugPrint('$hotelID'),
-      //   Navigator.of(context).push(
-      //     PageRouteBuilder(
-      //       pageBuilder: (context, animation, secondaryAnimation) =>
-      //           const MySearchPage(),
-      //       transitionsBuilder:
-      //           (context, animation, secondaryAnimation, child) {
-      //         return child;
-      //       },
-      //     ),
-      //   ),
-      // },
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => MyHotelPage(hotel: hotel),
         ),
       ),
+      // onTap: () {
+      //   Navigator.of(context).push(
+      //     NewPageRoute(
+      //       child: MyHotelPage(hotel: hotel),
+      //     ),
+      //   );
+      // },
       child: AnimatedContainer(
         width: width,
         height: height,
@@ -205,7 +197,7 @@ class HeroImage extends StatelessWidget {
             tag: 'hotel_${hotelID}_image',
             child: Container(
               height: 150,
-              foregroundDecoration: BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(imageURL),
                   fit: BoxFit.cover,

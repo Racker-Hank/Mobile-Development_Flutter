@@ -4,6 +4,7 @@ import './round_icon_button.dart';
 
 import '../config/ui_configs.dart';
 import '../view/search_view.dart';
+import 'new_page_route.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
@@ -14,13 +15,6 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   bool isAdvancedSearch = false;
-
-  // FocusNode searchBarFocusNode = FocusNode();
-  // FocusNode hotelBoxFocusNode = FocusNode();
-  // FocusNode guestsBoxFocusNode = FocusNode();
-  // FocusNode rightIconButtonFocusNode = FocusNode();
-
-  // bool isSearchFocussed = false;
 
   late final TextEditingController _hotel;
   late final TextEditingController _guests;
@@ -42,10 +36,6 @@ class _SearchBarState extends State<SearchBar> {
   @override
   void initState() {
     super.initState();
-    // searchBarFocusNode.addListener(_onFocusChange);
-    // // hotelBoxFocusNode.addListener(_onFocusChange);
-    // // guestsBoxFocusNode.addListener(_onFocusChange);
-    // rightIconButtonFocusNode.addListener(_onFocusChange);
 
     _hotel = TextEditingController();
     _guests = TextEditingController();
@@ -60,73 +50,8 @@ class _SearchBarState extends State<SearchBar> {
     _guests.dispose();
   }
 
-  // void _onFocusChange() {
-  //   // print(searchBarFocusNode.hasFocus);
-  //   // print(searchBarFocusNode.traversalChildren);
-
-  //   // setState(() {
-  //   //   isSearchFocussed =
-  //   //       // hotelBoxFocusNode.hasFocus || guestsBoxFocusNode.hasFocus;
-  //   //       searchBarFocusNode.hasFocus;
-
-  //   //   if (isSearchFocussed) {
-  //   leftIcon = Icon(
-  //     Icons.arrow_back_rounded,
-  //     color: UIConfig.darkGrey,
-  //     size: 20,
-  //   );
-  //   rightIcon = Icon(
-  //     Icons.tune_rounded,
-  //     color: UIConfig.primaryColor,
-  //     size: 20,
-  //   );
-  //   // } else {
-  //   leftIcon = Icon(
-  //     Icons.notifications_rounded,
-  //     color: UIConfig.darkGrey,
-  //     size: 20,
-  //   );
-  //   rightIcon = Icon(
-  //     Icons.chat_rounded,
-  //     color: UIConfig.darkGrey,
-  //     size: 20,
-  //   );
-  // }
-  // });
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   padding: const EdgeInsets.only(left: 16, right: 16, top: 28),
-    //   child: Row(
-    //     mainAxisSize: MainAxisSize.min,
-    //     children: [
-    //       Container(
-    //         padding: const EdgeInsets.only(right: 16),
-    //         child: ElevatedButton(
-    //             onPressed: () {}, child: const Icon(Icons.notifications)),
-    //       ),
-    //       Expanded(
-    //           child: TextFormField(
-    //         decoration: const InputDecoration(
-    //             border: UnderlineInputBorder(),
-    //             labelText: "Search for a place or location",
-    //             prefixIcon: Padding(
-    //                 padding:
-    //                     EdgeInsets.only(left: 6, top: 7, bottom: 7, right: 10),
-    //                 child: Icon(Icons.search))),
-    //       )),
-    //       Container(
-    //         padding: const EdgeInsets.only(left: 16),
-    //         child: ElevatedButton(
-    //           onPressed: () {},
-    //           child: const Icon(Icons.chat_bubble),
-    //         ),
-    //       )
-    //     ],
-    //   ),
-    // );
     return Container(
       margin: const EdgeInsets.only(top: 32),
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -182,77 +107,19 @@ class _SearchBarState extends State<SearchBar> {
                         //   );
                         //   // print(searchBoxFocusNode.hasFocus);
                         // });
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MySearchPage(),
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const MySearchPage(),
+                        //   ),
+                        // );
+                        Navigator.of(context).push(
+                          NewPageRoute(
+                            child: const MySearchPage(),
                           ),
                         );
                       },
                     ),
-                    // Visibility(
-                    //   visible: isAdvancedSearch,
-                    //   // replacement: ,
-                    //   child: Column(
-                    //     children: [
-                    //       const SizedBox(height: 16),
-                    //       SearchBox(
-                    //         controller: _guests,
-                    //         prefixIcon: Icon(
-                    //           Icons.people_rounded,
-                    //           color: UIConfig.primaryColor,
-                    //           size: 20,
-                    //         ),
-                    //         labelText: 'Guests',
-                    //         hintText: 2,
-                    //         keyboardType: TextInputType.number,
-                    //         suffix: Row(
-                    //           mainAxisSize: MainAxisSize.min,
-                    //           children: [
-                    //             GestureDetector(
-                    //               onTap: () {
-                    //                 int guests = int.parse(
-                    //                     _guests.text.isNotEmpty
-                    //                         ? _guests.text
-                    //                         : '0');
-                    //                 guests++;
-                    //                 _guests.text = '$guests';
-                    //               },
-                    //               child: Icon(
-                    //                 Icons.add_rounded,
-                    //                 color: UIConfig.primaryColor,
-                    //                 size: 20,
-                    //               ),
-                    //             ),
-                    //             Text(
-                    //               '|',
-                    //               style: TextStyle(color: UIConfig.darkGrey),
-                    //             ),
-                    //             GestureDetector(
-                    //               onTap: () {
-                    //                 int guests = int.parse(
-                    //                     _guests.text.isNotEmpty
-                    //                         ? _guests.text
-                    //                         : '0');
-                    //                 if (guests > 1) {
-                    //                   guests--;
-                    //                   _guests.text = '$guests';
-                    //                 } else {}
-                    //               },
-                    //               child: Icon(
-                    //                 Icons.remove_rounded,
-                    //                 color: UIConfig.primaryColor,
-                    //                 size: 20,
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //         // focusNode: guestsBoxFocusNode,
-                    //         focussed: () {},
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -267,11 +134,6 @@ class _SearchBarState extends State<SearchBar> {
             ],
           ),
           const SizedBox(height: 24),
-          // Button(
-          //   function: () {
-          //     print('${_hotel.text} ${_guests.text}');
-          //   },
-          // ),
         ],
       ),
     );
