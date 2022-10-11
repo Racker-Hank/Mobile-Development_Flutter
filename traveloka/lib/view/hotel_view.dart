@@ -202,51 +202,52 @@ class _MyHotelPageState extends State<MyHotelPage> {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        GestureDetector(
-                          onTap: () async {
-                            final context = reviewsKey.currentContext!;
-                            await Scrollable.ensureVisible(
-                              context,
-                              alignment: 0,
-                              duration: const Duration(milliseconds: 500),
-                            );
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-                            decoration: BoxDecoration(
-                              color: UIConfig.white,
-                              borderRadius: UIConfig.borderRadius,
-                              border: Border.all(
-                                color: UIConfig.accentColor,
-                                width: 1,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: const Offset(0, 1),
-                                  blurRadius: 3,
-                                  blurStyle: BlurStyle.solid,
-                                  color: UIConfig.black.withOpacity(.2),
+                        if (widget.hotel.reviews.isNotEmpty)
+                          GestureDetector(
+                            onTap: () async {
+                              final context = reviewsKey.currentContext!;
+                              await Scrollable.ensureVisible(
+                                context,
+                                alignment: 0,
+                                duration: const Duration(milliseconds: 500),
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                              decoration: BoxDecoration(
+                                color: UIConfig.white,
+                                borderRadius: UIConfig.borderRadius,
+                                border: Border.all(
+                                  color: UIConfig.accentColor,
+                                  width: 1,
                                 ),
-                                BoxShadow(
-                                  offset: const Offset(0, 4),
-                                  blurRadius: 6,
-                                  color: UIConfig.black.withOpacity(.15),
-                                  spreadRadius: 3,
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: const Offset(0, 1),
+                                    blurRadius: 3,
+                                    blurStyle: BlurStyle.solid,
+                                    color: UIConfig.black.withOpacity(.2),
+                                  ),
+                                  BoxShadow(
+                                    offset: const Offset(0, 4),
+                                    blurRadius: 6,
+                                    color: UIConfig.black.withOpacity(.15),
+                                    spreadRadius: 3,
+                                  ),
+                                ],
+                              ),
+                              child: Text(
+                                'Reviews',
+                                style: TextStyle(
+                                  fontFamily: 'Roboto',
+                                  fontSize: 14,
+                                  height: 1.4,
+                                  letterSpacing: .25,
+                                  color: UIConfig.accentColor,
                                 ),
-                              ],
-                            ),
-                            child: Text(
-                              'Reviews',
-                              style: TextStyle(
-                                fontFamily: 'Roboto',
-                                fontSize: 14,
-                                height: 1.4,
-                                letterSpacing: .25,
-                                color: UIConfig.accentColor,
                               ),
                             ),
-                          ),
-                        )
+                          )
                       ],
                     ),
                     const SizedBox(height: 16),
@@ -395,6 +396,7 @@ class Reviews extends StatelessWidget {
             color: UIConfig.accentColor,
             fontSize: 20,
             fontFamily: 'Roboto',
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
