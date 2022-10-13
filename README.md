@@ -23,3 +23,17 @@
 ### Week 4: Explore Page
 
 ![w4 screenshot](./res/img/w4.png)
+
+### Week 5:
+
+-  Search Page
+-  Create database
+
+![w5](./res/img/w5.png)
+
+### Week 6:
+
+-  Hotel Page
+-  Read from database
+
+![w6](./res/img/w6.png)
