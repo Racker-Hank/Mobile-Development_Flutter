@@ -24,22 +24,36 @@ class _ButtonState extends State<Button> {
   bool _focused = false;
   bool _hovering = false;
   // bool _on = false;
+  final List<Color> _colors = [
+    const Color(0xFF1ca0e3),
+    const Color(0xFF0a97e0),
+    const Color(0xFF008edc),
+    const Color(0xFF0085d8),
+    const Color(0xFF007cd3),
+    const Color(0xFF0084d9),
+    const Color(0xFF008ddf),
+    const Color(0xFF0095e5),
+    const Color(0xFF00b1f2),
+    const Color(0xFF00cbf7),
+    const Color(0xFF00e4f5),
+    const Color(0xFF5ffbf1),
+  ];
 
-  LinearGradient defaultGradient = LinearGradient(
-    colors: [
-      UIConfig.accentColor,
-      UIConfig.primaryColor,
-    ],
-    transform: const GradientRotation(math.pi / 4),
-  );
+  LinearGradient get defaultGradient {
+    return LinearGradient(
+      colors: _colors,
+      transform: const GradientRotation(math.pi / 4),
+    );
+  }
 
-  LinearGradient selectedGradient = LinearGradient(
-    colors: [
-      Color.alphaBlend(Colors.white.withOpacity(0.15), UIConfig.accentColor),
-      Color.alphaBlend(Colors.white.withOpacity(0.15), UIConfig.primaryColor),
-    ],
-    transform: const GradientRotation(math.pi / 4),
-  );
+  LinearGradient get selectedGradient {
+    return LinearGradient(
+      colors: _colors
+          .map((e) => Color.alphaBlend(Colors.white.withOpacity(.15), e))
+          .toList(),
+      transform: const GradientRotation(math.pi / 4),
+    );
+  }
 
   LinearGradient get gradient {
     LinearGradient gradient;
@@ -73,12 +87,12 @@ class _ButtonState extends State<Button> {
             gradient: gradient,
             boxShadow: const [
               BoxShadow(
-                color: Color.fromARGB(30, 0, 0, 0),
+                color: Color.fromARGB(70, 0, 0, 0),
                 offset: Offset(0, 2),
                 blurRadius: 3,
               ),
               BoxShadow(
-                color: Color.fromARGB(20, 0, 0, 0),
+                color: Color.fromARGB(30, 0, 0, 0),
                 offset: Offset(0, 6),
                 blurRadius: 10,
                 spreadRadius: 4,

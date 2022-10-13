@@ -1,3 +1,4 @@
+import 'review.dart';
 import 'package:traveloka/entity/review.dart';
 
 class Hotel {
@@ -22,6 +23,7 @@ class Hotel {
     this.reviews,
     this.price,
     this.description,
+    this.facilities,
     this.mapURL,
   );
 
@@ -30,10 +32,13 @@ class Hotel {
         (json['imageURLs'] as List).map((e) => e as String).toList();
 
     List<Review> reviews = (json['reviews'] as List)
-        .map((e) => Review(e['content'], e['rate']))
+        .map((e) => Review(e['content'], e['ratings']))
         .toList();
 
-    print(reviews[0].content);
+    Map<String, bool> facilities = {};
+    for (var e in (json['facilities'] as Map).entries) {
+      facilities[e.key] = e.value as bool;
+    }
 
     return Hotel(
       id,
@@ -44,6 +49,7 @@ class Hotel {
       reviews,
       json['price'],
       json['description'],
+      facilities,
       json['mapURL'],
     );
   }

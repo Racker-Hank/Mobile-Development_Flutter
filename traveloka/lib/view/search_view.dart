@@ -1,6 +1,10 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:traveloka/repositories/hotel_firebase.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:traveloka/repositories/hotel_data.dart';
 
 import '../components/button.dart';
 import '../components/hotel_card.dart';
@@ -15,7 +19,8 @@ class MySearchPage extends StatefulWidget {
   State<MySearchPage> createState() => _MySearchPageState();
 }
 
-class _MySearchPageState extends State<MySearchPage> {
+class _MySearchPageState extends State<MySearchPage>
+    with SingleTickerProviderStateMixin {
   bool isAdvancedSearch = false;
   bool isShowResult = false;
 
@@ -35,6 +40,12 @@ class _MySearchPageState extends State<MySearchPage> {
   late final TextEditingController _hotel;
   late final TextEditingController _dateRange;
   late final TextEditingController _guests;
+  late final AnimationController _animationController;
+  final Stream<List<Hotel>> hotelsStream = HotelFirebase.readHotels();
+  late List<Hotel> hotelsSnapshot = [];
+  late List<Hotel> hotels = List.from(hotelsSnapshot);
+
+  late final PageController _pageController;
 
   // List hotels = Hotel.hotels;
 
@@ -42,14 +53,43 @@ class _MySearchPageState extends State<MySearchPage> {
 
   @override
   void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 150),
+    );
+    // Timer(
+    //     const Duration(milliseconds: 0), () => _animationController.forward());
+    // _animationController.forward();
     super.initState();
 
     hotelBoxFocusNode.requestFocus();
     _hotel = TextEditingController();
     _dateRange = TextEditingController();
     _guests = TextEditingController();
+    _pageController = PageController(viewportFraction: .77);
 
-    isShowResult = false;
+    _hotel.addListener(_searchByName);
+
+    // isShowResult = false;
+  }
+
+  void _searchByName() {
+    //print(_hotel.text);
+    setState(() {
+      hotels = hotelsSnapshot
+          .where((element) =>
+              element.name.toLowerCase().contains(_hotel.text.toLowerCase()))
+          .toList();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _hotel.dispose();
+    _dateRange.dispose();
+    _guests.dispose();
+    _pageController.dispose();
   }
 
   DateTimeRange dateRange = DateTimeRange(
@@ -120,8 +160,8 @@ class _MySearchPageState extends State<MySearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
+      body: ListView(
+        // mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             margin: const EdgeInsets.only(top: 32),
@@ -135,6 +175,9 @@ class _MySearchPageState extends State<MySearchPage> {
                     LeftRoundIconButton(
                       icon: leftIcon,
                       function: () {
+                        // _animationController
+                        //     .reverse()
+                        //     .whenComplete(() => Navigator.pop(context));
                         Navigator.pop(context);
                       },
                     ),
@@ -277,31 +320,80 @@ class _MySearchPageState extends State<MySearchPage> {
             ),
           ),
           const SizedBox(height: 64),
-          Expanded(
+          // Expanded(
+          SizedBox(
+            height: 500,
             child: StreamBuilder<List<Hotel>>(
-                stream: HotelFirebase.readHotels(),
+                stream: hotelsStream,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     // print(snapshot.error.toString());
                     return Text(snapshot.error.toString());
                   } else if (snapshot.connectionState ==
                       ConnectionState.active) {
-                    final hotels = snapshot.data!;
+                    hotelsSnapshot = snapshot.data!;
+                    //hotels = List.from(_hotelsSnapshot);
 
                     return Visibility(
                       visible: isShowResult,
+                      // replacement: hotels.isEmpty
+                      //     ? Padding(
+                      //         padding:
+                      //             const EdgeInsets.symmetric(horizontal: 16),
+                      //         child: Center(
+                      //           child: Text(
+                      //             '😖😖😖\nSorry, we\'ve got no item matching your search.\n😿😿😿',
+                      //             style: TextStyle(
+                      //               color: UIConfig.accentColor,
+                      //               fontSize: 20,
+                      //               fontFamily: 'Roboto',
+                      //               fontWeight: FontWeight.bold,
+                      //             ),
+                      //             textAlign: TextAlign.center,
+                      //           ),
+                      //         ),
+                      //       )
+                      //     : Column(
+                      //         children: [
+                      //           SizedBox(
+                      //             width: min(
+                      //                 cardWidth,
+                      //                 .77 *
+                      //                     MediaQuery.of(context).size.width),
+                      //             child: Text(
+                      //               'Recommended',
+                      //               style: UIConfig.indicationTextStyle,
+                      //             ),
+                      //           ),
+                      //           HotelCard(
+                      //             hotel: hotels[0],
+                      //             width: min(
+                      //                 cardWidth,
+                      //                 .77 *
+                      //                     MediaQuery.of(context).size.width),
+                      //             // width: 328,
+                      //             height: 420,
+                      //             hMargin: 8,
+                      //             showFacilities: true,
+                      //           ),
+                      //         ],
+                      //       ),
                       replacement: Column(
                         children: [
                           SizedBox(
-                            width: cardWidth,
+                            width: min(cardWidth,
+                                .77 * MediaQuery.of(context).size.width),
                             child: Text(
                               'Recommended',
                               style: UIConfig.indicationTextStyle,
                             ),
                           ),
                           HotelCard(
-                            hotel: hotels[0],
-                            width: cardWidth,
+                            hotel: hotels.isNotEmpty
+                                ? hotels[0]
+                                : hotelsSnapshot[0],
+                            width: min(cardWidth,
+                                .77 * MediaQuery.of(context).size.width),
                             // width: 328,
                             height: 420,
                             hMargin: 8,
@@ -309,38 +401,76 @@ class _MySearchPageState extends State<MySearchPage> {
                           ),
                         ],
                       ),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: cardWidth,
-                            child: Text(
-                              'Search results (${hotels.length})',
-                              style: UIConfig.indicationTextStyle,
+                      child: hotels.isEmpty
+                          ? Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Center(
+                                child: Text(
+                                  '😖😖😖\nSorry, we\'ve got no item matching your search.\n😿😿😿',
+                                  style: TextStyle(
+                                    color: UIConfig.accentColor,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Roboto',
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            )
+                          : Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(
+                                  width: min(
+                                      cardWidth,
+                                      .77 * MediaQuery.of(context).size.width -
+                                          16),
+                                  child: Text(
+                                    'Search results (${hotels.length})',
+                                    style: UIConfig.indicationTextStyle,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: PageView.builder(
+                                    controller: _pageController,
+                                    itemCount: hotels.length,
+                                    itemBuilder: ((context, i) {
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          HotelCard(
+                                            hotel: hotels[i],
+                                            width: cardWidth,
+                                            // width: 328,
+                                            height: 420,
+                                            hMargin: 8,
+                                            showFacilities: true,
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                SmoothPageIndicator(
+                                  controller: _pageController,
+                                  count: hotels.length,
+                                  effect: WormEffect(
+                                    dotColor:
+                                        UIConfig.primaryColor.withAlpha(100),
+                                    activeDotColor: UIConfig.accentColor,
+                                  ),
+                                  onDotClicked: (index) {
+                                    _pageController.animateToPage(index,
+                                        duration:
+                                            const Duration(milliseconds: 500),
+                                        curve: Curves.easeInOutCubic);
+                                  },
+                                )
+                              ],
                             ),
-                          ),
-                          Expanded(
-                            child: PageView.builder(
-                              controller: PageController(viewportFraction: .77),
-                              itemCount: hotels.length,
-                              itemBuilder: ((context, i) {
-                                return Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    HotelCard(
-                                      hotel: hotels[i],
-                                      width: cardWidth,
-                                      // width: 328,
-                                      height: 420,
-                                      hMargin: 8,
-                                      showFacilities: true,
-                                    ),
-                                  ],
-                                );
-                              }),
-                            ),
-                          ),
-                        ],
-                      ),
                     );
                   } else {
                     return const Center(
