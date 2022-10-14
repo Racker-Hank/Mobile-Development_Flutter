@@ -32,7 +32,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   static const List<Widget> _viewOption = <Widget>[
     MyExplorePage(),
@@ -55,34 +55,6 @@ class _HomeState extends State<Home> {
         body: Center(
           child: _viewOption.elementAt(_selectedIndex),
         ),
-        // bottomNavigationBar: BottomNavigationBar(
-        //   type: BottomNavigationBarType.fixed,
-        //   items: const <BottomNavigationBarItem>[
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.explore),
-        //       label: 'Explore',
-        //     ),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.maps_home_work),
-        //       label: 'Booking',
-        //     ),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.bookmark),
-        //       label: 'Saved',
-        //     ),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.person),
-        //       label: 'Profile',
-        //     )
-        //   ],
-        //   currentIndex: _selectedIndex,
-        //   selectedFontSize: 12,
-        //   selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        //   selectedItemColor: Colors.black,
-        //   selectedIconTheme: const IconThemeData(color: Color(0xFF1CA0E3)),
-        //   unselectedItemColor: const Color(0xFF79747E),
-        //   onTap: _onItemTapped,
-        // ),
         bottomNavigationBar: BottomNavBar(
             selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
       ),

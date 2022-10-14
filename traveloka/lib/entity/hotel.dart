@@ -1,5 +1,4 @@
 import 'review.dart';
-import 'package:traveloka/entity/review.dart';
 
 class Hotel {
   late String id;
@@ -7,7 +6,7 @@ class Hotel {
   late String name;
   late String location;
   late double? ratings;
-  late List<Review?> reviews;
+  late List<Review> reviews;
   late int price;
   late String description;
   late Map<String, String> contacts;

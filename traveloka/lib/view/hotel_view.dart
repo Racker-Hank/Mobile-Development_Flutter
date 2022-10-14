@@ -98,7 +98,8 @@ class _MyHotelPageState extends State<MyHotelPage> {
                         Expanded(
                           child: HeadLine(
                               hotelName: widget.hotel.name,
-                              location: widget.hotel.location),
+                              location:
+                                  widget.hotel.location), // của m vẫn chạy à
                         ),
                         Ratings(
                           ratings: widget.hotel.reviews.isNotEmpty
