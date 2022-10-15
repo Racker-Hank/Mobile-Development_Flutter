@@ -70,7 +70,7 @@ class HotelTile extends StatelessWidget {
           //   imageURL: hotel.imageURLs[0],
           // ),
           leading: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: 80, maxWidth: 80),
+            constraints: const BoxConstraints(minHeight: 80, maxWidth: 80),
             child: Image.network(hotel.imageURLs[0]),
           ),
 
