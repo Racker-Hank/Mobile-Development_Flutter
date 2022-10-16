@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import '../components/hotel_tile.dart';
+import '../components/search_bar.dart';
+import '../entity/hotel.dart';
+import '../repositories/hotel_data.dart';
 
 class MySavedPage extends StatefulWidget {
   const MySavedPage({Key? key}) : super(key: key);
@@ -10,6 +14,44 @@ class MySavedPage extends StatefulWidget {
 class _MySavedPageState extends State<MySavedPage> {
   @override
   Widget build(BuildContext context) {
-    return const Text('Index 2: Saved');
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SearchBar(),
+        const SizedBox(height: 16),
+        Expanded(
+          child: StreamBuilder<List<Hotel>>(
+            stream: HotelFirebase.readHotels(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              } else if (snapshot.connectionState == ConnectionState.active) {
+                final hotels = snapshot.data!;
+                // return Text(hotels.length.toString());
+                return ListView.separated(
+                  itemCount: hotels.length,
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 8,
+                  ),
+                  addAutomaticKeepAlives: false,
+                  cacheExtent: 100,
+                  padding: const EdgeInsets.only(bottom: 16),
+                  itemBuilder: ((context, i) {
+                    return HotelTile(hotel: hotels[i]);
+                    // return Text('test');
+                  }),
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                  // child: Text(snapshot.connectionState.toString()),
+                );
+              }
+            },
+          ),
+        ),
+      ],
+    );
+    // return Text('test');
   }
 }

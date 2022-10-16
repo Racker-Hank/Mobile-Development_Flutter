@@ -7,13 +7,10 @@ import 'hotel_card.dart';
 class HotelTile extends StatelessWidget {
   const HotelTile(
       {super.key,
-      this.width,
       this.height,
       this.hMargin,
       this.vMargin,
       required this.hotel});
-
-  final double? width;
 
   final double? height;
 
@@ -35,13 +32,10 @@ class HotelTile extends StatelessWidget {
         ),
       ),
       child: Container(
-        // width: width,
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         height: 80,
-        // duration: const Duration(milliseconds: 500),
         // curve: Curves.easeInQuart,
-        constraints: const BoxConstraints(maxWidth: 350, minWidth: 284),
-        // constraints: const BoxConstraints(minWidth: 284),
-        margin: EdgeInsets.symmetric(vertical: 0, horizontal: hMargin ?? 16),
+        // margin: EdgeInsets.symmetric(vertical: 0, horizontal: hMargin ?? 16),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
           borderRadius: UIConfig.borderRadius,
@@ -61,26 +55,47 @@ class HotelTile extends StatelessWidget {
           ],
           color: UIConfig.white,
         ),
-        child: ListTile(
-          contentPadding: EdgeInsets.zero,
-          title: Text(hotel.name),
-          subtitle: Text('📍 ${hotel.location}'),
-          // leading: HeroImage(
-          //   hotelID: hotel.id,
-          //   imageURL: hotel.imageURLs[0],
-          // ),
-          leading: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 80, maxWidth: 80),
-            child: Image.network(hotel.imageURLs[0]),
-          ),
-
-          // leading: CircleAvatar(
-          //   radius: 40,
-          //   backgroundImage: NetworkImage(
-          //     hotel.imageURLs[0],
-          //   ),
-          // ),
+        child: Row(
+          children: [
+            Image.network(
+              hotel.imageURLs[0],
+              height: 80,
+              width: 120,
+              fit: BoxFit.cover,
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    hotel.name,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  Text(hotel.location)
+                ],
+              ),
+            ),
+            const SizedBox(width: 16),
+            const Padding(
+              padding: EdgeInsets.only(right: 16),
+              child: Icon(
+                Icons.keyboard_arrow_right_rounded,
+              ),
+            ),
+          ],
         ),
+
+        // child: ListTile(
+        //   contentPadding: EdgeInsets.zero,
+        //   title: Text(hotel.name),
+        //   subtitle: Text('📍 ${hotel.location}'),
+        //   leading: ConstrainedBox(
+        //     constraints: const BoxConstraints(minHeight: 80, maxWidth: 80),
+        //     child: Image.network(hotel.imageURLs[0]),
+        //   ),
       ),
     );
   }
