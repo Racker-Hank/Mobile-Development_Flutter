@@ -3,8 +3,6 @@ import 'package:traveloka/view/hotel_view.dart';
 import '../config/ui_configs.dart';
 
 import '../entity/hotel.dart';
-import '../view/booking_view.dart';
-import '../view/search_view.dart';
 // import 'package:hello_world/entity/Hotel.dart';
 
 class HotelCard extends StatelessWidget {
@@ -14,16 +12,6 @@ class HotelCard extends StatelessWidget {
     this.height,
     this.hMargin,
     this.vMargin,
-    // this.hotel,
-    // required this.hotelID,
-    // this.imageURL =
-    //     'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-    // this.hotelName = 'Florida Getaway',
-    // this.location = 'Florida villa',
-    // this.ratings = 3.8,
-    // this.price = 200,
-    // this.description =
-    //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
     required this.hotel,
     required this.showFacilities,
   });
@@ -37,14 +25,6 @@ class HotelCard extends StatelessWidget {
   final double? vMargin;
 
   final double columnSpacing = 8;
-
-  // final Hotel defaultHotel = Hotel(
-  //     'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-  //     'Florida Getaway',
-  //     'Florida villa',
-  //     3.8,
-  //     200,
-  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor');
 
   final Hotel hotel;
 
@@ -90,22 +70,6 @@ class HotelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () {
-      //   print('Tapped');
-      // },
-      // onTap: () => {
-      //   // debugPrint('$hotelID'),
-      //   Navigator.of(context).push(
-      //     PageRouteBuilder(
-      //       pageBuilder: (context, animation, secondaryAnimation) =>
-      //           const MySearchPage(),
-      //       transitionsBuilder:
-      //           (context, animation, secondaryAnimation, child) {
-      //         return child;
-      //       },
-      //     ),
-      //   ),
-      // },
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
@@ -157,9 +121,9 @@ class HotelCard extends StatelessWidget {
                         child: Ratings(
                           ratings: hotel.reviews.isNotEmpty
                               ? hotel.reviews
-                                      .map((e) => e.ratings)
-                                      .reduce((a, b) => a + b) /
-                                  hotel.reviews.length
+                              .map((e) => e.ratings)
+                              .reduce((a, b) => a + b) /
+                              hotel.reviews.length
                               : 0,
                         ),
                       ),
@@ -205,7 +169,7 @@ class HeroImage extends StatelessWidget {
             tag: 'hotel_${hotelID}_image',
             child: Container(
               height: 150,
-              foregroundDecoration: BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(imageURL),
                   fit: BoxFit.cover,
@@ -355,26 +319,26 @@ class Facilities extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: facilitiesUI.entries
               .map((e) => Visibility(
-                    visible: facilities[e.key] ?? false,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Column(
-                        children: [
-                          e.value,
-                          const SizedBox(height: 4),
-                          Text(
-                            '${e.key[0].toUpperCase()}${e.key.substring(1)}',
-                            style: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: UIConfig.darkGrey,
-                            ),
-                          ),
-                        ],
-                      ),
+            visible: facilities[e.key] ?? false,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                children: [
+                  e.value,
+                  const SizedBox(height: 4),
+                  Text(
+                    '${e.key[0].toUpperCase()}${e.key.substring(1)}',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: UIConfig.darkGrey,
                     ),
-                  ))
+                  ),
+                ],
+              ),
+            ),
+          ))
               .toList(),
         ),
       ),
