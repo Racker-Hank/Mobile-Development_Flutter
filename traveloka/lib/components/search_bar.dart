@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './button.dart';
 import './round_icon_button.dart';
@@ -113,9 +114,14 @@ class _SearchBarState extends State<SearchBar> {
                         //     builder: (context) => const MySearchPage(),
                         //   ),
                         // );
+                        // Navigator.of(context).push(
+                        //   NewPageRoute(
+                        //     child: const MySearchPage(),
+                        //   ),
+                        // );
                         Navigator.of(context).push(
-                          NewPageRoute(
-                            child: const MySearchPage(),
+                          CupertinoPageRoute(
+                            builder: ((context) => const MySearchPage()),
                           ),
                         );
                       },
@@ -151,9 +157,11 @@ class SearchBox extends StatelessWidget {
     this.suffix,
     this.keyboardType,
     required this.controller,
+    this.onChanged,
   }) : super(key: key);
 
   final Function() focussed;
+  final Function(String)? onChanged;
   final FocusNode? focusNode;
   final Icon prefixIcon;
   final dynamic hintText;
@@ -188,6 +196,7 @@ class SearchBox extends StatelessWidget {
         controller: controller,
         focusNode: focusNode,
         onTap: focussed,
+        onChanged: onChanged,
         keyboardType: keyboardType,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
