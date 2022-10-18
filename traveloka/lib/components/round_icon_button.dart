@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../config/UI_configs.dart';
+import '../config/ui_configs.dart';
 
 class RoundIconButton extends StatelessWidget {
   const RoundIconButton({
