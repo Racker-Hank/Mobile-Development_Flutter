@@ -2,23 +2,18 @@ import 'package:flutter/material.dart';
 import '../entity/hotel.dart';
 import 'package:traveloka/view/hotel_view.dart';
 import '../config/ui_configs.dart';
-import 'hotel_card.dart';
 
 class HotelTile extends StatelessWidget {
-  const HotelTile(
-      {super.key,
-      this.height,
-      this.hMargin,
-      this.vMargin,
-      required this.hotel});
-
-  final double? height;
+  const HotelTile({
+    super.key,
+    this.hMargin,
+    this.vMargin,
+    required this.hotel,
+  });
 
   final double? hMargin;
 
   final double? vMargin;
-
-  final double columnSpacing = 8;
 
   final Hotel hotel;
 

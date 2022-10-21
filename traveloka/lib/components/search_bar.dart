@@ -5,6 +5,7 @@ import './round_icon_button.dart';
 
 import '../config/ui_configs.dart';
 import '../view/search_view.dart';
+import 'input_box.dart';
 import 'new_page_route.dart';
 
 class SearchBar extends StatefulWidget {
@@ -36,19 +37,18 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   void initState() {
-    super.initState();
-
     _hotel = TextEditingController();
     _guests = TextEditingController();
+    super.initState();
   }
 
   @override
   void dispose() {
-    super.dispose();
     // hotelBoxFocusNode.dispose();
     // guestsBoxFocusNode.dispose();
     _hotel.dispose();
     _guests.dispose();
+    super.dispose();
   }
 
   @override
@@ -70,7 +70,7 @@ class _SearchBarState extends State<SearchBar> {
               Expanded(
                 child: Column(
                   children: [
-                    SearchBox(
+                    InputBox(
                       controller: _hotel,
                       prefixIcon: Icon(
                         Icons.search_rounded,
@@ -141,92 +141,6 @@ class _SearchBarState extends State<SearchBar> {
           ),
           const SizedBox(height: 24),
         ],
-      ),
-    );
-  }
-}
-
-class SearchBox extends StatelessWidget {
-  const SearchBox({
-    Key? key,
-    required this.focussed,
-    this.focusNode,
-    required this.hintText,
-    required this.labelText,
-    required this.prefixIcon,
-    this.suffix,
-    this.keyboardType,
-    required this.controller,
-    this.onChanged,
-  }) : super(key: key);
-
-  final Function() focussed;
-  final Function(String)? onChanged;
-  final FocusNode? focusNode;
-  final Icon prefixIcon;
-  final dynamic hintText;
-  final String labelText;
-  final Widget? suffix;
-  final TextInputType? keyboardType;
-  final TextEditingController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      // clipBehavior: Clip.antiAliasWithSaveLayer,
-      height: 36,
-      decoration: BoxDecoration(
-        borderRadius: UIConfig.borderRadius,
-        color: UIConfig.white,
-        boxShadow: const [
-          BoxShadow(
-            color: Color.fromARGB(30, 0, 0, 0),
-            offset: Offset(0, 2),
-            blurRadius: 3,
-          ),
-          BoxShadow(
-            color: Color.fromARGB(20, 0, 0, 0),
-            offset: Offset(0, 6),
-            blurRadius: 10,
-            spreadRadius: 4,
-          ),
-        ],
-      ),
-      child: TextField(
-        controller: controller,
-        focusNode: focusNode,
-        onTap: focussed,
-        onChanged: onChanged,
-        keyboardType: keyboardType,
-        textAlignVertical: TextAlignVertical.center,
-        decoration: InputDecoration(
-          hintText: '$hintText',
-          hintStyle: const TextStyle(
-            color: Color(0xFFB9B9B9),
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: UIConfig.borderRadius,
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: UIConfig.primaryColor),
-            borderRadius: UIConfig.borderRadius,
-          ),
-          labelText: labelText,
-          // label: const Padding(
-          //   padding: EdgeInsets.only(bottom: 4),
-          //   child: Text("Search for a location"),
-          // ),
-          // labelStyle: TextStyle(
-          //   fontFamily: 'Nunito Sans',
-          //   fontSize: 18,
-          //   color: UIConfig.primaryColor,
-          // ),
-          contentPadding: const EdgeInsets.only(right: 8),
-          prefixIcon: prefixIcon,
-          suffix: suffix,
-        ),
-        style: UIConfig.textFieldInputTextStyle,
       ),
     );
   }

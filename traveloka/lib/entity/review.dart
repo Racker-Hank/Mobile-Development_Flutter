@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class Review {
   final String content;
-  final int ratings;
+  final int rating;
   late User user;
 
-  Review(this.content, this.ratings);
+  Review(this.content, this.rating);
 }
