@@ -1,4 +1,7 @@
+// import 'dart:html';
+// import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:readmore/readmore.dart';
 import 'package:traveloka/components/button.dart';
 import 'dart:math' as math;
 
@@ -25,11 +28,40 @@ class _MyHotelPageState extends State<MyHotelPage> {
 
   final reviewsKey = GlobalKey();
   final descriptionKey = GlobalKey();
+  // Widget getMap() {
+  //   ui.platformViewRegistry.registerViewFactory("6", (int viewId) {
+  //     final latlang = maps.LatLng(12.9, 77.65);
+
+  //     final elem = DivElement()
+  //       ..id = "6"
+  //       ..style.width = "100%"
+  //       ..style.height = "100%"
+  //       ..style.border = "none";
+
+  //     final mapOptions = maps.MapOptions()
+  //       ..zoom = 11
+  //       ..tilt = 90
+  //       ..center = latlang;
+
+  //     final map = maps.GMap(elem, mapOptions);
+  //   });
+  // }
+
+  // final elem = DivElement()
+  //   ..id = "6"
+  //   ..style.width = "100%"
+  //   ..style.height = "100%"
+  //   ..style.border = "none";
+
+  // final mapOptions = maps.MapOptions()
+  //   ..zoom = 11
+  //   ..tilt = 90
+  //   ..center = maps.LatLng(12.9, 77.65);
 
   @override
   void initState() {
-    super.initState();
     heroImageURL = widget.hotel.imageURLs[0];
+    super.initState();
   }
 
   @override
@@ -63,13 +95,12 @@ class _MyHotelPageState extends State<MyHotelPage> {
                         Expanded(
                           child: HeadLine(
                               hotelName: widget.hotel.name,
-                              location:
-                              widget.hotel.location), // của m vẫn chạy à
+                              location: widget.hotel.location),
                         ),
                         Ratings(
-                          ratings: widget.hotel.reviews.isNotEmpty
+                          avgRatings: widget.hotel.reviews.isNotEmpty
                               ? widget.hotel.reviews
-                              .map((e) => e.ratings)
+                              .map((e) => e.rating)
                               .reduce((a, b) => a + b) /
                               widget.hotel.reviews.length
                               : 0,
@@ -78,13 +109,19 @@ class _MyHotelPageState extends State<MyHotelPage> {
                     ),
                     const SizedBox(height: 16),
                     AnchorButtons(
-                        descriptionKey: descriptionKey,
-                        widget: widget,
-                        reviewsKey: reviewsKey),
+                      descriptionKey: descriptionKey,
+                      widget: widget,
+                      reviewsKey: reviewsKey,
+                    ),
                     const SizedBox(height: 16),
-                    Container(
+                    ReadMoreText(
                       key: descriptionKey,
-                      child: Description(description: widget.hotel.description),
+                      widget.hotel.description,
+                      style: UIConfig.bodyMediumTextStyle,
+                      trimCollapsedText: 'Expand',
+                      trimExpandedText: 'Collapse',
+                      moreStyle: UIConfig.indicationTextStyle,
+                      lessStyle: UIConfig.indicationTextStyle,
                     ),
 
                     const SizedBox(height: 16),
@@ -94,8 +131,21 @@ class _MyHotelPageState extends State<MyHotelPage> {
                       facilities: widget.hotel.facilities,
                     ),
                     const SizedBox(height: 16),
+                    // const GoogleMap(
+                    //   initialCameraPosition: CameraPosition(
+                    //     target: LatLng(25.782337702478927, -80.14071738317143),
+                    //   ),
+                    // ),
+                    // Container(
+                    //   height: 300,
+                    //   child: map(),
+                    // ),
                     Directions(widget: widget),
                     const SizedBox(height: 16),
+                    // Container(
+                    //   height: 1,
+                    //   color: UIConfig.primaryColor,
+                    // ),
                     Reviews(
                       reviewsKey: reviewsKey,
                       widget: widget,
@@ -165,33 +215,42 @@ class _MyHotelPageState extends State<MyHotelPage> {
                     ),
                   ),
                 ),
-              Container(
-                width: smallImageWidth,
-                height: smallImageWidth,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(widget.hotel.imageURLs[4]),
-                    fit: BoxFit.cover,
-                    colorFilter: widget.hotel.imageURLs.length - 5 > 0
-                        ? ColorFilter.mode(
-                      UIConfig.black.withOpacity(.4),
-                      BlendMode.softLight,
-                    )
-                        : null,
-                  ),
-                ),
-                child: widget.hotel.imageURLs.length - 5 > 0
-                    ? Center(
-                  child: Text(
-                    '+${widget.hotel.imageURLs.length - 4}',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: UIConfig.white,
-                      fontFamily: 'Roboto',
+              GestureDetector(
+                onTap: () {
+                  if (widget.hotel.imageURLs.length == 5) {
+                    setState(() {
+                      heroImageURL = widget.hotel.imageURLs[4];
+                    });
+                  }
+                },
+                child: Container(
+                  width: smallImageWidth,
+                  height: smallImageWidth,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(widget.hotel.imageURLs[4]),
+                      fit: BoxFit.cover,
+                      colorFilter: widget.hotel.imageURLs.length - 5 > 0
+                          ? ColorFilter.mode(
+                        UIConfig.black.withOpacity(.4),
+                        BlendMode.softLight,
+                      )
+                          : null,
                     ),
                   ),
-                )
-                    : null,
+                  child: widget.hotel.imageURLs.length - 5 > 0
+                      ? Center(
+                    child: Text(
+                      '+${widget.hotel.imageURLs.length - 4}',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: UIConfig.white,
+                        fontFamily: 'Roboto',
+                      ),
+                    ),
+                  )
+                      : null,
+                ),
               )
             ],
           ),
@@ -392,6 +451,8 @@ class Directions extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
+          // clipBehavior: Clip.antiAliasWithSaveLayer,
+          // child: Image.network(widget.hotel.mapURL),
         ),
       ],
     );
@@ -502,18 +563,22 @@ class Reviews extends StatelessWidget {
           leading: const CircleAvatar(radius: 20),
           title: Padding(
             padding: const EdgeInsets.only(bottom: 4),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const Expanded(
+                  child: Text('UserName'),
+                ),
                 Row(
                   children: [
-                    for (var i = 0; i < e.ratings; i++)
+                    for (var i = 0; i < e.rating; i++)
                       Icon(
                         Icons.star_rounded,
                         color: UIConfig.accentColor,
                         size: 20,
                       ),
-                    for (var i = e.ratings; i < 5; i++)
+                    for (var i = e.rating; i < 5; i++)
                       Icon(
                         Icons.star_rounded,
                         color: UIConfig.darkGrey,
@@ -521,11 +586,10 @@ class Reviews extends StatelessWidget {
                       ),
                   ],
                 ),
-                const Text('UserName'),
               ],
             ),
           ),
-          subtitle: Text(
+          subtitle: SelectableText(
             e.content,
             style: UIConfig.bodyMediumTextStyle,
           ),
@@ -533,5 +597,6 @@ class Reviews extends StatelessWidget {
             .toList(),
       ),
     );
+    // return const Text('Reviews');
   }
 }

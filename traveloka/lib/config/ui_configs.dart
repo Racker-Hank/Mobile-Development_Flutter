@@ -19,8 +19,8 @@ class UIConfig {
   static TextStyle bodyMediumTextStyle = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 14,
-    height: 1.4,
-    letterSpacing: .25,
+    height: 1.5,
+    letterSpacing: .5,
     color: Color(0xFF49454F),
   );
   static TextStyle buttonTextStyle = const TextStyle(
@@ -41,4 +41,15 @@ class UIConfig {
     fontSize: 14,
     color: primaryColor,
   );
+
+  static String capitalize(String s) {
+    var splitted = s.split(' ');
+    String cap = '';
+    for (var e in splitted) {
+      if (e.isNotEmpty) {
+        cap += '${e.trim()[0].toUpperCase()}${e.trim().substring(1)} ';
+      }
+    }
+    return cap.trim();
+  }
 }

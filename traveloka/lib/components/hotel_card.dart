@@ -3,7 +3,6 @@ import 'package:traveloka/view/hotel_view.dart';
 import '../config/ui_configs.dart';
 
 import '../entity/hotel.dart';
-// import 'package:hello_world/entity/Hotel.dart';
 
 class HotelCard extends StatelessWidget {
   const HotelCard({
@@ -76,6 +75,13 @@ class HotelCard extends StatelessWidget {
           builder: (context) => MyHotelPage(hotel: hotel),
         ),
       ),
+      // onTap: () {
+      //   Navigator.of(context).push(
+      //     NewPageRoute(
+      //       child: MyHotelPage(hotel: hotel),
+      //     ),
+      //   );
+      // },
       child: AnimatedContainer(
         width: width,
         height: height,
@@ -119,11 +125,11 @@ class HotelCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Ratings(
-                          ratings: hotel.reviews.isNotEmpty
+                          avgRatings: hotel.reviews.isNotEmpty
                               ? hotel.reviews
-                              .map((e) => e.ratings)
-                              .reduce((a, b) => a + b) /
-                              hotel.reviews.length
+                                      .map((e) => e.rating)
+                                      .reduce((a, b) => a + b) /
+                                  hotel.reviews.length
                               : 0,
                         ),
                       ),
@@ -200,12 +206,12 @@ class HeadLine extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        SelectableText(
           hotelName,
           style: UIConfig.titleLargeTextStyle,
         ),
         const SizedBox(height: 2),
-        Text(
+        SelectableText(
           '📍 $location',
           style: UIConfig.bodyMediumTextStyle,
         ),
@@ -217,18 +223,18 @@ class HeadLine extends StatelessWidget {
 class Ratings extends StatelessWidget {
   const Ratings({
     Key? key,
-    required this.ratings,
+    required this.avgRatings,
   }) : super(key: key);
 
-  final double ratings;
+  final double avgRatings;
 
   @override
   Widget build(BuildContext context) {
     return Row(children: [
       Text(
-        ratings - ratings.toInt() != 0
-            ? ratings.toStringAsFixed(1)
-            : '$ratings',
+        avgRatings - avgRatings.toInt() != 0
+            ? avgRatings.toStringAsFixed(1)
+            : '$avgRatings',
         style: const TextStyle(
           fontFamily: 'Roboto',
           fontSize: 14,
@@ -292,7 +298,10 @@ class Description extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(maxHeight: maxHeight),
-      child: Text(description),
+      child: Text(
+        description,
+        style: UIConfig.bodyMediumTextStyle,
+      ),
     );
   }
 }

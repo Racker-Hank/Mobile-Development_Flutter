@@ -6,9 +6,9 @@ class NewPageRoute extends PageRouteBuilder {
   NewPageRoute({
     required this.child,
   }) : super(
-    transitionDuration: const Duration(milliseconds: 300),
-    pageBuilder: (context, animation, secondaryAnimation) => child,
-  );
+          transitionDuration: const Duration(milliseconds: 300),
+          pageBuilder: (context, animation, secondaryAnimation) => child,
+        );
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
@@ -17,7 +17,7 @@ class NewPageRoute extends PageRouteBuilder {
       position: Tween<Offset>(
         begin: const Offset(1, 0),
         end: Offset.zero,
-      ).chain(CurveTween(curve: Curves.easeInCubic)).animate(animation),
+      ).chain(CurveTween(curve: Curves.easeInOutCubic)).animate(animation),
       child: child,
     );
   }

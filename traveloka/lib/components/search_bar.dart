@@ -1,12 +1,10 @@
-import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:traveloka/main.dart';
-import './button.dart';
 import './round_icon_button.dart';
 
 import '../config/ui_configs.dart';
 import '../view/search_view.dart';
+import 'input_box.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
@@ -18,13 +16,6 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   bool isAdvancedSearch = false;
   // late AnimationController _animationController;
-
-  // FocusNode searchBarFocusNode = FocusNode();
-  // FocusNode hotelBoxFocusNode = FocusNode();
-  // FocusNode guestsBoxFocusNode = FocusNode();
-  // FocusNode rightIconButtonFocusNode = FocusNode();
-
-  // bool isSearchFocussed = false;
 
   late final TextEditingController _hotel;
   late final TextEditingController _guests;
@@ -45,30 +36,19 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   void initState() {
-    // _animationController = AnimationController(
-    //     vsync: this,
-    //     duration: const Duration(milliseconds: 150)
-    // );
-    // Timer(const Duration(milliseconds: 200), () => _animationController.forward());
-
-    super.initState();
-    // searchBarFocusNode.addListener(_onFocusChange);
-    // // hotelBoxFocusNode.addListener(_onFocusChange);
-    // // guestsBoxFocusNode.addListener(_onFocusChange);
-    // rightIconButtonFocusNode.addListener(_onFocusChange);
-
     _hotel = TextEditingController();
     _guests = TextEditingController();
+    super.initState();
   }
 
   @override
   void dispose() {
-    super.dispose();
     // hotelBoxFocusNode.dispose();
     // guestsBoxFocusNode.dispose();
     // _animationController.dispose();
     _hotel.dispose();
     _guests.dispose();
+    super.dispose();
   }
 
   @override
@@ -90,7 +70,7 @@ class _SearchBarState extends State<SearchBar> {
               Expanded(
                 child: Column(
                   children: [
-                    SearchBox(
+                    InputBox(
                       controller: _hotel,
                       prefixIcon: Icon(
                         Icons.search_rounded,
@@ -115,10 +95,9 @@ class _SearchBarState extends State<SearchBar> {
                       labelText: 'Search for a location',
                       // focusNode: hotelBoxFocusNode,
                       focussed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MySearchPage(),
+                        Navigator.of(context).push(
+                          CupertinoPageRoute(
+                            builder: ((context) => const MySearchPage()),
                           ),
                         );
                       },
@@ -137,86 +116,7 @@ class _SearchBarState extends State<SearchBar> {
             ],
           ),
           const SizedBox(height: 24),
-          // Button(
-          //   function: () {
-          //     print('${_hotel.text} ${_guests.text}');
-          //   },
-          // ),
         ],
-      ),
-    );
-  }
-}
-
-class SearchBox extends StatelessWidget {
-  const SearchBox({
-    Key? key,
-    required this.focussed,
-    this.focusNode,
-    required this.hintText,
-    required this.labelText,
-    required this.prefixIcon,
-    this.suffix,
-    this.keyboardType,
-    required this.controller,
-  }) : super(key: key);
-
-  final Function() focussed;
-  final FocusNode? focusNode;
-  final Icon prefixIcon;
-  final dynamic hintText;
-  final String labelText;
-  final Widget? suffix;
-  final TextInputType? keyboardType;
-  final TextEditingController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      // clipBehavior: Clip.antiAliasWithSaveLayer,
-      height: 36,
-      decoration: BoxDecoration(
-        borderRadius: UIConfig.borderRadius,
-        color: UIConfig.white,
-        boxShadow: const [
-          BoxShadow(
-            color: Color.fromARGB(30, 0, 0, 0),
-            offset: Offset(0, 2),
-            blurRadius: 3,
-          ),
-          BoxShadow(
-            color: Color.fromARGB(20, 0, 0, 0),
-            offset: Offset(0, 6),
-            blurRadius: 10,
-            spreadRadius: 4,
-          ),
-        ],
-      ),
-      child: TextField(
-        controller: controller,
-        focusNode: focusNode,
-        onTap: focussed,
-        keyboardType: keyboardType,
-        textAlignVertical: TextAlignVertical.center,
-        decoration: InputDecoration(
-          hintText: '$hintText',
-          hintStyle: const TextStyle(
-            color: Color(0xFFB9B9B9),
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: UIConfig.borderRadius,
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: UIConfig.primaryColor),
-            borderRadius: UIConfig.borderRadius,
-          ),
-          labelText: labelText,
-          contentPadding: const EdgeInsets.only(right: 8),
-          prefixIcon: prefixIcon,
-          suffix: suffix,
-        ),
-        style: UIConfig.textFieldInputTextStyle,
       ),
     );
   }

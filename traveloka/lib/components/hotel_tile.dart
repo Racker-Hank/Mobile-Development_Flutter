@@ -2,23 +2,18 @@ import 'package:flutter/material.dart';
 import '../entity/hotel.dart';
 import 'package:traveloka/view/hotel_view.dart';
 import '../config/ui_configs.dart';
-import 'hotel_card.dart';
 
 class HotelTile extends StatelessWidget {
-  const HotelTile(
-      {super.key,
-        this.height,
-        this.hMargin,
-        this.vMargin,
-        required this.hotel});
-
-  final double? height;
+  const HotelTile({
+    super.key,
+    this.hMargin,
+    this.vMargin,
+    required this.hotel,
+  });
 
   final double? hMargin;
 
   final double? vMargin;
-
-  final double columnSpacing = 8;
 
   final Hotel hotel;
 
@@ -34,8 +29,6 @@ class HotelTile extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         height: 80,
-        // curve: Curves.easeInQuart,
-        // margin: EdgeInsets.symmetric(vertical: 0, horizontal: hMargin ?? 16),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
           borderRadius: UIConfig.borderRadius,
@@ -57,11 +50,14 @@ class HotelTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Image.network(
-              hotel.imageURLs[0],
-              height: 80,
-              width: 120,
-              fit: BoxFit.cover,
+            Hero(
+              tag: 'hotel_${hotel.id}_image',
+              child: Image.network(
+                hotel.imageURLs[0],
+                height: 80,
+                width: (MediaQuery.of(context).size.width - 32) / 4,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -72,9 +68,19 @@ class HotelTile extends StatelessWidget {
                   Text(
                     hotel.name,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontFamily: 'Roboto',
+                    ),
                   ),
-                  Text(hotel.location)
+                  const SizedBox(height: 4),
+                  Text(
+                    '📍 ${hotel.location}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'Roboto',
+                    ),
+                  )
                 ],
               ),
             ),
@@ -87,15 +93,6 @@ class HotelTile extends StatelessWidget {
             ),
           ],
         ),
-
-        // child: ListTile(
-        //   contentPadding: EdgeInsets.zero,
-        //   title: Text(hotel.name),
-        //   subtitle: Text('📍 ${hotel.location}'),
-        //   leading: ConstrainedBox(
-        //     constraints: const BoxConstraints(minHeight: 80, maxWidth: 80),
-        //     child: Image.network(hotel.imageURLs[0]),
-        //   ),
       ),
     );
   }
