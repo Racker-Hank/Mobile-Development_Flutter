@@ -41,27 +41,16 @@ class _MySearchPageState extends State<MySearchPage>
   late final TextEditingController _hotel;
   late final TextEditingController _dateRange;
   late final TextEditingController _guests;
-  // late final AnimationController _animationController;
-  // final Stream<List<Hotel>> hotelsStream = HotelFirebase.readHotels();
+  final Stream<List<Hotel>> hotelsStream = HotelFirebase.readHotels();
   late List<Hotel> hotelsSnapshot = [];
   late List<Hotel> hotels = List.from(hotelsSnapshot);
 
   late final PageController _pageController;
 
-  // List hotels = Hotel.hotels;
-
   double cardWidth = 284;
 
   @override
   void initState() {
-    // _animationController = AnimationController(
-    //   vsync: this,
-    //   duration: const Duration(milliseconds: 150),
-    // );
-    // Timer(
-    //     const Duration(milliseconds: 0), () => _animationController.forward());
-    // _animationController.forward();
-
     hotelBoxFocusNode.requestFocus();
     _hotel = TextEditingController();
     _dateRange = TextEditingController();
@@ -74,7 +63,6 @@ class _MySearchPageState extends State<MySearchPage>
   }
 
   Future<void> _searchByHotel() async {
-    //print(_hotel.text);
     if (_hotel.text.isNotEmpty) {
       List<Hotel> searchByName = [];
       List<Hotel> searchByLocation = [];
@@ -88,10 +76,6 @@ class _MySearchPageState extends State<MySearchPage>
     }
 
     setState(() {
-      // hotels = hotelsSnapshot
-      //     .where((element) =>
-      //         element.name.toLowerCase().contains(_hotel.text.toLowerCase()))
-      //     .toList();
       hotels = hotelsSnapshot;
     });
   }
@@ -245,7 +229,6 @@ class _MySearchPageState extends State<MySearchPage>
                 stream: HotelFirebase.readHotelsLimit(1),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    // print(snapshot.error.toString());
                     return Text(snapshot.error.toString());
                   } else if (snapshot.connectionState ==
                       ConnectionState.active) {
@@ -269,7 +252,6 @@ class _MySearchPageState extends State<MySearchPage>
                                 : hotelsSnapshot[0],
                             width: min(cardWidth,
                                 .77 * MediaQuery.of(context).size.width),
-                            // width: 328,
                             height: 420,
                             hMargin: 8,
                             showFacilities: true,

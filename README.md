@@ -19,10 +19,50 @@
 ### Week 3: Hello World
 
 ![w3 screenshot](./res/img/w3.png)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e08f1369ac9638a28c51d44a694c6e4f20937ac0
 
 ### Week 4: Explore Page
 
 ![w4 screenshot](./res/img/w4.png)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8aaf43333c559ca83d58acd9b5768590b130f863
+=======
+>>>>>>> e08f1369ac9638a28c51d44a694c6e4f20937ac0
+=======
+
+### Week 5:
+
+-  Search Page
+-  Create database
+
+![w5](./res/img/w5.png)
+
+### Week 6:
+
+-  Hotel Page
+-  Read from database
+
+![w6](./res/img/w6.png)
+>>>>>>> 72309ff8fd635afd289e761410bdae5a9c1250e4
+
+### Week 5:
+
+-  Search Page
+-  Create database
+
+![w5](./res/img/w5.png)
+
+### Week 6:
+
+-  Hotel Page
+-  Read from database
+
+![w6](./res/img/w6.png)
 
 ### Week 5:
 

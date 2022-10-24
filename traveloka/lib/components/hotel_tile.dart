@@ -29,8 +29,6 @@ class HotelTile extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         height: 80,
-        // curve: Curves.easeInQuart,
-        // margin: EdgeInsets.symmetric(vertical: 0, horizontal: hMargin ?? 16),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
           borderRadius: UIConfig.borderRadius,
@@ -73,7 +71,6 @@ class HotelTile extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                       fontFamily: 'Roboto',
-                      // letterSpacing: .1,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -97,6 +94,41 @@ class HotelTile extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class HeroImage extends StatelessWidget {
+  const HeroImage({
+    Key? key,
+    required this.hotelID,
+    required this.imageURL,
+  }) : super(key: key);
+
+  final String imageURL;
+  final String hotelID;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(
+          flex: 1,
+          child: Hero(
+            tag: 'hotel_${hotelID}_image',
+            child: Container(
+              height: 150,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(imageURL),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

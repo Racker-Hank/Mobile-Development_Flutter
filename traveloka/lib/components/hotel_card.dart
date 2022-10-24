@@ -76,6 +76,13 @@ class HotelCard extends StatelessWidget {
           builder: (context) => MyHotelPage(hotel: hotel),
         ),
       ),
+      // onTap: () {
+      //   Navigator.of(context).push(
+      //     NewPageRoute(
+      //       child: MyHotelPage(hotel: hotel),
+      //     ),
+      //   );
+      // },
       child: AnimatedContainer(
         width: width,
         height: height,

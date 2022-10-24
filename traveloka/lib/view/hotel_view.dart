@@ -4,14 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:traveloka/components/button.dart';
 import 'dart:math' as math;
-// import 'package:google_maps/google_maps.dart' as maps;
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../components/hotel_card.dart';
 import '../config/ui_configs.dart';
 import '../entity/hotel.dart';
-import '../entity/review.dart';
-import '../main.dart';
 
 class MyHotelPage extends StatefulWidget {
   const MyHotelPage({
@@ -99,8 +95,7 @@ class _MyHotelPageState extends State<MyHotelPage> {
                         Expanded(
                           child: HeadLine(
                               hotelName: widget.hotel.name,
-                              location:
-                                  widget.hotel.location), // của m vẫn chạy à
+                              location: widget.hotel.location),
                         ),
                         Ratings(
                           avgRatings: widget.hotel.reviews.isNotEmpty
@@ -605,39 +600,3 @@ class Reviews extends StatelessWidget {
     // return const Text('Reviews');
   }
 }
-
-// Widget map() {
-//   //A unique id to name the div element
-//   String htmlId = "6";
-//   //creates a webview in dart
-//   //ignore: undefined_prefixed_name
-//   ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
-//     final latLang = maps.LatLng(25.782331531688957, -80.1425676581279);
-//     //class to create a div element
-
-//     final mapOptions = maps.MapOptions()
-//       ..zoom = 13
-//       ..tilt = 90
-//       ..center = latLang;
-//     final elem = DivElement()
-//       ..id = htmlId
-//       ..style.width = "100%"
-//       ..style.height = "100%"
-//       ..style.border = "none";
-
-//     final map = maps.GMap(elem, mapOptions);
-//     // Marker(MarkerOptions()
-//     //   ..position = latLang
-//     //   ..map = map
-//     //   ..title = 'My position');
-//     // Marker(MarkerOptions()
-//     //   ..position = LatLng(12.9557616, 77.7568832)
-//     //   ..map = map
-//     //   ..title = 'My position');
-//     return elem;
-//   });
-//   //creates a platform view for Flutter Web
-//   return HtmlElementView(
-//     viewType: htmlId,
-//   );
-// }

@@ -45,6 +45,7 @@ class _SearchBarState extends State<SearchBar> {
   void dispose() {
     // hotelBoxFocusNode.dispose();
     // guestsBoxFocusNode.dispose();
+    // _animationController.dispose();
     _hotel.dispose();
     _guests.dispose();
     super.dispose();
