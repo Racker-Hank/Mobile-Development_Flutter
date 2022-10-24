@@ -26,6 +26,14 @@ class Hotel {
     this.mapURL,
   );
 
+  @override
+  bool operator ==(other) {
+    return other is Hotel && other.runtimeType == runtimeType && id == other.id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
+
   static Hotel fromJson(Map<String, dynamic> json, String id) {
     List<String> imageURLs =
         (json['imageURLs'] as List).map((e) => e as String).toList();

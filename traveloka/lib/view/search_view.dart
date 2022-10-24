@@ -40,8 +40,8 @@ class _MySearchPageState extends State<MySearchPage>
   late final TextEditingController _hotel;
   late final TextEditingController _dateRange;
   late final TextEditingController _guests;
-  late final AnimationController _animationController;
-  final Stream<List<Hotel>> hotelsStream = HotelFirebase.readHotels();
+  // late final AnimationController _animationController;
+  // final Stream<List<Hotel>> hotelsStream = HotelFirebase.readHotels();
   late List<Hotel> hotelsSnapshot = [];
   late List<Hotel> hotels = List.from(hotelsSnapshot);
 
@@ -53,10 +53,10 @@ class _MySearchPageState extends State<MySearchPage>
 
   @override
   void initState() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 150),
-    );
+    // _animationController = AnimationController(
+    //   vsync: this,
+    //   duration: const Duration(milliseconds: 150),
+    // );
     // Timer(
     //     const Duration(milliseconds: 0), () => _animationController.forward());
     // _animationController.forward();
@@ -68,18 +68,30 @@ class _MySearchPageState extends State<MySearchPage>
     _guests = TextEditingController();
     _pageController = PageController(viewportFraction: .77);
 
-    _hotel.addListener(_searchByName);
-
+    _hotel.addListener(_searchByHotel);
     // isShowResult = false;
   }
 
-  void _searchByName() {
+  Future<void> _searchByHotel() async {
     //print(_hotel.text);
+    if (_hotel.text.isNotEmpty) {
+      List<Hotel> searchByName = [];
+      List<Hotel> searchByLocation = [];
+      await HotelFirebase.searchHotelByName(_hotel.text).first.then((e) {
+        searchByName.addAll(e);
+      });
+      await HotelFirebase.searchHotelByLocation(_hotel.text).first.then((e) {
+        searchByName.addAll(e);
+      });
+      hotelsSnapshot = {...searchByName, ...searchByLocation}.toList();
+    }
+
     setState(() {
-      hotels = hotelsSnapshot
-          .where((element) =>
-              element.name.toLowerCase().contains(_hotel.text.toLowerCase()))
-          .toList();
+      // hotels = hotelsSnapshot
+      //     .where((element) =>
+      //         element.name.toLowerCase().contains(_hotel.text.toLowerCase()))
+      //     .toList();
+      hotels = hotelsSnapshot;
     });
   }
 
@@ -161,7 +173,6 @@ class _MySearchPageState extends State<MySearchPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        // mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             margin: const EdgeInsets.only(top: 32),
@@ -185,109 +196,15 @@ class _MySearchPageState extends State<MySearchPage>
                     Expanded(
                       child: Column(
                         children: [
-                          SearchBox(
-                            controller: _hotel,
-                            prefixIcon: Icon(
-                              Icons.pin_drop,
-                              color: UIConfig.primaryColor,
-                              size: 20,
-                            ),
-                            suffix: Align(
-                              alignment: Alignment.centerRight,
-                              widthFactor: 1,
-                              // heightFactor: 1,
-                              child: GestureDetector(
-                                onTap: () {
-                                  _hotel.text = '';
-                                  setState(() {
-                                    isShowResult = false;
-                                  });
-                                },
-                                child: const Icon(
-                                  Icons.cancel_rounded,
-                                  color: Color(0xFF79747e),
-                                  size: 16,
-                                ),
-                              ),
-                            ),
-                            hintText: 'traveloka🚀',
-                            labelText: 'Search for a location',
-                            focusNode: hotelBoxFocusNode,
-                            focussed: () {},
-                          ),
+                          hotelSearchBox(),
                           Visibility(
                             visible: isAdvancedSearch,
-                            // replacement: ,
                             child: Column(
                               children: [
                                 const SizedBox(height: 24),
-                                SearchBox(
-                                  controller: _dateRange,
-                                  focussed: pickDateRange,
-                                  prefixIcon: Icon(
-                                    Icons.calendar_month_rounded,
-                                    color: UIConfig.primaryColor,
-                                    size: 20,
-                                  ),
-                                  labelText: 'Pick a date',
-                                  hintText:
-                                      '${DateFormat('MMMd').format(dateRange.start)} - ${DateFormat('MMMd').format(dateRange.end)}',
-                                ),
+                                dateSearchBox(),
                                 const SizedBox(height: 24),
-                                SearchBox(
-                                  controller: _guests,
-                                  focussed: () {},
-                                  prefixIcon: Icon(
-                                    Icons.people_rounded,
-                                    color: UIConfig.primaryColor,
-                                    size: 20,
-                                  ),
-                                  labelText: 'Guests',
-                                  hintText: 2,
-                                  keyboardType: TextInputType.number,
-                                  suffix: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          int guests = int.parse(
-                                              _guests.text.isNotEmpty
-                                                  ? _guests.text
-                                                  : '0');
-                                          guests++;
-                                          _guests.text = '$guests';
-                                        },
-                                        child: Icon(
-                                          Icons.add_rounded,
-                                          color: UIConfig.primaryColor,
-                                          size: 20,
-                                        ),
-                                      ),
-                                      Text(
-                                        '|',
-                                        style:
-                                            TextStyle(color: UIConfig.darkGrey),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          int guests = int.parse(
-                                              _guests.text.isNotEmpty
-                                                  ? _guests.text
-                                                  : '0');
-                                          if (guests > 1) {
-                                            guests--;
-                                            _guests.text = '$guests';
-                                          } else {}
-                                        },
-                                        child: Icon(
-                                          Icons.remove_rounded,
-                                          color: UIConfig.primaryColor,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                GuestsSearchBox(guests: _guests),
                               ],
                             ),
                           ),
@@ -324,7 +241,7 @@ class _MySearchPageState extends State<MySearchPage>
           SizedBox(
             height: 500,
             child: StreamBuilder<List<Hotel>>(
-                stream: hotelsStream,
+                stream: HotelFirebase.readHotelsLimit(1),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     // print(snapshot.error.toString());
@@ -332,52 +249,9 @@ class _MySearchPageState extends State<MySearchPage>
                   } else if (snapshot.connectionState ==
                       ConnectionState.active) {
                     hotelsSnapshot = snapshot.data!;
-                    //hotels = List.from(_hotelsSnapshot);
 
                     return Visibility(
                       visible: isShowResult,
-                      // replacement: hotels.isEmpty
-                      //     ? Padding(
-                      //         padding:
-                      //             const EdgeInsets.symmetric(horizontal: 16),
-                      //         child: Center(
-                      //           child: Text(
-                      //             '😖😖😖\nSorry, we\'ve got no item matching your search.\n😿😿😿',
-                      //             style: TextStyle(
-                      //               color: UIConfig.accentColor,
-                      //               fontSize: 20,
-                      //               fontFamily: 'Roboto',
-                      //               fontWeight: FontWeight.bold,
-                      //             ),
-                      //             textAlign: TextAlign.center,
-                      //           ),
-                      //         ),
-                      //       )
-                      //     : Column(
-                      //         children: [
-                      //           SizedBox(
-                      //             width: min(
-                      //                 cardWidth,
-                      //                 .77 *
-                      //                     MediaQuery.of(context).size.width),
-                      //             child: Text(
-                      //               'Recommended',
-                      //               style: UIConfig.indicationTextStyle,
-                      //             ),
-                      //           ),
-                      //           HotelCard(
-                      //             hotel: hotels[0],
-                      //             width: min(
-                      //                 cardWidth,
-                      //                 .77 *
-                      //                     MediaQuery.of(context).size.width),
-                      //             // width: 328,
-                      //             height: 420,
-                      //             hMargin: 8,
-                      //             showFacilities: true,
-                      //           ),
-                      //         ],
-                      //       ),
                       replacement: Column(
                         children: [
                           SizedBox(
@@ -479,6 +353,122 @@ class _MySearchPageState extends State<MySearchPage>
                     );
                   }
                 }),
+          ),
+        ],
+      ),
+    );
+  }
+
+  SearchBox hotelSearchBox() {
+    return SearchBox(
+      controller: _hotel,
+      prefixIcon: Icon(
+        Icons.pin_drop,
+        color: UIConfig.primaryColor,
+        size: 20,
+      ),
+      suffix: Align(
+        alignment: Alignment.centerRight,
+        widthFactor: 1,
+        // heightFactor: 1,
+        child: GestureDetector(
+          onTap: () {
+            _hotel.text = '';
+            setState(() {
+              isShowResult = false;
+            });
+          },
+          child: const Icon(
+            Icons.cancel_rounded,
+            color: Color(0xFF79747e),
+            size: 16,
+          ),
+        ),
+      ),
+      hintText: 'traveloka🚀',
+      labelText: 'Search for a location',
+      focusNode: hotelBoxFocusNode,
+      focussed: () {},
+      onChanged: (_) {
+        setState(() {
+          isShowResult = false;
+        });
+      },
+    );
+  }
+
+  SearchBox dateSearchBox() {
+    return SearchBox(
+      controller: _dateRange,
+      focussed: pickDateRange,
+      prefixIcon: Icon(
+        Icons.calendar_month_rounded,
+        color: UIConfig.primaryColor,
+        size: 20,
+      ),
+      labelText: 'Pick a date',
+      hintText:
+          '${DateFormat('MMMd').format(dateRange.start)} - ${DateFormat('MMMd').format(dateRange.end)}',
+    );
+  }
+}
+
+class GuestsSearchBox extends StatelessWidget {
+  const GuestsSearchBox({
+    Key? key,
+    required TextEditingController guests,
+  })  : _guests = guests,
+        super(key: key);
+
+  final TextEditingController _guests;
+
+  @override
+  Widget build(BuildContext context) {
+    return SearchBox(
+      controller: _guests,
+      focussed: () {},
+      prefixIcon: Icon(
+        Icons.people_rounded,
+        color: UIConfig.primaryColor,
+        size: 20,
+      ),
+      labelText: 'Guests',
+      hintText: 2,
+      keyboardType: TextInputType.number,
+      suffix: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GestureDetector(
+            onTap: () {
+              int guests =
+                  int.parse(_guests.text.isNotEmpty ? _guests.text : '0');
+              guests++;
+              _guests.text = '$guests';
+            },
+            child: Icon(
+              Icons.add_rounded,
+              color: UIConfig.primaryColor,
+              size: 20,
+            ),
+          ),
+          Text(
+            '|',
+            style: TextStyle(color: UIConfig.darkGrey),
+          ),
+          GestureDetector(
+            onTap: () {
+              int guests =
+                  int.parse(_guests.text.isNotEmpty ? _guests.text : '0');
+              if (guests > 1) {
+                guests--;
+                _guests.text = '$guests';
+              } else {}
+            },
+            child: Icon(
+              Icons.remove_rounded,
+              color: UIConfig.primaryColor,
+              size: 20,
+            ),
           ),
         ],
       ),

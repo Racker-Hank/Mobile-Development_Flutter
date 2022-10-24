@@ -57,11 +57,14 @@ class HotelTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Image.network(
-              hotel.imageURLs[0],
-              height: 80,
-              width: 120,
-              fit: BoxFit.cover,
+            Hero(
+              tag: 'hotel_${hotel.id}_image',
+              child: Image.network(
+                hotel.imageURLs[0],
+                height: 80,
+                width: (MediaQuery.of(context).size.width - 32) / 4,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -72,9 +75,20 @@ class HotelTile extends StatelessWidget {
                   Text(
                     hotel.name,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontFamily: 'Roboto',
+                      // letterSpacing: .1,
+                    ),
                   ),
-                  Text(hotel.location)
+                  const SizedBox(height: 4),
+                  Text(
+                    '📍 ${hotel.location}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'Roboto',
+                    ),
+                  )
                 ],
               ),
             ),
@@ -87,51 +101,7 @@ class HotelTile extends StatelessWidget {
             ),
           ],
         ),
-
-        // child: ListTile(
-        //   contentPadding: EdgeInsets.zero,
-        //   title: Text(hotel.name),
-        //   subtitle: Text('📍 ${hotel.location}'),
-        //   leading: ConstrainedBox(
-        //     constraints: const BoxConstraints(minHeight: 80, maxWidth: 80),
-        //     child: Image.network(hotel.imageURLs[0]),
-        //   ),
       ),
-    );
-  }
-}
-
-class HeroImage extends StatelessWidget {
-  const HeroImage({
-    Key? key,
-    required this.hotelID,
-    required this.imageURL,
-  }) : super(key: key);
-
-  final String imageURL;
-  final String hotelID;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Expanded(
-          flex: 1,
-          child: Hero(
-            tag: 'hotel_${hotelID}_image',
-            child: Container(
-              height: 150,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(imageURL),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

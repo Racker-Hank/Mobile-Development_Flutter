@@ -1,6 +1,7 @@
 // import 'dart:html';
 // import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:readmore/readmore.dart';
 import 'package:traveloka/components/button.dart';
 import 'dart:math' as math;
 // import 'package:google_maps/google_maps.dart' as maps;
@@ -113,13 +114,19 @@ class _MyHotelPageState extends State<MyHotelPage> {
                     ),
                     const SizedBox(height: 16),
                     AnchorButtons(
-                        descriptionKey: descriptionKey,
-                        widget: widget,
-                        reviewsKey: reviewsKey),
+                      descriptionKey: descriptionKey,
+                      widget: widget,
+                      reviewsKey: reviewsKey,
+                    ),
                     const SizedBox(height: 16),
-                    Container(
+                    ReadMoreText(
                       key: descriptionKey,
-                      child: Description(description: widget.hotel.description),
+                      widget.hotel.description,
+                      style: UIConfig.bodyMediumTextStyle,
+                      trimCollapsedText: 'Expand',
+                      trimExpandedText: 'Collapse',
+                      moreStyle: UIConfig.indicationTextStyle,
+                      lessStyle: UIConfig.indicationTextStyle,
                     ),
 
                     const SizedBox(height: 16),
@@ -213,33 +220,42 @@ class _MyHotelPageState extends State<MyHotelPage> {
                     ),
                   ),
                 ),
-              Container(
-                width: smallImageWidth,
-                height: smallImageWidth,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(widget.hotel.imageURLs[4]),
-                    fit: BoxFit.cover,
-                    colorFilter: widget.hotel.imageURLs.length - 5 > 0
-                        ? ColorFilter.mode(
-                            UIConfig.black.withOpacity(.4),
-                            BlendMode.softLight,
-                          )
-                        : null,
+              GestureDetector(
+                onTap: () {
+                  if (widget.hotel.imageURLs.length == 5) {
+                    setState(() {
+                      heroImageURL = widget.hotel.imageURLs[4];
+                    });
+                  }
+                },
+                child: Container(
+                  width: smallImageWidth,
+                  height: smallImageWidth,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(widget.hotel.imageURLs[4]),
+                      fit: BoxFit.cover,
+                      colorFilter: widget.hotel.imageURLs.length - 5 > 0
+                          ? ColorFilter.mode(
+                              UIConfig.black.withOpacity(.4),
+                              BlendMode.softLight,
+                            )
+                          : null,
+                    ),
                   ),
-                ),
-                child: widget.hotel.imageURLs.length - 5 > 0
-                    ? Center(
-                        child: Text(
-                          '+${widget.hotel.imageURLs.length - 4}',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: UIConfig.white,
-                            fontFamily: 'Roboto',
+                  child: widget.hotel.imageURLs.length - 5 > 0
+                      ? Center(
+                          child: Text(
+                            '+${widget.hotel.imageURLs.length - 4}',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: UIConfig.white,
+                              fontFamily: 'Roboto',
+                            ),
                           ),
-                        ),
-                      )
-                    : null,
+                        )
+                      : null,
+                ),
               )
             ],
           ),
@@ -575,7 +591,7 @@ class Reviews extends StatelessWidget {
                       ],
                     ),
                   ),
-                  subtitle: Text(
+                  subtitle: SelectableText(
                     e.content,
                     style: UIConfig.bodyMediumTextStyle,
                   ),

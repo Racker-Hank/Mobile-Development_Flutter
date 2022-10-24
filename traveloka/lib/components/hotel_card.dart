@@ -200,12 +200,12 @@ class HeadLine extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        SelectableText(
           hotelName,
           style: UIConfig.titleLargeTextStyle,
         ),
         const SizedBox(height: 2),
-        Text(
+        SelectableText(
           '📍 $location',
           style: UIConfig.bodyMediumTextStyle,
         ),
@@ -292,7 +292,10 @@ class Description extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(maxHeight: maxHeight),
-      child: Text(description),
+      child: Text(
+        description,
+        style: UIConfig.bodyMediumTextStyle,
+      ),
     );
   }
 }
