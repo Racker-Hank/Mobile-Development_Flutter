@@ -28,36 +28,6 @@ class _MyHotelPageState extends State<MyHotelPage> {
 
   final reviewsKey = GlobalKey();
   final descriptionKey = GlobalKey();
-  // Widget getMap() {
-  //   ui.platformViewRegistry.registerViewFactory("6", (int viewId) {
-  //     final latlang = maps.LatLng(12.9, 77.65);
-
-  //     final elem = DivElement()
-  //       ..id = "6"
-  //       ..style.width = "100%"
-  //       ..style.height = "100%"
-  //       ..style.border = "none";
-
-  //     final mapOptions = maps.MapOptions()
-  //       ..zoom = 11
-  //       ..tilt = 90
-  //       ..center = latlang;
-
-  //     final map = maps.GMap(elem, mapOptions);
-  //   });
-  // }
-
-  // final elem = DivElement()
-  //   ..id = "6"
-  //   ..style.width = "100%"
-  //   ..style.height = "100%"
-  //   ..style.border = "none";
-
-  // final mapOptions = maps.MapOptions()
-  //   ..zoom = 11
-  //   ..tilt = 90
-  //   ..center = maps.LatLng(12.9, 77.65);
-
   @override
   void initState() {
     heroImageURL = widget.hotel.imageURLs[0];
@@ -70,7 +40,6 @@ class _MyHotelPageState extends State<MyHotelPage> {
         (MediaQuery.of(context).size.width - imageSpacing * 4) / 5;
 
     return Scaffold(
-      // appBar: AppBar(title: const Text('Search')),
       body: Stack(
         children: [
           ListView(

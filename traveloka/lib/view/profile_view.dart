@@ -84,7 +84,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                               children: [
                                 Text(
                                   //user.displayName!,
-                                  user.uid!,
+                                  user.uid,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.normal,

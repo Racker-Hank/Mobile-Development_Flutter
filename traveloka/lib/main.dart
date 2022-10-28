@@ -13,9 +13,6 @@ import 'view/home_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
   runApp(MaterialApp(
     title: 'Traveloka',
     theme: ThemeData(
