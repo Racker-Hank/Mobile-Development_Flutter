@@ -34,9 +34,9 @@ class Hotel {
   @override
   int get hashCode => id.hashCode;
 
-  static Hotel fromJson(Map<String, dynamic> json, String id) {
+  static Hotel fromJson(Map<String, dynamic>? json, String id) {
     List<String> imageURLs =
-        (json['imageURLs'] as List).map((e) => e as String).toList();
+        (json!['imageURLs'] as List).map((e) => e as String).toList();
 
     List<Review> reviews = (json['reviews'] as List)
         .map((e) => Review(e['content'], e['ratings']))

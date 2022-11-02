@@ -1,6 +1,8 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:traveloka/entity/booking.dart';
+import 'package:traveloka/repositories/hotel_data.dart';
 import '../components/hotel_card.dart';
 import '../entity/hotel.dart';
 import '../config/UI_configs.dart';
@@ -8,10 +10,11 @@ import '../config/UI_configs.dart';
 class BookingDetailPage extends StatefulWidget {
   const BookingDetailPage({
     super.key,
-    required this.hotel,
+    required this.bookingHotel,
+    required Hotel hotel,
   });
 
-  final Hotel hotel;
+  final BookingHotel bookingHotel;
 
   @override
   State<BookingDetailPage> createState() => _BookingDetailPageState();
@@ -21,11 +24,13 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
   bool isSaved = false;
   String heroImageURL = '';
   double imageSpacing = 4;
+  late Hotel hotel;
 
   @override
   Widget build(BuildContext context) {
     var smallImageWidth =
         (MediaQuery.of(context).size.width - imageSpacing * 4) / 5;
+    hotel = HotelFirebase.getHotelById(widget.bookingHotel.hotelId) as Hotel;
 
     return Column(mainAxisSize: MainAxisSize.min, children: [
       Stack(
@@ -46,50 +51,30 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: HeadLine(
-                      hotelName: widget.hotel.name,
-                      location: widget.hotel.location),
+                  child:
+                      HeadLine(hotelName: hotel.name, location: hotel.location),
                 ),
                 Ratings(
-                  avgRatings: widget.hotel.reviews.isNotEmpty
-                      ? widget.hotel.reviews
+                  avgRatings: hotel.reviews.isNotEmpty
+                      ? hotel.reviews
                               .map((e) => e.rating)
                               .reduce((a, b) => a + b) /
-                          widget.hotel.reviews.length
+                          hotel.reviews.length
                       : 0,
                 ),
               ],
             ),
             const SizedBox(height: 16),
             Container(
-              color: ,
-              child: [
-                Text()
-              ],
-            )
-            // AnchorButtons(
-            //   descriptionKey: descriptionKey,
-            //   widget: widget,
-            //   reviewsKey: reviewsKey,
-            // ),
-            // const SizedBox(height: 16),
-            // ReadMoreText(
-            //   key: descriptionKey,
-            //   widget.hotel.description,
-            //   style: UIConfig.bodyMediumTextStyle,
-            //   trimCollapsedText: 'Expand',
-            //   trimExpandedText: 'Collapse',
-            //   moreStyle: UIConfig.indicationTextStyle,
-            //   lessStyle: UIConfig.indicationTextStyle,
-            // ),
+                color: const Color.fromARGB(70, 0, 0, 0),
+                child: Column(
+                  children: [
+                    Text('Id: ${widget.bookingHotel.id}'),
+                    Text('Time: ${widget.bookingHotel.bookingFromDate}'),
+                  ],
+                )),
             const SizedBox(height: 16),
             const SizedBox(height: 16),
-            // Directions(widget: widget),
-            // const SizedBox(height: 16),
-            // Reviews(
-            //   reviewsKey: reviewsKey,
-            //   widget: widget,
-            // ),
           ],
         ),
       ),
@@ -166,7 +151,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
       child: Column(
         children: [
           Hero(
-            tag: 'hotel${widget.hotel.id}_image',
+            tag: 'hotel${hotel.id}_image',
             child: Container(
               height: MediaQuery.of(context).size.width * 2 / 3,
               decoration: BoxDecoration(
@@ -183,7 +168,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
               for (int i = 0; i < 4; i++)
                 GestureDetector(
                   onTap: () => setState(() {
-                    heroImageURL = widget.hotel.imageURLs[i];
+                    heroImageURL = hotel.imageURLs[i];
                   }),
                   child: Container(
                     width: smallImageWidth,
@@ -191,7 +176,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                     margin: EdgeInsets.only(right: imageSpacing),
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(widget.hotel.imageURLs[i]),
+                        image: NetworkImage(hotel.imageURLs[i]),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -199,9 +184,9 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                 ),
               GestureDetector(
                 onTap: () {
-                  if (widget.hotel.imageURLs.length == 5) {
+                  if (hotel.imageURLs.length == 5) {
                     setState(() {
-                      heroImageURL = widget.hotel.imageURLs[4];
+                      heroImageURL = hotel.imageURLs[4];
                     });
                   }
                 },
@@ -210,9 +195,9 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                   height: smallImageWidth,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(widget.hotel.imageURLs[4]),
+                      image: NetworkImage(hotel.imageURLs[4]),
                       fit: BoxFit.cover,
-                      colorFilter: widget.hotel.imageURLs.length - 5 > 0
+                      colorFilter: hotel.imageURLs.length - 5 > 0
                           ? ColorFilter.mode(
                               UIConfig.black.withOpacity(.4),
                               BlendMode.softLight,
@@ -220,10 +205,10 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                           : null,
                     ),
                   ),
-                  child: widget.hotel.imageURLs.length - 5 > 0
+                  child: hotel.imageURLs.length - 5 > 0
                       ? Center(
                           child: Text(
-                            '+${widget.hotel.imageURLs.length - 4}',
+                            '+${hotel.imageURLs.length - 4}',
                             style: TextStyle(
                               fontSize: 16,
                               color: UIConfig.white,

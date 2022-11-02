@@ -47,4 +47,12 @@ class HotelFirebase {
             .map((doc) => Hotel.fromJson(doc.data(), doc.id))
             .toList());
   }
+
+  static Future<Hotel> getHotelById(String id) {
+    return FirebaseFirestore.instance
+        .collection("hotels")
+        .doc(id)
+        .get()
+        .then((value) => Hotel.fromJson(value.data(), value.id));
+  }
 }

@@ -38,21 +38,6 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // body: TextButton(
-      //   onPressed: () async {
-      //     try {
-      //       final userCred =
-      //           await FirebaseAuth.instance.signInWithEmailAndPassword(
-      //         email: '20020141@vnu.edu.vn',
-      //         password: '1234567890',
-      //       );
-      //       print(userCred);
-      //     } on Exception catch (e) {
-      //       print(e);
-      //     }
-      //   },
-      //   child: Text('login'),
-      // ),
       body: Column(
         children: [
           const HeroSvg(),

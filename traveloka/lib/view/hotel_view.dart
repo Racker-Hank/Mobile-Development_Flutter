@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:traveloka/components/button.dart';
-import 'package:traveloka/view/booking_detail_view.dart';
 import 'dart:math' as math;
-
 import '../components/hotel_card.dart';
 import '../config/ui_configs.dart';
 import '../entity/hotel.dart';
@@ -92,6 +89,7 @@ class _MyHotelPageState extends State<MyHotelPage> {
                       moreStyle: UIConfig.indicationTextStyle,
                       lessStyle: UIConfig.indicationTextStyle,
                     ),
+
                     const SizedBox(height: 16),
                     Facilities(
                       showFacilities: true,
@@ -99,8 +97,21 @@ class _MyHotelPageState extends State<MyHotelPage> {
                       facilities: widget.hotel.facilities,
                     ),
                     const SizedBox(height: 16),
+                    // const GoogleMap(
+                    //   initialCameraPosition: CameraPosition(
+                    //     target: LatLng(25.782337702478927, -80.14071738317143),
+                    //   ),
+                    // ),
+                    // Container(
+                    //   height: 300,
+                    //   child: map(),
+                    // ),
                     Directions(widget: widget),
                     const SizedBox(height: 16),
+                    // Container(
+                    //   height: 1,
+                    //   color: UIConfig.primaryColor,
+                    // ),
                     Reviews(
                       reviewsKey: reviewsKey,
                       widget: widget,
@@ -110,10 +121,7 @@ class _MyHotelPageState extends State<MyHotelPage> {
               ),
             ],
           ),
-          BookingCTA(
-            widget: widget,
-            hotel: widget.hotel,
-          )
+          BookingCTA(widget: widget)
         ],
       ),
     );
@@ -421,11 +429,9 @@ class BookingCTA extends StatelessWidget {
   const BookingCTA({
     Key? key,
     required this.widget,
-    required this.hotel,
   }) : super(key: key);
 
   final MyHotelPage widget;
-  final Hotel hotel;
 
   @override
   Widget build(BuildContext context) {
@@ -473,12 +479,7 @@ class BookingCTA extends StatelessWidget {
             ),
             Button(
               function: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                    CupertinoPageRoute(
-                      builder: ((context) =>
-                          BookingDetailPage(hotel: widget.hotel)),
-                    ),
-                    (route) => false);
+                print('test');
               },
               label: 'Book Now',
               icon: Icon(
