@@ -6,6 +6,7 @@ import 'package:traveloka/config/UI_configs.dart';
 import 'view/signin_view.dart';
 import 'firebase_options.dart';
 import 'view/home_view.dart';
+import 'view/signup_view.dart';
 // import 'package:traveloka/components/bottom_nav_bar.dart';
 // import 'view/booking_view.dart';
 // import 'view/explore_view.dart';
@@ -58,7 +59,8 @@ class Traveloka extends StatelessWidget {
               // }
               return const Home();
             } else {
-              return const SignInPage();
+              // return const SignInPage();
+              return const SignUpPage();
             }
           default:
             return const Center(child: CircularProgressIndicator.adaptive());
