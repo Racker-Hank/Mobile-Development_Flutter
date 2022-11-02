@@ -147,9 +147,9 @@ class HotelCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Ratings(
-                          ratings: hotel.reviews.isNotEmpty
+                          avgRatings: hotel.reviews.isNotEmpty
                               ? hotel.reviews
-                                      .map((e) => e.ratings)
+                                      .map((e) => e.rating)
                                       .reduce((a, b) => a + b) /
                                   hotel.reviews.length
                               : 0,
@@ -245,18 +245,18 @@ class HeadLine extends StatelessWidget {
 class Ratings extends StatelessWidget {
   const Ratings({
     Key? key,
-    required this.ratings,
+    required this.avgRatings,
   }) : super(key: key);
 
-  final double ratings;
+  final double avgRatings;
 
   @override
   Widget build(BuildContext context) {
     return Row(children: [
       Text(
-        ratings - ratings.toInt() != 0
-            ? ratings.toStringAsFixed(1)
-            : '$ratings',
+        avgRatings - avgRatings.toInt() != 0
+            ? avgRatings.toStringAsFixed(1)
+            : '$avgRatings',
         style: const TextStyle(
           fontFamily: 'Roboto',
           fontSize: 14,
