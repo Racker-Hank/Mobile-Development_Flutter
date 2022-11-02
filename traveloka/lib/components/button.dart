@@ -80,10 +80,6 @@ class _ButtonState extends State<Button> {
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 4),
           decoration: BoxDecoration(
             borderRadius: UIConfig.borderRadius,
-            // gradient: LinearGradient(
-            //   colors: [UIConfig.accentColor, UIConfig.primaryColor],
-            //   transform: const GradientRotation(math.pi / 4),
-            // ),
             gradient: gradient,
             boxShadow: const [
               BoxShadow(

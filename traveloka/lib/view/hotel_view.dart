@@ -8,8 +8,6 @@ import 'dart:math' as math;
 import '../components/hotel_card.dart';
 import '../config/ui_configs.dart';
 import '../entity/hotel.dart';
-import '../entity/review.dart';
-import '../main.dart';
 
 class MyHotelPage extends StatefulWidget {
   const MyHotelPage({
@@ -42,7 +40,6 @@ class _MyHotelPageState extends State<MyHotelPage> {
         (MediaQuery.of(context).size.width - imageSpacing * 4) / 5;
 
     return Scaffold(
-      // appBar: AppBar(title: const Text('Search')),
       body: Stack(
         children: [
           ListView(

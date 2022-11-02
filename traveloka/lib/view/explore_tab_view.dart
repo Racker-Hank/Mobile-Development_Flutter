@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:traveloka/repositories/hotel_data.dart';
-import '../components/button.dart';
-import '../components/round_icon_button.dart';
-import '../config/ui_configs.dart';
-
 import '../components/hotel_card.dart';
 import '../components/search_bar.dart';
 import '../entity/hotel.dart';

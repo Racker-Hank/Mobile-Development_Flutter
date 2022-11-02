@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:traveloka/config/UI_configs.dart';
 import 'view/signin_view.dart';
 import 'firebase_options.dart';
+import 'view/booking_view.dart';
+import 'view/explore_view.dart';
+import 'view/profile_view.dart';
+import 'view/saved_view.dart';
 import 'view/home_view.dart';
 import 'view/signup_view.dart';
 // import 'package:traveloka/components/bottom_nav_bar.dart';
@@ -16,9 +20,6 @@ import 'view/signup_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
   runApp(MaterialApp(
     title: 'Traveloka',
     theme: ThemeData(

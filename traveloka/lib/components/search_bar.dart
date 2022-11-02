@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import './button.dart';
 import './round_icon_button.dart';
 
 import '../config/ui_configs.dart';
@@ -46,6 +45,7 @@ class _SearchBarState extends State<SearchBar> {
   void dispose() {
     // hotelBoxFocusNode.dispose();
     // guestsBoxFocusNode.dispose();
+    // _animationController.dispose();
     _hotel.dispose();
     _guests.dispose();
     super.dispose();
