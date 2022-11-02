@@ -43,7 +43,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
           const HeroSvg(),
           const SizedBox(height: 24),

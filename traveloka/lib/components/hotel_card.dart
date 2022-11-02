@@ -4,7 +4,7 @@ import 'package:traveloka/view/hotel_view.dart';
 import '../config/ui_configs.dart';
 
 import '../entity/hotel.dart';
-import '../view/booking_view.dart';
+import '../view/booking_tab_view.dart';
 import '../view/search_view.dart';
 // import 'package:hello_world/entity/Hotel.dart';
 

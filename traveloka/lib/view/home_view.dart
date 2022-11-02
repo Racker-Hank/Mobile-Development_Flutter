@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../components/bottom_nav_bar.dart';
-import 'explore_view.dart';
-import 'booking_view.dart';
-import 'profile_view.dart';
-import 'saved_view.dart';
-// import 'search_view.dart';
+import 'explore_tab_view.dart';
+import 'booking_tab_view.dart';
+import 'profile_tab_view.dart';
+import 'saved_tab_view.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

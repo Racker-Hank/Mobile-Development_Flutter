@@ -18,8 +18,6 @@ class MyExplorePage extends StatefulWidget {
 class _MyExplorePageState extends State<MyExplorePage> {
   final double hPadding = 16;
 
-  // List hotels = Hotel.hotels;
-
   @override
   Widget build(BuildContext context) {
     return Column(
