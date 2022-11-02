@@ -64,8 +64,8 @@ class _MyHotelPageState extends State<MyHotelPage> {
 
   @override
   void initState() {
-    super.initState();
     heroImageURL = widget.hotel.imageURLs[0];
+    super.initState();
   }
 
   @override
@@ -102,9 +102,9 @@ class _MyHotelPageState extends State<MyHotelPage> {
                               location: widget.hotel.location),
                         ),
                         Ratings(
-                          ratings: widget.hotel.reviews.isNotEmpty
+                          avgRatings: widget.hotel.reviews.isNotEmpty
                               ? widget.hotel.reviews
-                                      .map((e) => e.ratings)
+                                      .map((e) => e.rating)
                                       .reduce((a, b) => a + b) /
                                   widget.hotel.reviews.length
                               : 0,
@@ -567,18 +567,22 @@ class Reviews extends StatelessWidget {
                   leading: const CircleAvatar(radius: 20),
                   title: Padding(
                     padding: const EdgeInsets.only(bottom: 4),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        const Expanded(
+                          child: Text('UserName'),
+                        ),
                         Row(
                           children: [
-                            for (var i = 0; i < e.ratings; i++)
+                            for (var i = 0; i < e.rating; i++)
                               Icon(
                                 Icons.star_rounded,
                                 color: UIConfig.accentColor,
                                 size: 20,
                               ),
-                            for (var i = e.ratings; i < 5; i++)
+                            for (var i = e.rating; i < 5; i++)
                               Icon(
                                 Icons.star_rounded,
                                 color: UIConfig.darkGrey,
@@ -586,7 +590,6 @@ class Reviews extends StatelessWidget {
                               ),
                           ],
                         ),
-                        const Text('UserName'),
                       ],
                     ),
                   ),

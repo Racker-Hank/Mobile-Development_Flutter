@@ -29,7 +29,7 @@ class _MyExplorePageState extends State<MyExplorePage> {
         const SizedBox(height: 16),
         Expanded(
           child: StreamBuilder<List<Hotel>>(
-            stream: HotelFirebase.readHotels(),
+            stream: HotelFirebase.readHotelsLimit(20),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 print(snapshot.error.toString());

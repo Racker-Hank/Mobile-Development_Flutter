@@ -46,7 +46,7 @@ class _MySavedPageState extends State<MySavedPage> {
                           child: Text(
                             'You have not saved any hotel.',
                             style: TextStyle(
-                                color: UIConfig.accentColor,
+                                color: UIConfig.black,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Roboto'),

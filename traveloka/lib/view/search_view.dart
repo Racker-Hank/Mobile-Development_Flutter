@@ -8,6 +8,7 @@ import 'package:traveloka/repositories/hotel_data.dart';
 
 import '../components/button.dart';
 import '../components/hotel_card.dart';
+import '../components/input_box.dart';
 import '../components/search_bar.dart';
 import '../config/ui_configs.dart';
 import '../entity/hotel.dart';
@@ -60,7 +61,6 @@ class _MySearchPageState extends State<MySearchPage>
     // Timer(
     //     const Duration(milliseconds: 0), () => _animationController.forward());
     // _animationController.forward();
-    super.initState();
 
     hotelBoxFocusNode.requestFocus();
     _hotel = TextEditingController();
@@ -70,6 +70,7 @@ class _MySearchPageState extends State<MySearchPage>
 
     _hotel.addListener(_searchByHotel);
     // isShowResult = false;
+    super.initState();
   }
 
   Future<void> _searchByHotel() async {
@@ -97,11 +98,11 @@ class _MySearchPageState extends State<MySearchPage>
 
   @override
   void dispose() {
-    super.dispose();
     _hotel.dispose();
     _dateRange.dispose();
     _guests.dispose();
     _pageController.dispose();
+    super.dispose();
   }
 
   DateTimeRange dateRange = DateTimeRange(
@@ -359,8 +360,8 @@ class _MySearchPageState extends State<MySearchPage>
     );
   }
 
-  SearchBox hotelSearchBox() {
-    return SearchBox(
+  InputBox hotelSearchBox() {
+    return InputBox(
       controller: _hotel,
       prefixIcon: Icon(
         Icons.pin_drop,
@@ -397,8 +398,8 @@ class _MySearchPageState extends State<MySearchPage>
     );
   }
 
-  SearchBox dateSearchBox() {
-    return SearchBox(
+  InputBox dateSearchBox() {
+    return InputBox(
       controller: _dateRange,
       focussed: pickDateRange,
       prefixIcon: Icon(
@@ -424,7 +425,7 @@ class GuestsSearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SearchBox(
+    return InputBox(
       controller: _guests,
       focussed: () {},
       prefixIcon: Icon(
@@ -442,11 +443,13 @@ class GuestsSearchBox extends StatelessWidget {
             onTap: () {
               int guests =
                   int.parse(_guests.text.isNotEmpty ? _guests.text : '0');
-              guests++;
-              _guests.text = '$guests';
+              if (guests > 1) {
+                guests--;
+                _guests.text = '$guests';
+              } else {}
             },
             child: Icon(
-              Icons.add_rounded,
+              Icons.remove_rounded,
               color: UIConfig.primaryColor,
               size: 20,
             ),
@@ -459,13 +462,11 @@ class GuestsSearchBox extends StatelessWidget {
             onTap: () {
               int guests =
                   int.parse(_guests.text.isNotEmpty ? _guests.text : '0');
-              if (guests > 1) {
-                guests--;
-                _guests.text = '$guests';
-              } else {}
+              guests++;
+              _guests.text = '$guests';
             },
             child: Icon(
-              Icons.remove_rounded,
+              Icons.add_rounded,
               color: UIConfig.primaryColor,
               size: 20,
             ),
