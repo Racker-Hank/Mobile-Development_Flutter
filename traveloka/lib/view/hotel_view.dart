@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:traveloka/components/button.dart';
+import 'package:traveloka/view/booking_detail_view.dart';
+import 'package:traveloka/view/past_booking_detail_view.dart';
 import 'dart:math' as math;
 import '../components/hotel_card.dart';
 import '../config/ui_configs.dart';
@@ -60,8 +62,9 @@ class _MyHotelPageState extends State<MyHotelPage> {
                       children: [
                         Expanded(
                           child: HeadLine(
-                              hotelName: widget.hotel.name,
-                              location: widget.hotel.location),
+                            hotelName: widget.hotel.name,
+                            location: widget.hotel.location
+                          ),
                         ),
                         Ratings(
                           avgRatings: widget.hotel.reviews.isNotEmpty
@@ -479,7 +482,15 @@ class BookingCTA extends StatelessWidget {
             ),
             Button(
               function: () {
-                print('test');
+                // print('test');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BookingDetailPage(
+                      hotel: widget.hotel
+                    )
+                  )
+                );
               },
               label: 'Book Now',
               icon: Icon(

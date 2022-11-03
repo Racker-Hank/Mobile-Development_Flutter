@@ -47,8 +47,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   Column(
                     children: [
                       Container(
-                        margin:
-                            const EdgeInsets.only(left: 16, right: 16, top: 32),
+                        margin: const EdgeInsets.only(left: 16, right: 16, top: 32),
                         height: 80,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         decoration: BoxDecoration(
@@ -137,8 +136,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                             (route) => false);
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 32, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 4),
                         decoration: BoxDecoration(
                           color: const Color(0xFFDC362E),
                           borderRadius: UIConfig.borderRadius,

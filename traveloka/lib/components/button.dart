@@ -5,7 +5,7 @@ import 'dart:math' as math;
 class Button extends StatefulWidget {
   const Button({
     super.key,
-    this.label = 'Search',
+    required this.label,
     this.icon = const Icon(Icons.search, size: 24, color: Colors.white),
     this.showIcon = false,
     required this.function,

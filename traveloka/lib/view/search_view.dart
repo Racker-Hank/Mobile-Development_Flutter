@@ -148,10 +148,8 @@ class _MySearchPageState extends State<MySearchPage>
       dateRange = newDateRange;
     });
 
-    String dateFormat =
-        dateRange.start.year == dateRange.end.year ? 'MMMd' : 'MMM d, yy';
-    _dateRange.text =
-        '${DateFormat(dateFormat).format(dateRange.start)} - ${DateFormat(dateFormat).format(dateRange.end)}';
+    String dateFormat = dateRange.start.year == dateRange.end.year ? 'MMMd' : 'MMM d, yy';
+    _dateRange.text = '${DateFormat(dateFormat).format(dateRange.start)} - ${DateFormat(dateFormat).format(dateRange.end)}';
   }
 
   @override
@@ -210,6 +208,7 @@ class _MySearchPageState extends State<MySearchPage>
                 ),
                 const SizedBox(height: 24),
                 Button(
+                  label: 'Search',
                   function: () {
                     debugPrint(
                         '${_hotel.text} ${_dateRange.text} ${_guests.text}');

@@ -8,7 +8,7 @@ class BookingHotel {
   late int price;
 
   static BookingHotel fromJson(Map<String, dynamic> json, String id) {
-    BookingHotel ans = new BookingHotel();
+    BookingHotel ans = BookingHotel();
     
     ans.id = id;
     ans.bookingFromDate = DateTime.parse(json["bookingFromDate"]);
