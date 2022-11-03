@@ -43,9 +43,8 @@ class Traveloka extends StatelessWidget {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
             return Text(snapshot.connectionState.toString());
-          // case ConnectionState.waiting:
-          //   // TODO: Handle this case.
-          //   break;
+          case ConnectionState.waiting:
+            return const Center(child: CircularProgressIndicator.adaptive());
           // case ConnectionState.active:
           //   // TODO: Handle this case.
           //   break;
@@ -59,7 +58,7 @@ class Traveloka extends StatelessWidget {
               // }
               return const Home();
             } else {
-              // return const SignInPage();
+              return const SignInPage();
               return const SignUpPage();
             }
           default:

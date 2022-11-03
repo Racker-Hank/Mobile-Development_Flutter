@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:traveloka/config/UI_configs.dart';
+import 'package:traveloka/entity/hotel.dart';
 
-import '../entity/hotel.dart';
+// import '../entity/hotel.dart';
 
 class HotelFirebase {
   static Stream<List<Hotel>> readHotels() {

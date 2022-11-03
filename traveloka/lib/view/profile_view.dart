@@ -77,7 +77,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                                 maxRadius: 24,
                                 child: user.photoURL != null
                                     ? Image.network(user.photoURL!)
-                                    : Text(displayName[0]),
+                                    : Text(UIConfig.capitalize(displayName[0])),
                               ),
                             ),
                             Expanded(
