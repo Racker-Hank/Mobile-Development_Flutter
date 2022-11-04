@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:traveloka/components/new_page_route.dart';
+import 'package:traveloka/entity/hotel.dart';
 import 'package:traveloka/view/hotel_view.dart';
 import '../config/ui_configs.dart';
 
-import '../entity/hotel.dart';
+// import '../entity/hotel.dart';
 import '../view/booking_tab_view.dart';
 import '../view/search_view.dart';
 // import 'package:hello_world/entity/Hotel.dart';
@@ -237,7 +239,7 @@ class Ratings extends StatelessWidget {
       Text(
         avgRatings - avgRatings.toInt() != 0
             ? avgRatings.toStringAsFixed(1)
-            : '$avgRatings',
+            : avgRatings.toStringAsFixed(0),
         style: const TextStyle(
           fontFamily: 'Roboto',
           fontSize: 14,
@@ -291,7 +293,7 @@ class Description extends StatelessWidget {
   const Description({
     Key? key,
     required this.description,
-    this.maxHeight = 60,
+    this.maxHeight = 14 * 5,
   }) : super(key: key);
 
   final String description;

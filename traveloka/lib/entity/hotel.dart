@@ -5,7 +5,7 @@ class Hotel {
   late List<String> imageURLs;
   late String name;
   late String location;
-  late double? ratings;
+  // late double? ratings;
   late List<Review> reviews;
   late int price;
   late String description;
@@ -18,7 +18,7 @@ class Hotel {
     this.imageURLs,
     this.name,
     this.location,
-    this.ratings,
+    // this.ratings,
     this.reviews,
     this.price,
     this.description,
@@ -52,7 +52,7 @@ class Hotel {
       imageURLs,
       json['name'],
       json['location'],
-      json['ratings'],
+      // json['ratings'],
       reviews,
       json['price'],
       json['description'],

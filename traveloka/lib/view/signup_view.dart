@@ -22,6 +22,10 @@ class _SignUpPageState extends State<SignUpPage> {
   late final TextEditingController _userName;
   late final TextEditingController _email;
   late final TextEditingController _password;
+  late final FocusNode usernameFocusNode;
+  late final FocusNode emailFocusNode;
+  late final FocusNode passwordFocusNode;
+
   bool _passwordVisible = false;
 
   @override
@@ -29,6 +33,10 @@ class _SignUpPageState extends State<SignUpPage> {
     _userName = TextEditingController();
     _email = TextEditingController();
     _password = TextEditingController();
+    usernameFocusNode = FocusNode();
+    emailFocusNode = FocusNode();
+    passwordFocusNode = FocusNode();
+
     super.initState();
   }
 
@@ -37,6 +45,9 @@ class _SignUpPageState extends State<SignUpPage> {
     _userName.dispose();
     _email.dispose();
     _password.dispose();
+    usernameFocusNode.dispose();
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
     super.dispose();
   }
 
@@ -52,68 +63,15 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                InputBox(
-                  controller: _userName,
-                  focussed: () {},
-                  hintText: '',
-                  labelText: 'Username',
-                  autoCorrect: false,
-                  // keyboardType: TextInputType.emailAddress,
-                  prefixIcon: Icon(
-                    Icons.person_rounded,
-                    color: UIConfig.black,
-                    size: 20,
-                  ),
-                ),
+                UsernameInputBox(
+                    userName: _userName, emailFocusNode: emailFocusNode),
                 const SizedBox(height: 24),
-                InputBox(
-                  controller: _email,
-                  focussed: () {},
-                  hintText: '',
-                  labelText: 'Email',
-                  autoCorrect: false,
-                  keyboardType: TextInputType.emailAddress,
-                  prefixIcon: Icon(
-                    Icons.email_rounded,
-                    color: UIConfig.black,
-                    size: 20,
-                  ),
-                ),
+                EmailInputBox(
+                    email: _email,
+                    emailFocusNode: emailFocusNode,
+                    passwordFocusNode: passwordFocusNode),
                 const SizedBox(height: 24),
-                InputBox(
-                  controller: _password,
-                  focussed: () {},
-                  hintText: '',
-                  labelText: 'Password',
-                  autoCorrect: false,
-                  obscureText: !_passwordVisible,
-                  prefixIcon: Icon(
-                    Icons.vpn_key_rounded,
-                    color: UIConfig.black,
-                    size: 20,
-                  ),
-                  suffix: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          _passwordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: UIConfig.primaryColor,
-                          size: 20,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _passwordVisible = !_passwordVisible;
-                          });
-                        },
-                      ),
-                      const Text(''),
-                    ],
-                  ),
-                ),
+                passwordInputBox(context),
                 const SizedBox(height: 24),
                 Button(
                   function: () async {
@@ -174,6 +132,105 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  InputBox passwordInputBox(BuildContext context) {
+    return InputBox(
+      controller: _password,
+      focussed: () {},
+      onEditingComplete: () => FocusScope.of(context).unfocus(),
+      focusNode: passwordFocusNode,
+      hintText: '',
+      labelText: 'Password',
+      autoCorrect: false,
+      obscureText: !_passwordVisible,
+      prefixIcon: Icon(
+        Icons.vpn_key_rounded,
+        color: UIConfig.black,
+        size: 20,
+      ),
+      suffix: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            icon: Icon(
+              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              color: UIConfig.primaryColor,
+              size: 20,
+            ),
+            onPressed: () {
+              setState(() {
+                _passwordVisible = !_passwordVisible;
+              });
+            },
+          ),
+          const Text(''),
+        ],
+      ),
+    );
+  }
+}
+
+class UsernameInputBox extends StatelessWidget {
+  const UsernameInputBox({
+    Key? key,
+    required TextEditingController userName,
+    required this.emailFocusNode,
+  })  : _userName = userName,
+        super(key: key);
+
+  final TextEditingController _userName;
+  final FocusNode emailFocusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return InputBox(
+      controller: _userName,
+      focussed: () {},
+      onEditingComplete: () => emailFocusNode.requestFocus(),
+      hintText: '',
+      labelText: 'Username',
+      autoCorrect: false,
+      prefixIcon: Icon(
+        Icons.person_rounded,
+        color: UIConfig.black,
+        size: 20,
+      ),
+    );
+  }
+}
+
+class EmailInputBox extends StatelessWidget {
+  const EmailInputBox({
+    Key? key,
+    required TextEditingController email,
+    required this.emailFocusNode,
+    required this.passwordFocusNode,
+  })  : _email = email,
+        super(key: key);
+
+  final TextEditingController _email;
+  final FocusNode emailFocusNode;
+  final FocusNode passwordFocusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return InputBox(
+      controller: _email,
+      focussed: () {},
+      focusNode: emailFocusNode,
+      onEditingComplete: () => passwordFocusNode.requestFocus(),
+      hintText: '',
+      labelText: 'Email',
+      autoCorrect: false,
+      keyboardType: TextInputType.emailAddress,
+      prefixIcon: Icon(
+        Icons.email_rounded,
+        color: UIConfig.black,
+        size: 20,
       ),
     );
   }

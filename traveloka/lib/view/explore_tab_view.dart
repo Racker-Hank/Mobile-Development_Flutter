@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:traveloka/entity/hotel.dart';
 import 'package:traveloka/repositories/hotel_data.dart';
 import '../components/hotel_card.dart';
 import '../components/search_bar.dart';
-import '../entity/hotel.dart';
+// import '../entity/hotel.dart';
 
 class MyExplorePage extends StatefulWidget {
   const MyExplorePage({Key? key}) : super(key: key);

@@ -44,8 +44,13 @@ render.experimental.xml
 .flutter-plugins
 .flutter-plugins-dependencies
 
+<<<<<<< HEAD
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+=======
+genhtml.perl
+coverage/
+>>>>>>> ff7b54111442a3aaeb5c0eda3f9e0538460e3a10

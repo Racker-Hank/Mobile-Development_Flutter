@@ -35,12 +35,17 @@ class Traveloka extends StatelessWidget {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
             return Text(snapshot.connectionState.toString());
+          case ConnectionState.waiting:
+            return const Center(child: CircularProgressIndicator.adaptive());
+          // case ConnectionState.active:
+          //   // TODO: Handle this case.
+          //   break;
           case ConnectionState.done:
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
               return const Home();
             } else {
-              return const SignUpPage();
+              return const SignInPage();
             }
           default:
             return const Center(child: CircularProgressIndicator.adaptive());

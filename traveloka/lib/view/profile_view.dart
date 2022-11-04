@@ -25,12 +25,12 @@ class _MyProfilePageState extends State<MyProfilePage> {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
             return Text(snapshot.connectionState.toString());
-          // case ConnectionState.waiting:
-          //   // TODO: Handle this case.
-          //   break;
-          // case ConnectionState.active:
-          //   // TODO: Handle this case.
-          //   break;
+        // case ConnectionState.waiting:
+        //   // TODO: Handle this case.
+        //   break;
+        // case ConnectionState.active:
+        //   // TODO: Handle this case.
+        //   break;
           case ConnectionState.done:
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
@@ -39,7 +39,8 @@ class _MyProfilePageState extends State<MyProfilePage> {
               // } else {
               //   return const Text('not verified');
               // }
-              print(user.photoURL);
+              String displayName = user.displayName ?? user.email!;
+              // print(user.photoURL);
               return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -47,22 +48,24 @@ class _MyProfilePageState extends State<MyProfilePage> {
                     children: [
                       Container(
                         margin:
-                            const EdgeInsets.only(left: 16, right: 16, top: 32),
+                        const EdgeInsets.only(left: 16, right: 16, top: 32),
                         height: 80,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         decoration: BoxDecoration(
                             borderRadius: UIConfig.borderRadius,
                             boxShadow: const [
                               BoxShadow(
-                                  color: Color.fromARGB(30, 0, 0, 0),
-                                  offset: Offset(0, 1),
-                                  blurRadius: 3,
-                                  spreadRadius: 1),
+                                color: Color.fromARGB(30, 0, 0, 0),
+                                offset: Offset(0, 1),
+                                blurRadius: 3,
+                                spreadRadius: 1,
+                              ),
                               BoxShadow(
-                                  color: Color.fromARGB(50, 0, 0, 0),
-                                  offset: Offset(0, 1),
-                                  blurRadius: 2,
-                                  spreadRadius: 0)
+                                color: Color.fromARGB(50, 0, 0, 0),
+                                offset: Offset(0, 1),
+                                blurRadius: 2,
+                                spreadRadius: 0,
+                              )
                             ],
                             color: UIConfig.white),
                         child: Row(
@@ -74,27 +77,34 @@ class _MyProfilePageState extends State<MyProfilePage> {
                                 maxRadius: 24,
                                 child: user.photoURL != null
                                     ? Image.network(user.photoURL!)
-                                    : Text(user.email![0]),
+                                    : Text(UIConfig.capitalize(displayName[0])),
                               ),
                             ),
                             Expanded(
-                                child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  //user.displayName!,
-                                  user.uid,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 19,
-                                    fontFamily: 'Roboto',
-                                  ),
-                                )
-                              ],
-                            )),
-                            const SizedBox(width: 30)
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    //user.displayName!,
+                                    // user.uid!,
+                                    displayName,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      // fontWeight: FontWeight.normal,
+                                      fontSize: 22,
+                                      fontFamily: 'Roboto',
+                                      color: UIConfig.black,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            const Padding(
+                              padding: EdgeInsets.only(right: 16),
+                              child: Icon(Icons.border_color_rounded),
+                            )
                           ],
                         ),
                       ),
@@ -124,7 +134,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                             CupertinoPageRoute(
                               builder: ((context) => const SignInPage()),
                             ),
-                            (route) => false);
+                                (route) => false);
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -149,14 +159,14 @@ class _MyProfilePageState extends State<MyProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Log out',
+                              'Sign out 🎉',
                               style: UIConfig.buttonTextStyle,
                             ),
                           ],
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               );
             } else {
@@ -173,9 +183,9 @@ class _MyProfilePageState extends State<MyProfilePage> {
 class SettingTile extends StatelessWidget {
   const SettingTile(
       {super.key,
-      required this.tileName,
-      required this.tileText,
-      required this.tileIcon});
+        required this.tileName,
+        required this.tileText,
+        required this.tileIcon});
 
   final String tileName;
 
@@ -186,58 +196,60 @@ class SettingTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {},
-        child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            height: 80,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            decoration: BoxDecoration(
-                borderRadius: UIConfig.borderRadius,
-                boxShadow: const [
-                  BoxShadow(
-                      color: Color.fromARGB(30, 0, 0, 0),
-                      offset: Offset(0, 1),
-                      blurRadius: 3,
-                      spreadRadius: 1),
-                  BoxShadow(
-                      color: Color.fromARGB(50, 0, 0, 0),
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
-                      spreadRadius: 0)
+      onTap: () {},
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        height: 80,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        decoration: BoxDecoration(
+            borderRadius: UIConfig.borderRadius,
+            boxShadow: const [
+              BoxShadow(
+                  color: Color.fromARGB(30, 0, 0, 0),
+                  offset: Offset(0, 1),
+                  blurRadius: 3,
+                  spreadRadius: 1),
+              BoxShadow(
+                  color: Color.fromARGB(50, 0, 0, 0),
+                  offset: Offset(0, 1),
+                  blurRadius: 2,
+                  spreadRadius: 0)
+            ],
+            color: UIConfig.white),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 19),
+              child: tileIcon,
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    tileName,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        fontFamily: 'Roboto'),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    tileText,
+                    style: const TextStyle(fontSize: 14, fontFamily: 'Roboto'),
+                  )
                 ],
-                color: UIConfig.white),
-            child: Row(children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 19),
-                child: tileIcon,
               ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      tileName,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          fontFamily: 'Roboto'),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      tileText,
-                      style:
-                          const TextStyle(fontSize: 14, fontFamily: 'Roboto'),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(width: 16),
-              const Padding(
-                padding: EdgeInsets.only(right: 16),
-                child: Icon(Icons.keyboard_arrow_right_rounded),
-              )
-            ])));
+            ),
+            const SizedBox(width: 16),
+            const Padding(
+              padding: EdgeInsets.only(right: 16),
+              child: Icon(Icons.keyboard_arrow_right_rounded),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

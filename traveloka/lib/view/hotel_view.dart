@@ -202,7 +202,7 @@ class _MyHotelPageState extends State<MyHotelPage> {
                       colorFilter: widget.hotel.imageURLs.length - 5 > 0
                           ? ColorFilter.mode(
                               UIConfig.black.withOpacity(.4),
-                              BlendMode.softLight,
+                              BlendMode.srcOver,
                             )
                           : null,
                     ),

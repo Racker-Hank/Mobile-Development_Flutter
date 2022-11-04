@@ -15,7 +15,7 @@ class HeroSvg extends StatefulWidget {
 
 class _HeroSvgState extends State<HeroSvg> {
   int svgIndex = Random().nextInt(3) + 1;
-  String path = '../../assets/';
+  String path = 'assets/';
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _HeroSvgState extends State<HeroSvg> {
           child: Column(
             children: [
               Container(
-                height: 320,
+                height: MediaQuery.of(context).size.height * .35,
                 child: SvgPicture.asset(
                   '$path$svgIndex.svg',
                   // width: MediaQuery.of(context).size.width - 128,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../entity/hotel.dart';
+import 'package:traveloka/entity/hotel.dart';
+// import '../entity/hotel.dart';
 import 'package:traveloka/view/hotel_view.dart';
 import '../config/ui_configs.dart';
 

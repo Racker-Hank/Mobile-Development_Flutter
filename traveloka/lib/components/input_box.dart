@@ -14,6 +14,7 @@ class InputBox extends StatelessWidget {
     this.keyboardType,
     required this.controller,
     this.onChanged,
+    this.onEditingComplete,
     this.obscureText,
     this.autoCorrect,
     this.enableSuggestions,
@@ -21,6 +22,7 @@ class InputBox extends StatelessWidget {
 
   final Function() focussed;
   final Function(String)? onChanged;
+  final Function()? onEditingComplete;
   final FocusNode? focusNode;
   final Icon prefixIcon;
   final dynamic hintText;
@@ -59,6 +61,7 @@ class InputBox extends StatelessWidget {
         focusNode: focusNode,
         onTap: focussed,
         onChanged: onChanged,
+        onEditingComplete: onEditingComplete,
         keyboardType: keyboardType,
         textAlignVertical: TextAlignVertical.center,
         obscureText: obscureText ?? false,

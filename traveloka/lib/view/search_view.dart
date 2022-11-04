@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:traveloka/entity/hotel.dart';
 import 'package:traveloka/repositories/hotel_data.dart';
 
 import '../components/button.dart';
@@ -11,7 +12,7 @@ import '../components/hotel_card.dart';
 import '../components/input_box.dart';
 import '../components/search_bar.dart';
 import '../config/ui_configs.dart';
-import '../entity/hotel.dart';
+// import '../entity/hotel.dart';
 
 class MySearchPage extends StatefulWidget {
   const MySearchPage({Key? key}) : super(key: key);
@@ -169,9 +170,7 @@ class _MySearchPageState extends State<MySearchPage>
                     LeftRoundIconButton(
                       icon: leftIcon,
                       function: () {
-                        // _animationController
-                        //     .reverse()
-                        //     .whenComplete(() => Navigator.pop(context));
+                        FocusScope.of(context).unfocus();
                         Navigator.pop(context);
                       },
                     ),
@@ -212,6 +211,7 @@ class _MySearchPageState extends State<MySearchPage>
                   function: () {
                     debugPrint(
                         '${_hotel.text} ${_dateRange.text} ${_guests.text}');
+                    FocusScope.of(context).unfocus();
                     setState(() {
                       isShowResult = true;
                     });
@@ -251,7 +251,6 @@ class _MySearchPageState extends State<MySearchPage>
                                 : hotelsSnapshot[0],
                             width: min(cardWidth,
                                 .77 * MediaQuery.of(context).size.width),
-                            height: 420,
                             hMargin: 8,
                             showFacilities: true,
                           ),

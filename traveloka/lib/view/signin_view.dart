@@ -19,12 +19,16 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   late final TextEditingController _email;
   late final TextEditingController _password;
+  late final FocusNode emailFocusNode;
+  late final FocusNode passwordFocusNode;
   bool _passwordVisible = false;
 
   @override
   void initState() {
     _email = TextEditingController();
     _password = TextEditingController();
+    emailFocusNode = FocusNode();
+    passwordFocusNode = FocusNode();
     super.initState();
   }
 
@@ -32,13 +36,15 @@ class _SignInPageState extends State<SignInPage> {
   void dispose() {
     _email.dispose();
     _password.dispose();
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
           const HeroSvg(),
           const SizedBox(height: 24),
@@ -50,18 +56,10 @@ class _SignInPageState extends State<SignInPage> {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    InputBox(
-                      controller: _email,
-                      focussed: () {},
-                      hintText: '',
-                      labelText: 'Email',
-                      autoCorrect: false,
-                      keyboardType: TextInputType.emailAddress,
-                      prefixIcon: Icon(
-                        Icons.email_rounded,
-                        color: UIConfig.black,
-                        size: 20,
-                      ),
+                    EmailInputBox(
+                      email: _email,
+                      emailFocusNode: emailFocusNode,
+                      passwordFocusNode: passwordFocusNode,
                     ),
                     const SizedBox(height: 24),
                     Column(
@@ -70,6 +68,9 @@ class _SignInPageState extends State<SignInPage> {
                         InputBox(
                           controller: _password,
                           focussed: () {},
+                          onEditingComplete: () =>
+                              FocusScope.of(context).unfocus(),
+                          focusNode: passwordFocusNode,
                           hintText: '',
                           labelText: 'Password',
                           autoCorrect: false,
@@ -138,7 +139,7 @@ class _SignInPageState extends State<SignInPage> {
                     )
                   ],
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

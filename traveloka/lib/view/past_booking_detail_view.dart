@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:traveloka/entity/booking.dart';
 import 'package:traveloka/repositories/hotel_data.dart';
