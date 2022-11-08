@@ -42,10 +42,8 @@ class MyClipper extends CustomClipper<Path> {
 
     Path path = Path();
     path.lineTo(0, h);
-    // path.lineTo(w / 2, h);
     path.quadraticBezierTo(w / 4, h + curveHeight, w / 2, h);
     path.quadraticBezierTo(w / 4 * 3, h - curveHeight, w, h);
-    // path.lineTo(w, h);
     path.lineTo(w, 0);
     path.close();
     return path;
@@ -75,7 +73,10 @@ class ClipShadowPath extends StatelessWidget {
         clipper: clipper,
         shadow: shadow,
       ),
-      child: ClipPath(child: child, clipper: clipper),
+      child: ClipPath(
+        clipper: clipper,
+        child: child,
+      ),
     );
   }
 }

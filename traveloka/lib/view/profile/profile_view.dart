@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:traveloka/config/UI_configs.dart';
+import 'package:traveloka/config/ui_configs.dart';
 
-import '../firebase_options.dart';
-import 'signin_view.dart';
+import '../../firebase_options.dart';
+import '../auth/signin_view.dart';
 
 class MyProfilePage extends StatefulWidget {
   const MyProfilePage({Key? key}) : super(key: key);
@@ -110,31 +110,39 @@ class _MyProfilePageState extends State<MyProfilePage> {
                       ),
                       const SizedBox(height: 30),
                       const SettingTile(
-                          tileName: 'My Wallet',
-                          tileText: 'View and set preferences',
-                          tileIcon: Icon(Icons.account_balance_wallet)),
+                        tileName: 'My Wallet',
+                        tileText: 'View and set preferences',
+                        tileIcon: Icon(Icons.account_balance_wallet_rounded),
+                      ),
                       const SizedBox(height: 32),
                       const SettingTile(
-                          tileName: 'Settings',
-                          tileText: 'View and set preferences',
-                          tileIcon: Icon(Icons.settings)),
+                        tileName: 'Settings',
+                        tileText: 'View and set preferences',
+                        tileIcon: Icon(Icons.settings_rounded),
+                      ),
                       const SizedBox(height: 8),
                       const SettingTile(
-                          tileName: 'Help Center',
-                          tileText: 'FAQs',
-                          tileIcon: Icon(Icons.help))
+                        tileName: 'Help Center',
+                        tileText: 'FAQs',
+                        tileIcon: Icon(Icons.help_rounded),
+                      )
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 18),
+                    padding: const EdgeInsets.only(bottom: 16),
                     child: GestureDetector(
                       onTap: () async {
-                        await FirebaseAuth.instance.signOut();
-                        Navigator.of(context).pushAndRemoveUntil(
-                            CupertinoPageRoute(
-                              builder: ((context) => const SignInPage()),
-                            ),
-                            (route) => false);
+                        await FirebaseAuth.instance.signOut().whenComplete(
+                            () => Navigator.of(context).pushAndRemoveUntil(
+                                CupertinoPageRoute(
+                                  builder: ((context) => const SignInPage()),
+                                ),
+                                (route) => false));
+                        // Navigator.of(context).pushAndRemoveUntil(
+                        //     CupertinoPageRoute(
+                        //       builder: ((context) => const SignInPage()),
+                        //     ),
+                        //     (route) => false);
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -144,14 +152,16 @@ class _MyProfilePageState extends State<MyProfilePage> {
                           borderRadius: UIConfig.borderRadius,
                           boxShadow: const [
                             BoxShadow(
-                                color: Color.fromARGB(70, 0, 0, 0),
-                                offset: Offset(0, 2),
-                                blurRadius: 3),
+                              color: Color.fromARGB(70, 0, 0, 0),
+                              offset: Offset(0, 2),
+                              blurRadius: 3,
+                            ),
                             BoxShadow(
-                                color: Color.fromARGB(30, 0, 0, 0),
-                                offset: Offset(0, 6),
-                                blurRadius: 10,
-                                spreadRadius: 4)
+                              color: Color.fromARGB(30, 0, 0, 0),
+                              offset: Offset(0, 6),
+                              blurRadius: 10,
+                              spreadRadius: 4,
+                            )
                           ],
                         ),
                         child: Row(

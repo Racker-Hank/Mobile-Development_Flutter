@@ -7,11 +7,11 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:traveloka/entity/hotel.dart';
 import 'package:traveloka/repositories/hotel_data.dart';
 
-import '../components/button.dart';
-import '../components/hotel_card.dart';
-import '../components/input_box.dart';
-import '../components/search_bar.dart';
-import '../config/ui_configs.dart';
+import '../../components/button.dart';
+import '../../components/hotel_card.dart';
+import '../../components/input_box.dart';
+import '../../components/search_bar.dart';
+import '../../config/ui_configs.dart';
 // import '../entity/hotel.dart';
 
 class MySearchPage extends StatefulWidget {
@@ -324,7 +324,7 @@ class _MySearchPageState extends State<MySearchPage>
                                             hotel: hotels[i],
                                             width: cardWidth,
                                             // width: 328,
-                                            height: 420,
+                                            // height: 420,
                                             hMargin: 8,
                                             showFacilities: true,
                                           ),
