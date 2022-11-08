@@ -39,29 +39,33 @@ class _HotelViewHeaderButtonsState extends State<HotelViewHeaderButtons> {
           ),
           Row(
             children: [
-              GestureDetector(
-                onTap: () async {
-                  await UserFirebase.saveHotel(
-                      widget.hotel.id, widget.isSaved.value);
-                  setState(() {
-                    widget.isSaved.value = !widget.isSaved.value;
-                  });
-                },
-                child: AnimatedCrossFade(
-                  firstChild: Icon(
-                    Icons.bookmark_border_rounded,
-                    color: UIConfig.white,
-                  ),
-                  secondChild: Icon(
-                    Icons.bookmark_rounded,
-                    color: UIConfig.white,
-                  ),
-                  crossFadeState: widget.isSaved.value
-                      ? CrossFadeState.showSecond
-                      : CrossFadeState.showFirst,
-                  duration: const Duration(milliseconds: 200),
-                ),
-              ),
+              FutureBuilder(
+                  future: UserFirebase.isSaved(widget.hotel.id),
+                  builder: (context, snapshot) {
+                    return GestureDetector(
+                      onTap: () async {
+                        await UserFirebase.saveHotel(
+                            widget.hotel.id, widget.isSaved.value);
+                        setState(() {
+                          widget.isSaved.value = !widget.isSaved.value;
+                        });
+                      },
+                      child: AnimatedCrossFade(
+                        firstChild: Icon(
+                          Icons.bookmark_border_rounded,
+                          color: UIConfig.white,
+                        ),
+                        secondChild: Icon(
+                          Icons.bookmark_rounded,
+                          color: UIConfig.white,
+                        ),
+                        crossFadeState: snapshot.data ?? widget.isSaved.value
+                            ? CrossFadeState.showSecond
+                            : CrossFadeState.showFirst,
+                        duration: const Duration(milliseconds: 200),
+                      ),
+                    );
+                  }),
               const SizedBox(width: 16),
               Icon(
                 Icons.share_rounded,

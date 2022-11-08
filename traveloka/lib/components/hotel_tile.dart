@@ -29,7 +29,7 @@ class HotelTile extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) {
-            if (showBooking) {
+            if (!showBooking) {
               return MyHotelPage(hotel: hotel);
             } else {
               return BookingDetailPage(hotel: hotel);

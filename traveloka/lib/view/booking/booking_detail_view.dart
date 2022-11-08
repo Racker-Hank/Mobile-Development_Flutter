@@ -114,7 +114,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
     //hotel = HotelFirebase.getHotelById(widget.hotel.id) as Hotel;
 
     return Scaffold(
-      body: Column(
+      body: ListView(
         // mainAxisSize: MainAxisSize.min,
         children: [
           Stack(
@@ -160,372 +160,367 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
               ),
             ],
           ),
-          Expanded(
-            child: Container(
-              // margin: const EdgeInsets.only(bottom: 50),
-              height: double.infinity,
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // mainAxisSize: MainAxisSize.min,
-                children: [
-                  Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: HeadLine(
-                              hotelName: widget.hotel.name,
-                              location: widget.hotel.location,
-                            ),
+          Container(
+            // margin: const EdgeInsets.only(bottom: 50),
+            height: MediaQuery.of(context).size.height -
+                MediaQuery.of(context).size.width * 2 / 3,
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisSize: MainAxisSize.min,
+              children: [
+                Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: HeadLine(
+                            hotelName: widget.hotel.name,
+                            location: widget.hotel.location,
                           ),
-                          Ratings(
-                            avgRatings: widget.hotel.reviews.isNotEmpty
-                                ? widget.hotel.reviews
-                                        .map((e) => e.rating)
-                                        .reduce((a, b) => a + b) /
-                                    widget.hotel.reviews.length
-                                : 0,
-                          ),
-                        ],
+                        ),
+                        Ratings(
+                          avgRatings: widget.hotel.reviews.isNotEmpty
+                              ? widget.hotel.reviews
+                                      .map((e) => e.rating)
+                                      .reduce((a, b) => a + b) /
+                                  widget.hotel.reviews.length
+                              : 0,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFDADDE3),
+                        borderRadius: UIConfig.borderRadius,
                       ),
-                      const SizedBox(height: 16),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFDADDE3),
-                          borderRadius: UIConfig.borderRadius,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        child: Row(
-                          children: [
-                            Column(
-                              children: [
-                                Text(
-                                  'Booking ID: ',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.normal,
-                                    color: UIConfig.black,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Booked on: ',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.normal,
-                                    color: UIConfig.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(width: 32),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.hotel.id,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.bold,
-                                    color: UIConfig.black,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  DateFormat('MMM d, yyyy')
-                                      .format(DateTime.now()),
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.bold,
-                                    color: UIConfig.black,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
                       ),
-                      // Container(
-                      //     decoration: BoxDecoration(
-                      //       color: const Color(0xFFDADDE3),
-                      //       borderRadius: UIConfig.borderRadius,
-                      //     ),
-                      //     child: Column(
-                      //       children: [
-                      //         Padding(
-                      //           padding: const EdgeInsets.only(left: 8, top: 8),
-                      //           child: Row(
-                      //             children: [
-                      //               Text(
-                      //                 'Booking ID: ',
-                      //                 style: TextStyle(
-                      //                     fontSize: 18,
-                      //                     fontFamily: 'Roboto',
-                      //                     fontWeight: FontWeight.normal,
-                      //                     color: UIConfig.black
-                      //                 ),
-                      //               ),
-                      //               const SizedBox(width: 32),
-                      //               Text(
-                      //                 widget.hotel.id,
-                      //                 style: TextStyle(
-                      //                     fontSize: 18,
-                      //                     fontFamily: 'Roboto',
-                      //                     fontWeight: FontWeight.bold,
-                      //                     color: UIConfig.black
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //         const SizedBox(height: 8),
-                      //         Padding(
-                      //           padding: const EdgeInsets.only(left: 8, bottom: 8),
-                      //           child: Row(
-                      //             children: [
-                      //               Text(
-                      //                 'Booked on: ',
-                      //                 style: TextStyle(
-                      //                     fontSize: 18,
-                      //                     fontFamily: 'Roboto',
-                      //                     fontWeight: FontWeight.normal,
-                      //                     color: UIConfig.black
-                      //                 ),
-                      //               ),
-                      //               const SizedBox(width: 32),
-                      //               Text(
-                      //                 DateFormat('MMM d, yyyy').format(DateTime.now()),
-                      //                 style: TextStyle(
-                      //                     fontSize: 18,
-                      //                     fontFamily: 'Roboto',
-                      //                     fontWeight: FontWeight.bold,
-                      //                     color: UIConfig.black
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         )
-                      //       ],
-                      //     )
-                      // ),
-                      const SizedBox(height: 16),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
                         children: [
-                          Text(
-                            'Booking detail',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.bold,
-                                color: UIConfig.black),
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                          Column(
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(
-                                    top: 16, right: 16, bottom: 16),
-                                child: Icon(Icons.calendar_month_rounded),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Duration',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.normal,
-                                        color: UIConfig.black,
-                                      ),
-                                    ),
-                                    Text(
-                                      '${DateFormat('MMM d, yyyy').format(dateRange.start)} - ${DateFormat('MMM d, yyyy').format(dateRange.end)}',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.bold,
-                                        color: UIConfig.black,
-                                      ),
-                                    ),
-                                    Text(
-                                      '($dateRangeInDay night${dateRangeInDay > 1 ? 's' : ''})',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.bold,
-                                        color: UIConfig.black,
-                                      ),
-                                    )
-                                  ],
+                              Text(
+                                'Booking ID: ',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'Roboto',
+                                  fontWeight: FontWeight.normal,
+                                  color: UIConfig.black,
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: pickDateRange,
-                                child: Icon(
-                                  Icons.border_color_rounded,
-                                  color: UIConfig.primaryColor,
-                                ),
-                              )
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(
-                                    top: 16, right: 16, bottom: 16),
-                                child: Icon(Icons.people_rounded),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Guests',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.normal,
-                                          color: UIConfig.black),
-                                    ),
-                                    TextField(
-                                      controller: _guests,
-                                      keyboardType: TextInputType.number,
-                                      decoration:
-                                          const InputDecoration.collapsed(
-                                        hintText: 'Insert number of guests',
-                                        hintStyle: TextStyle(
-                                          color: Color(0xFFB9B9B9),
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.bold,
-                                          color: UIConfig.black),
-                                    )
-                                  ],
+                              const SizedBox(height: 8),
+                              Text(
+                                'Booked on: ',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'Roboto',
+                                  fontWeight: FontWeight.normal,
+                                  color: UIConfig.black,
                                 ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      Divider(
-                        color: UIConfig.accentColor,
-                        thickness: 2,
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'TOTAL',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.bold,
-                              color: UIConfig.black,
-                            ),
-                          ),
-                          Text(
-                            '\$${dateRangeInDay * widget.hotel.price}',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.bold,
-                              color: UIConfig.accentColor,
-                            ),
+                          const SizedBox(width: 32),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.hotel.id,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'Roboto',
+                                  fontWeight: FontWeight.bold,
+                                  color: UIConfig.black,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                DateFormat('MMM d, yyyy')
+                                    .format(DateTime.now()),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'Roboto',
+                                  fontWeight: FontWeight.bold,
+                                  color: UIConfig.black,
+                                ),
+                              ),
+                            ],
                           )
                         ],
                       ),
-                    ],
-                  ),
-                  // const SizedBox(height: 64),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 18),
-                    child: Row(
+                    ),
+                    // Container(
+                    //     decoration: BoxDecoration(
+                    //       color: const Color(0xFFDADDE3),
+                    //       borderRadius: UIConfig.borderRadius,
+                    //     ),
+                    //     child: Column(
+                    //       children: [
+                    //         Padding(
+                    //           padding: const EdgeInsets.only(left: 8, top: 8),
+                    //           child: Row(
+                    //             children: [
+                    //               Text(
+                    //                 'Booking ID: ',
+                    //                 style: TextStyle(
+                    //                     fontSize: 18,
+                    //                     fontFamily: 'Roboto',
+                    //                     fontWeight: FontWeight.normal,
+                    //                     color: UIConfig.black
+                    //                 ),
+                    //               ),
+                    //               const SizedBox(width: 32),
+                    //               Text(
+                    //                 widget.hotel.id,
+                    //                 style: TextStyle(
+                    //                     fontSize: 18,
+                    //                     fontFamily: 'Roboto',
+                    //                     fontWeight: FontWeight.bold,
+                    //                     color: UIConfig.black
+                    //                 ),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //         const SizedBox(height: 8),
+                    //         Padding(
+                    //           padding: const EdgeInsets.only(left: 8, bottom: 8),
+                    //           child: Row(
+                    //             children: [
+                    //               Text(
+                    //                 'Booked on: ',
+                    //                 style: TextStyle(
+                    //                     fontSize: 18,
+                    //                     fontFamily: 'Roboto',
+                    //                     fontWeight: FontWeight.normal,
+                    //                     color: UIConfig.black
+                    //                 ),
+                    //               ),
+                    //               const SizedBox(width: 32),
+                    //               Text(
+                    //                 DateFormat('MMM d, yyyy').format(DateTime.now()),
+                    //                 style: TextStyle(
+                    //                     fontSize: 18,
+                    //                     fontFamily: 'Roboto',
+                    //                     fontWeight: FontWeight.bold,
+                    //                     color: UIConfig.black
+                    //                 ),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         )
+                    //       ],
+                    //     )
+                    // ),
+                    const SizedBox(height: 16),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            // setState(() {
-                            //   dateRange = DateTimeRange(
-                            //     start: DateTime.now(),
-                            //     end: DateTime(
-                            //         DateTime.now().year,
-                            //         DateTime.now().month,
-                            //         DateTime.now().day + 7,),
-                            //   );
-
-                            //   _guests.text = '1';
-                            // });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 32, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFDC362E),
-                              borderRadius: UIConfig.borderRadius,
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color.fromARGB(70, 0, 0, 0),
-                                  offset: Offset(0, 2),
-                                  blurRadius: 3,
-                                ),
-                                BoxShadow(
-                                  color: Color.fromARGB(30, 0, 0, 0),
-                                  offset: Offset(0, 6),
-                                  blurRadius: 10,
-                                  spreadRadius: 4,
-                                )
-                              ],
+                        Text(
+                          'Booking detail',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.bold,
+                              color: UIConfig.black),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(
+                                  top: 16, right: 16, bottom: 16),
+                              child: Icon(Icons.calendar_month_rounded),
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Cancel',
-                                  style: UIConfig.buttonTextStyle,
-                                ),
-                              ],
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Duration',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.normal,
+                                      color: UIConfig.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${DateFormat('MMM d, yyyy').format(dateRange.start)} - ${DateFormat('MMM d, yyyy').format(dateRange.end)}',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.bold,
+                                      color: UIConfig.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    '($dateRangeInDay night${dateRangeInDay > 1 ? 's' : ''})',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.bold,
+                                      color: UIConfig.black,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
+                            GestureDetector(
+                              onTap: pickDateRange,
+                              child: Icon(
+                                Icons.border_color_rounded,
+                                color: UIConfig.primaryColor,
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(
+                                  top: 16, right: 16, bottom: 16),
+                              child: Icon(Icons.people_rounded),
+                            ),
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Guests',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.normal,
+                                        color: UIConfig.black),
+                                  ),
+                                  TextField(
+                                    controller: _guests,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration.collapsed(
+                                      hintText: 'Insert number of guests',
+                                      hintStyle: TextStyle(
+                                        color: Color(0xFFB9B9B9),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.bold,
+                                        color: UIConfig.black),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Divider(
+                      color: UIConfig.accentColor,
+                      thickness: 2,
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'TOTAL',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.bold,
+                            color: UIConfig.black,
                           ),
                         ),
-                        Button(
-                          label: 'Confirm',
-                          function: () {},
+                        Text(
+                          '\$${dateRangeInDay * widget.hotel.price}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.bold,
+                            color: UIConfig.accentColor,
+                          ),
                         )
                       ],
                     ),
-                  )
-                ],
-              ),
+                  ],
+                ),
+                // const SizedBox(height: 64),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // setState(() {
+                        //   dateRange = DateTimeRange(
+                        //     start: DateTime.now(),
+                        //     end: DateTime(
+                        //         DateTime.now().year,
+                        //         DateTime.now().month,
+                        //         DateTime.now().day + 7,),
+                        //   );
+
+                        //   _guests.text = '1';
+                        // });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 32, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFDC362E),
+                          borderRadius: UIConfig.borderRadius,
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color.fromARGB(70, 0, 0, 0),
+                              offset: Offset(0, 2),
+                              blurRadius: 3,
+                            ),
+                            BoxShadow(
+                              color: Color.fromARGB(30, 0, 0, 0),
+                              offset: Offset(0, 6),
+                              blurRadius: 10,
+                              spreadRadius: 4,
+                            )
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Cancel',
+                              style: UIConfig.buttonTextStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Button(
+                      label: 'Confirm',
+                      function: () {},
+                    )
+                  ],
+                )
+              ],
             ),
           ),
         ],

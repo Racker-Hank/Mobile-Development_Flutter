@@ -84,7 +84,10 @@ class _MyBookingPageState extends State<MyBookingPage> {
                           cacheExtent: 100,
                           padding: const EdgeInsets.only(bottom: 16),
                           itemBuilder: ((context, i) {
-                            return HotelTile(hotel: hotels[i]);
+                            return HotelTile(
+                              hotel: hotels[i],
+                              showBooking: true,
+                            );
                           }),
                         ),
                       ],

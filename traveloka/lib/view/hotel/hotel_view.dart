@@ -170,7 +170,16 @@ class _MyHotelPageState extends State<MyHotelPage> {
               ),
             ],
           ),
-          BookingCTA(widget: widget)
+          BookingCTA(
+              widget: widget,
+              function: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          BookingDetailPage(hotel: widget.hotel),
+                    )).then((value) => setState(() {}));
+              }),
         ],
       ),
     );
@@ -483,9 +492,11 @@ class BookingCTA extends StatelessWidget {
   const BookingCTA({
     Key? key,
     required this.widget,
+    required this.function,
   }) : super(key: key);
 
   final MyHotelPage widget;
+  final Function() function;
 
   @override
   Widget build(BuildContext context) {
@@ -532,16 +543,17 @@ class BookingCTA extends StatelessWidget {
               ),
             ),
             Button(
-              function: () {
-                // print('test');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        BookingDetailPage(hotel: widget.hotel),
-                  ),
-                );
-              },
+              // function: () {
+              // print('test');
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) =>
+              //         BookingDetailPage(hotel: widget.hotel),
+              //   ),
+              // ).then((_) => widget.createState());
+              // },
+              function: function,
               label: 'Book Now',
               icon: Icon(
                 Icons.arrow_forward_rounded,
