@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:traveloka/config/UI_configs.dart';
+import 'package:traveloka/config/ui_configs.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({

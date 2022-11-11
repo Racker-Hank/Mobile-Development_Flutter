@@ -8,14 +8,13 @@ class CustomClipPath extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return ClipShadowPath(
-    return ClipPath(
-      // shadow: BoxShadow(
-      //   offset: Offset(0, 4),
-      //   blurRadius: 4,
-      //   // blurStyle: BlurStyle.inner,
-      //   color: UIConfig.black.withOpacity(.25),
-      // ),
+    return ClipShadowPath(
+      // return ClipPath(
+      shadow: BoxShadow(
+        offset: const Offset(0, 4),
+        blurRadius: 4,
+        color: UIConfig.black.withAlpha(25),
+      ),
       clipper: MyClipper(),
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -24,7 +23,7 @@ class CustomClipPath extends StatelessWidget {
           gradient: LinearGradient(
             colors: [
               UIConfig.accentColor,
-              UIConfig.accentColor.withAlpha(10),
+              UIConfig.white,
             ],
             transform: const GradientRotation(math.pi / 2),
           ),
@@ -43,10 +42,8 @@ class MyClipper extends CustomClipper<Path> {
 
     Path path = Path();
     path.lineTo(0, h);
-    // path.lineTo(w / 2, h);
     path.quadraticBezierTo(w / 4, h + curveHeight, w / 2, h);
     path.quadraticBezierTo(w / 4 * 3, h - curveHeight, w, h);
-    // path.lineTo(w, h);
     path.lineTo(w, 0);
     path.close();
     return path;
@@ -76,7 +73,10 @@ class ClipShadowPath extends StatelessWidget {
         clipper: clipper,
         shadow: shadow,
       ),
-      child: ClipPath(child: child, clipper: clipper),
+      child: ClipPath(
+        clipper: clipper,
+        child: child,
+      ),
     );
   }
 }

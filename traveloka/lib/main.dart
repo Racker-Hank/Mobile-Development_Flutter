@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:traveloka/config/UI_configs.dart';
-import 'view/signin_view.dart';
+import 'package:traveloka/config/ui_configs.dart';
+import 'view/auth/signin_view.dart';
 import 'firebase_options.dart';
 import 'view/home_view.dart';
-import 'view/signup_view.dart';
+import 'view/auth/signup_view.dart';
 // import 'package:traveloka/components/bottom_nav_bar.dart';
 // import 'view/booking_view.dart';
 // import 'view/explore_view.dart';
@@ -43,9 +43,8 @@ class Traveloka extends StatelessWidget {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
             return Text(snapshot.connectionState.toString());
-          // case ConnectionState.waiting:
-          //   // TODO: Handle this case.
-          //   break;
+          case ConnectionState.waiting:
+            return const Center(child: CircularProgressIndicator.adaptive());
           // case ConnectionState.active:
           //   // TODO: Handle this case.
           //   break;
@@ -59,7 +58,7 @@ class Traveloka extends StatelessWidget {
               // }
               return const Home();
             } else {
-              // return const SignInPage();
+              return const SignInPage();
               return const SignUpPage();
             }
           default:

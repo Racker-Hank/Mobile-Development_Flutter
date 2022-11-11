@@ -1,30 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:traveloka/components/new_page_route.dart';
-import 'package:traveloka/view/hotel_view.dart';
+import 'package:traveloka/entity/hotel.dart';
+import 'package:traveloka/view/hotel/hotel_view.dart';
 import '../config/ui_configs.dart';
 
-import '../entity/hotel.dart';
-import '../view/booking_view.dart';
-import '../view/search_view.dart';
+// import '../entity/hotel.dart';
+import '../view/booking/booking_view.dart';
+import '../view/search/search_view.dart';
 // import 'package:hello_world/entity/Hotel.dart';
 
 class HotelCard extends StatelessWidget {
-  HotelCard({
+  const HotelCard({
     super.key,
     this.width,
     this.height,
     this.hMargin,
     this.vMargin,
-    // this.hotel,
-    // required this.hotelID,
-    // this.imageURL =
-    //     'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-    // this.hotelName = 'Florida Getaway',
-    // this.location = 'Florida villa',
-    // this.ratings = 3.8,
-    // this.price = 200,
-    // this.description =
-    //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
     required this.hotel,
     required this.showFacilities,
   });
@@ -39,29 +30,7 @@ class HotelCard extends StatelessWidget {
 
   final double columnSpacing = 8;
 
-  // final Hotel defaultHotel = Hotel(
-  //     'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-  //     'Florida Getaway',
-  //     'Florida villa',
-  //     3.8,
-  //     200,
-  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor');
-
   final Hotel hotel;
-
-  // final int hotelID;
-
-  // final String imageURL;
-
-  // final String hotelName;
-
-  // final String location;
-
-  // final double? ratings;
-
-  // final int price;
-
-  // final String description;
 
   final bool showFacilities;
 
@@ -256,7 +225,7 @@ class Ratings extends StatelessWidget {
       Text(
         avgRatings - avgRatings.toInt() != 0
             ? avgRatings.toStringAsFixed(1)
-            : '$avgRatings',
+            : avgRatings.toStringAsFixed(0),
         style: const TextStyle(
           fontFamily: 'Roboto',
           fontSize: 14,
@@ -310,7 +279,7 @@ class Description extends StatelessWidget {
   const Description({
     Key? key,
     required this.description,
-    this.maxHeight = 60,
+    this.maxHeight = 14 * 4.5,
   }) : super(key: key);
 
   final String description;
