@@ -246,69 +246,6 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                     ],
                   ),
                 ),
-                // Container(
-                //     decoration: BoxDecoration(
-                //       color: const Color(0xFFDADDE3),
-                //       borderRadius: UIConfig.borderRadius,
-                //     ),
-                //     child: Column(
-                //       children: [
-                //         Padding(
-                //           padding: const EdgeInsets.only(left: 8, top: 8),
-                //           child: Row(
-                //             children: [
-                //               Text(
-                //                 'Booking ID: ',
-                //                 style: TextStyle(
-                //                     fontSize: 18,
-                //                     fontFamily: 'Roboto',
-                //                     fontWeight: FontWeight.normal,
-                //                     color: UIConfig.black
-                //                 ),
-                //               ),
-                //               const SizedBox(width: 32),
-                //               Text(
-                //                 widget.hotel.id,
-                //                 style: TextStyle(
-                //                     fontSize: 18,
-                //                     fontFamily: 'Roboto',
-                //                     fontWeight: FontWeight.bold,
-                //                     color: UIConfig.black
-                //                 ),
-                //               ),
-                //             ],
-                //           ),
-                //         ),
-                //         const SizedBox(height: 8),
-                //         Padding(
-                //           padding: const EdgeInsets.only(left: 8, bottom: 8),
-                //           child: Row(
-                //             children: [
-                //               Text(
-                //                 'Booked on: ',
-                //                 style: TextStyle(
-                //                     fontSize: 18,
-                //                     fontFamily: 'Roboto',
-                //                     fontWeight: FontWeight.normal,
-                //                     color: UIConfig.black
-                //                 ),
-                //               ),
-                //               const SizedBox(width: 32),
-                //               Text(
-                //                 DateFormat('MMM d, yyyy').format(DateTime.now()),
-                //                 style: TextStyle(
-                //                     fontSize: 18,
-                //                     fontFamily: 'Roboto',
-                //                     fontWeight: FontWeight.bold,
-                //                     color: UIConfig.black
-                //                 ),
-                //               ),
-                //             ],
-                //           ),
-                //         )
-                //       ],
-                //     )
-                // ),
                 const SizedBox(height: 16),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
