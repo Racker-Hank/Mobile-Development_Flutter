@@ -4,7 +4,6 @@ import 'package:traveloka/config/UI_configs.dart';
 import 'package:traveloka/entity/hotel.dart';
 import 'package:traveloka/repositories/hotel_data.dart';
 import '../components/search_bar.dart';
-// import '../entity/hotel.dart';
 
 class MyBookingPage extends StatefulWidget {
   const MyBookingPage({Key? key}) : super(key: key);

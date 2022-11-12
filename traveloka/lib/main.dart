@@ -1,13 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:traveloka/config/UI_configs.dart';
-import 'view/signin_view.dart';
+import 'package:traveloka/config/ui_configs.dart';
+import 'view/auth/signin_view.dart';
 import 'firebase_options.dart';
-import 'view/profile_view.dart';
 import 'view/home_view.dart';
-import 'view/signup_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

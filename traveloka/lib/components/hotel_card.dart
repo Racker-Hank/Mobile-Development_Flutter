@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:traveloka/components/new_page_route.dart';
 import 'package:traveloka/entity/hotel.dart';
-import 'package:traveloka/view/hotel_view.dart';
+import 'package:traveloka/view/hotel/hotel_view.dart';
 import '../config/ui_configs.dart';
-
-// import '../entity/hotel.dart';
-import '../view/booking_tab_view.dart';
-import '../view/search_view.dart';
-// import 'package:hello_world/entity/Hotel.dart';
 
 class HotelCard extends StatelessWidget {
   const HotelCard({
@@ -31,20 +25,6 @@ class HotelCard extends StatelessWidget {
   final double columnSpacing = 8;
 
   final Hotel hotel;
-
-  // final int hotelID;
-
-  // final String imageURL;
-
-  // final String hotelName;
-
-  // final String location;
-
-  // final double? ratings;
-
-  // final int price;
-
-  // final String description;
 
   final bool showFacilities;
 
@@ -293,7 +273,7 @@ class Description extends StatelessWidget {
   const Description({
     Key? key,
     required this.description,
-    this.maxHeight = 14 * 5,
+    this.maxHeight = 14 * 4.5,
   }) : super(key: key);
 
   final String description;

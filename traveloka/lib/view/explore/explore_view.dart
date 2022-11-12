@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:traveloka/entity/hotel.dart';
 import 'package:traveloka/repositories/hotel_data.dart';
-
 import '../../components/hotel_card.dart';
 import '../../components/search_bar.dart';
 
@@ -37,6 +36,7 @@ class _MyExplorePageState extends State<MyExplorePage> {
                   ),
                   addAutomaticKeepAlives: false,
                   cacheExtent: 100,
+                  // padding: const EdgeInsets.symmetric(vertical: 30),
                   padding: const EdgeInsets.only(bottom: 16),
                   itemBuilder: ((context, i) {
                     return Column(

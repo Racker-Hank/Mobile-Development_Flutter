@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:traveloka/config/UI_configs.dart';
 
 import '../firebase_options.dart';
-import 'signin_view.dart';
+import 'auth/signin_view.dart';
 
 class MyProfilePage extends StatefulWidget {
   const MyProfilePage({Key? key}) : super(key: key);

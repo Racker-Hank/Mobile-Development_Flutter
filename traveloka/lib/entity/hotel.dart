@@ -5,7 +5,6 @@ class Hotel {
   late List<String> imageURLs;
   late String name;
   late String location;
-  // late double? ratings;
   late List<Review> reviews;
   late int price;
   late String description;
@@ -52,7 +51,6 @@ class Hotel {
       imageURLs,
       json['name'],
       json['location'],
-      // json['ratings'],
       reviews,
       json['price'],
       json['description'],

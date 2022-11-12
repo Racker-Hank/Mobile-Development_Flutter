@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:traveloka/entity/booking.dart';
-import 'package:traveloka/repositories/hotel_data.dart';
 import '../components/button.dart';
 import '../components/hotel_card.dart';
-import '../components/input_box.dart';
 import '../entity/hotel.dart';
 import '../config/UI_configs.dart';
 
@@ -101,16 +98,10 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
     setState(() {
       dateRange = newDateRange;
     });
-
-    // String dateFormat = dateRange.start.year == dateRange.end.year ? 'MMMd' : 'MMM d, yy';
-    // _dateRange.text = '${DateFormat(dateFormat).format(dateRange.start)} - ${DateFormat(dateFormat).format(dateRange.end)}';
   }
 
   @override
   Widget build(BuildContext context) {
-    var smallImageWidth = (MediaQuery.of(context).size.width - imageSpacing * 4) / 5;
-    //hotel = HotelFirebase.getHotelById(widget.hotel.id) as Hotel;
-
     return Scaffold(
       body: Column(
         mainAxisSize: MainAxisSize.min,

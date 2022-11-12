@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:traveloka/entity/hotel.dart';
-// import '../entity/hotel.dart';
-import 'package:traveloka/view/hotel_view.dart';
+import 'package:traveloka/view/booking/booking_detail_view.dart';
+import 'package:traveloka/view/hotel/hotel_view.dart';
 import '../config/ui_configs.dart';
 
 class HotelTile extends StatelessWidget {
@@ -9,8 +9,11 @@ class HotelTile extends StatelessWidget {
     super.key,
     this.hMargin,
     this.vMargin,
+    this.showBooking = false,
     required this.hotel,
   });
+
+  final bool showBooking;
 
   final double? hMargin;
 
@@ -24,7 +27,13 @@ class HotelTile extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MyHotelPage(hotel: hotel),
+          builder: (context) {
+            if (!showBooking) {
+              return MyHotelPage(hotel: hotel);
+            } else {
+              return BookingDetailPage(hotel: hotel);
+            }
+          },
         ),
       ),
       child: Container(

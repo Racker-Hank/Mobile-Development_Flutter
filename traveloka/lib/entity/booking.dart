@@ -1,4 +1,4 @@
-class BookingHotel {
+class Booking {
   late String id;
   late DateTime bookingFromDate;
   late DateTime bookingToDate;
@@ -6,18 +6,20 @@ class BookingHotel {
   late String userId;
   late String hotelId;
   late int price;
+  late bool status;
 
-  static BookingHotel fromJson(Map<String, dynamic> json, String id) {
-    BookingHotel ans = BookingHotel();
-    
-    ans.id = id;
-    ans.bookingFromDate = DateTime.parse(json["bookingFromDate"]);
-    ans.bookingToDate = DateTime.parse(json["bookingToDate"]);
-    ans.bookingTimestamp = DateTime.parse(json["bookingTimestamp"]);
-    ans.userId = json["userId"];
-    ans.hotelId = json["hotelId"];
-    ans.price = json["price"];
+  static Booking fromJson(Map<String, dynamic> json, String id) {
+    Booking booking = Booking();
 
-    return ans;
+    booking.id = id;
+    booking.bookingFromDate = DateTime.parse(json['bookingFromDate']);
+    booking.bookingToDate = DateTime.parse(json['bookingToDate']);
+    booking.bookingTimestamp = DateTime.parse(json['bookingTimestamp']);
+    booking.userId = json['userId'];
+    booking.hotelId = json['hotelId'];
+    booking.price = json['price'];
+    booking.status = json['status'];
+
+    return booking;
   }
 }

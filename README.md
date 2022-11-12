@@ -16,12 +16,12 @@
 -  [Week 2: Hello World](#week-2-hello-world)
 -  [Week 3: Hello World](#week-3-hello-world)
 -  [Week 4: Explore Page](#week-4-explore-page)
--  [Week 5:](#week-5)
--  [Week 6:](#week-6)
--  [Week 7:](#week-7)
+-  [Week 5](#week-5)
+-  [Week 6](#week-6)
+-  [Week 7](#week-7)
 -  [Week 8: Profile Page](#week-8-profile-page)
 -  [Week 9: Auth](#week-9-auth)
--  [Week 10:](#week-10)
+-  [Week 10](#week-10)
 
 ### Week 1: Holiday
 

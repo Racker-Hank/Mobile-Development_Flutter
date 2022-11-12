@@ -1,14 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:traveloka/components/hero_svg.dart';
+import 'package:traveloka/repositories/user_data.dart';
 import 'package:traveloka/view/home_view.dart';
 
-import '../components/button.dart';
-import '../components/clip_path.dart';
-import '../components/input_box.dart';
-import '../config/ui_configs.dart';
+import '../../components/button.dart';
+import '../../components/input_box.dart';
+import '../../config/ui_configs.dart';
 import 'signin_view.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -89,11 +88,17 @@ class _SignUpPageState extends State<SignUpPage> {
                       // await userCred.user?.updatre
                       // print(userCred);
                       // await FirebaseAuth.instance.signOut();
-                      Navigator.of(context).pushAndRemoveUntil(
-                          CupertinoPageRoute(
-                            builder: ((context) => const Home()),
-                          ),
-                          (route) => false);
+                      await UserFirebase.initUser(userCred).whenComplete(
+                          () => Navigator.of(context).pushAndRemoveUntil(
+                              CupertinoPageRoute(
+                                builder: ((context) => const Home()),
+                              ),
+                              (route) => false));
+                      // Navigator.of(context).pushAndRemoveUntil(
+                      //     CupertinoPageRoute(
+                      //       builder: ((context) => const Home()),
+                      //     ),
+                      //     (route) => false);
                     } on Exception catch (e) {
                       print(e);
                     }
@@ -105,7 +110,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   showIcon: true,
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

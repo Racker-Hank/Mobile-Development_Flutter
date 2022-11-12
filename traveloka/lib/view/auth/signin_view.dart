@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:traveloka/view/home_view.dart';
 
-import '../components/button.dart';
-import '../components/hero_svg.dart';
-import '../components/input_box.dart';
-import '../config/ui_configs.dart';
+import '../../components/button.dart';
+import '../../components/hero_svg.dart';
+import '../../components/input_box.dart';
+import '../../config/ui_configs.dart';
 import 'signup_view.dart';
 
 class SignInPage extends StatefulWidget {
