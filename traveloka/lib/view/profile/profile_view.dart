@@ -101,10 +101,17 @@ class _MyProfilePageState extends State<MyProfilePage> {
                               ),
                             ),
                             const SizedBox(width: 16),
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.only(right: 16),
-                              child: Icon(Icons.border_color_rounded),
-                            )
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    UIConfig.darkMode();
+                                  });
+                                },
+                                child: const Icon(Icons.border_color_rounded),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -215,15 +222,17 @@ class SettingTile extends StatelessWidget {
             borderRadius: UIConfig.borderRadius,
             boxShadow: const [
               BoxShadow(
-                  color: Color.fromARGB(30, 0, 0, 0),
-                  offset: Offset(0, 1),
-                  blurRadius: 3,
-                  spreadRadius: 1),
+                color: Color.fromARGB(30, 0, 0, 0),
+                offset: Offset(0, 1),
+                blurRadius: 3,
+                spreadRadius: 1,
+              ),
               BoxShadow(
-                  color: Color.fromARGB(50, 0, 0, 0),
-                  offset: Offset(0, 1),
-                  blurRadius: 2,
-                  spreadRadius: 0)
+                color: Color.fromARGB(50, 0, 0, 0),
+                offset: Offset(0, 1),
+                blurRadius: 2,
+                spreadRadius: 0,
+              )
             ],
             color: UIConfig.white),
         child: Row(
@@ -240,14 +249,18 @@ class SettingTile extends StatelessWidget {
                   Text(
                     tileName,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        fontFamily: 'Roboto'),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontFamily: 'Roboto',
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     tileText,
-                    style: const TextStyle(fontSize: 14, fontFamily: 'Roboto'),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'Roboto',
+                    ),
                   )
                 ],
               ),

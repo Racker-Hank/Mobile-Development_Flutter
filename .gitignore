@@ -140,3 +140,4 @@ doc/api/
 
 genhtml.perl
 coverage/
+traveloka/lib/config/UI_configs.dart

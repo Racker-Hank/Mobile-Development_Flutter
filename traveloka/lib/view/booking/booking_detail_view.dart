@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:traveloka/entity/booking.dart';
-import 'package:traveloka/repositories/hotel_data.dart';
 import '../../components/button.dart';
 import '../../components/hotel_card.dart';
-import '../../components/input_box.dart';
 import '../../config/primitive_wrapper.dart';
 import '../../entity/hotel.dart';
 import '../../config/ui_configs.dart';
+import '../../repositories/booking_data.dart';
 import '../../repositories/user_data.dart';
 import '../hotel/hotel_view_header_buttons.dart';
 
@@ -15,9 +14,13 @@ class BookingDetailPage extends StatefulWidget {
   const BookingDetailPage({
     super.key,
     required this.hotel,
+    this.booking,
+    this.defaultDateRange,
   });
 
   final Hotel hotel;
+  final Booking? booking;
+  final DateTimeRange? defaultDateRange;
 
   @override
   State<BookingDetailPage> createState() => _BookingDetailPageState();
@@ -25,16 +28,26 @@ class BookingDetailPage extends StatefulWidget {
 
 class _BookingDetailPageState extends State<BookingDetailPage> {
   bool isSaved = false;
-  // String heroImageURL = '';
   double imageSpacing = 4;
-  //late Hotel hotel;
+  late DateTimeRange dateRange;
 
   late final TextEditingController _guests;
+  late FocusNode guestFocusNode;
 
   @override
   void initState() {
     _guests = TextEditingController();
     _guests.text = '2';
+    guestFocusNode = FocusNode();
+    dateRange = widget.defaultDateRange ??
+        DateTimeRange(
+          start: DateTime.now(),
+          end: DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day + 7,
+          ),
+        );
 
     UserFirebase.isSaved(widget.hotel.id).then((value) => setState(() {
           isSaved = value;
@@ -46,14 +59,19 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
   @override
   void dispose() {
     _guests.dispose();
+    guestFocusNode.dispose();
 
     super.dispose();
   }
 
-  DateTimeRange dateRange = DateTimeRange(
-      start: DateTime.now(),
-      end: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day + 7));
+  // DateTimeRange dateRange = DateTimeRange(
+  //   start: DateTime.now(),
+  //   end: DateTime(
+  //     DateTime.now().year,
+  //     DateTime.now().month,
+  //     DateTime.now().day + 7,
+  //   ),
+  // );
 
   Future pickDateRange() async {
     DateTimeRange? newDateRange = await showDateRangePicker(
@@ -108,10 +126,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    // var smallImageWidth =
-    // (MediaQuery.of(context).size.width - imageSpacing * 4) / 5;
     var dateRangeInDay = dateRange.duration.inDays;
-    //hotel = HotelFirebase.getHotelById(widget.hotel.id) as Hotel;
 
     return Scaffold(
       body: ListView(
@@ -232,7 +247,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.hotel.id,
+                                widget.booking!.id,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontFamily: 'Roboto',
@@ -256,69 +271,6 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                         ],
                       ),
                     ),
-                    // Container(
-                    //     decoration: BoxDecoration(
-                    //       color: const Color(0xFFDADDE3),
-                    //       borderRadius: UIConfig.borderRadius,
-                    //     ),
-                    //     child: Column(
-                    //       children: [
-                    //         Padding(
-                    //           padding: const EdgeInsets.only(left: 8, top: 8),
-                    //           child: Row(
-                    //             children: [
-                    //               Text(
-                    //                 'Booking ID: ',
-                    //                 style: TextStyle(
-                    //                     fontSize: 18,
-                    //                     fontFamily: 'Roboto',
-                    //                     fontWeight: FontWeight.normal,
-                    //                     color: UIConfig.black
-                    //                 ),
-                    //               ),
-                    //               const SizedBox(width: 32),
-                    //               Text(
-                    //                 widget.hotel.id,
-                    //                 style: TextStyle(
-                    //                     fontSize: 18,
-                    //                     fontFamily: 'Roboto',
-                    //                     fontWeight: FontWeight.bold,
-                    //                     color: UIConfig.black
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         const SizedBox(height: 8),
-                    //         Padding(
-                    //           padding: const EdgeInsets.only(left: 8, bottom: 8),
-                    //           child: Row(
-                    //             children: [
-                    //               Text(
-                    //                 'Booked on: ',
-                    //                 style: TextStyle(
-                    //                     fontSize: 18,
-                    //                     fontFamily: 'Roboto',
-                    //                     fontWeight: FontWeight.normal,
-                    //                     color: UIConfig.black
-                    //                 ),
-                    //               ),
-                    //               const SizedBox(width: 32),
-                    //               Text(
-                    //                 DateFormat('MMM d, yyyy').format(DateTime.now()),
-                    //                 style: TextStyle(
-                    //                     fontSize: 18,
-                    //                     fontFamily: 'Roboto',
-                    //                     fontWeight: FontWeight.bold,
-                    //                     color: UIConfig.black
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         )
-                    //       ],
-                    //     )
-                    // ),
                     const SizedBox(height: 16),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -376,13 +328,14 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                                 ],
                               ),
                             ),
-                            GestureDetector(
-                              onTap: pickDateRange,
-                              child: Icon(
-                                Icons.border_color_rounded,
-                                color: UIConfig.primaryColor,
-                              ),
-                            )
+                            if (!widget.booking!.status)
+                              GestureDetector(
+                                onTap: pickDateRange,
+                                child: Icon(
+                                  Icons.border_color_rounded,
+                                  color: UIConfig.primaryColor,
+                                ),
+                              )
                           ],
                         ),
                         const SizedBox(height: 16),
@@ -409,7 +362,9 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                                   ),
                                   TextField(
                                     controller: _guests,
+                                    focusNode: guestFocusNode,
                                     keyboardType: TextInputType.number,
+                                    readOnly: widget.booking!.status,
                                     decoration: const InputDecoration.collapsed(
                                       hintText: 'Insert number of guests',
                                       hintStyle: TextStyle(
@@ -428,6 +383,14 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                                 ],
                               ),
                             ),
+                            if (!widget.booking!.status)
+                              GestureDetector(
+                                onTap: () => guestFocusNode.requestFocus(),
+                                child: Icon(
+                                  Icons.border_color_rounded,
+                                  color: UIConfig.primaryColor,
+                                ),
+                              )
                           ],
                         ),
                       ],
@@ -463,63 +426,72 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                     ),
                   ],
                 ),
-                // const SizedBox(height: 64),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        // setState(() {
-                        //   dateRange = DateTimeRange(
-                        //     start: DateTime.now(),
-                        //     end: DateTime(
-                        //         DateTime.now().year,
-                        //         DateTime.now().month,
-                        //         DateTime.now().day + 7,),
-                        //   );
+                if (!widget.booking!.status)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          BookingFirebase.cancelBooking(widget.booking!.id);
+                          // setState(() {
+                          //   dateRange = DateTimeRange(
+                          //     start: DateTime.now(),
+                          //     end: DateTime(
+                          //       DateTime.now().year,
+                          //       DateTime.now().month,
+                          //       DateTime.now().day + 7,
+                          //     ),
+                          //   );
 
-                        //   _guests.text = '1';
-                        // });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 32, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFDC362E),
-                          borderRadius: UIConfig.borderRadius,
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color.fromARGB(70, 0, 0, 0),
-                              offset: Offset(0, 2),
-                              blurRadius: 3,
-                            ),
-                            BoxShadow(
-                              color: Color.fromARGB(30, 0, 0, 0),
-                              offset: Offset(0, 6),
-                              blurRadius: 10,
-                              spreadRadius: 4,
-                            )
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Cancel',
-                              style: UIConfig.buttonTextStyle,
-                            ),
-                          ],
+                          //   _guests.text = '2';
+                          // });
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFDC362E),
+                            borderRadius: UIConfig.borderRadius,
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color.fromARGB(70, 0, 0, 0),
+                                offset: Offset(0, 2),
+                                blurRadius: 3,
+                              ),
+                              BoxShadow(
+                                color: Color.fromARGB(30, 0, 0, 0),
+                                offset: Offset(0, 6),
+                                blurRadius: 10,
+                                spreadRadius: 4,
+                              )
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Cancel',
+                                style: UIConfig.buttonTextStyle,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Button(
-                      label: 'Confirm',
-                      function: () {},
-                    )
-                  ],
-                )
+                      Button(
+                        label: 'Confirm',
+                        function: () {
+                          BookingFirebase.confirmBooking(widget.booking!.id);
+                          setState(() {
+                            widget.booking!.status = true;
+                          });
+                          // Navigator.of(context).pop();
+                        },
+                      )
+                    ],
+                  )
               ],
             ),
           ),

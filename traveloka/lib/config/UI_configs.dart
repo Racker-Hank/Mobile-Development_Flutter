@@ -11,17 +11,19 @@ class UIConfig {
   static Color screenBackgroundColor = const Color(0xFFF2F5FA);
   static Color darkGrey = const Color(0xFF79747E);
 
-  static TextStyle titleLargeTextStyle = const TextStyle(
+  static TextStyle titleLargeTextStyle = TextStyle(
     fontFamily: 'Roboto',
     fontSize: 22,
     height: 1.3,
+    color: black,
   );
-  static TextStyle bodyMediumTextStyle = const TextStyle(
+  static TextStyle bodyMediumTextStyle = TextStyle(
     fontFamily: 'Roboto',
     fontSize: 14,
     height: 1.5,
     letterSpacing: .5,
-    color: Color(0xFF49454F),
+    // color: Color(0xFF49454F),
+    color: black,
   );
   static TextStyle buttonTextStyle = const TextStyle(
     fontFamily: 'Nunito Sans',
@@ -51,5 +53,16 @@ class UIConfig {
       }
     }
     return cap.trim();
+  }
+
+  static void darkMode() {
+    black = const Color(0xFFFFFFFF);
+    white = const Color(0xFF000000);
+    screenBackgroundColor = const Color(0xFFFFFFFF).withAlpha(230);
+    accentColor = const Color(0xFFFFFFFF);
+    darkGrey = const Color(0xFFA29AAC);
+    titleLargeTextStyle = titleLargeTextStyle.copyWith(color: black);
+    bodyMediumTextStyle = bodyMediumTextStyle.copyWith(color: black);
+    textFieldInputTextStyle = textFieldInputTextStyle.copyWith(color: black);
   }
 }

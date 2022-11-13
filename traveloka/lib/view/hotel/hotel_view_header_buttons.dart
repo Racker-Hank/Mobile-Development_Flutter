@@ -32,9 +32,9 @@ class _HotelViewHeaderButtonsState extends State<HotelViewHeaderButtons> {
         children: [
           GestureDetector(
             onTap: () => Navigator.pop(widget.parentWidgetContext),
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_rounded,
-              color: UIConfig.white,
+              color: Color(0xFFFFFFFF),
             ),
           ),
           Row(
@@ -51,13 +51,13 @@ class _HotelViewHeaderButtonsState extends State<HotelViewHeaderButtons> {
                         });
                       },
                       child: AnimatedCrossFade(
-                        firstChild: Icon(
+                        firstChild: const Icon(
                           Icons.bookmark_border_rounded,
-                          color: UIConfig.white,
+                          color: Color(0xFFFFFFFF),
                         ),
-                        secondChild: Icon(
+                        secondChild: const Icon(
                           Icons.bookmark_rounded,
-                          color: UIConfig.white,
+                          color: Color(0xFFFFFFFF),
                         ),
                         crossFadeState: snapshot.data ?? widget.isSaved.value
                             ? CrossFadeState.showSecond
@@ -67,9 +67,9 @@ class _HotelViewHeaderButtonsState extends State<HotelViewHeaderButtons> {
                     );
                   }),
               const SizedBox(width: 16),
-              Icon(
+              const Icon(
                 Icons.share_rounded,
-                color: UIConfig.white,
+                color: Color(0xFFFFFFFF),
               ),
             ],
           )

@@ -80,9 +80,7 @@ class _MySavedPageState extends State<MySavedPage> {
                                 itemCount: savedHotels.length,
                                 shrinkWrap: true,
                                 separatorBuilder: (context, index) =>
-                                    const SizedBox(
-                                  height: 8,
-                                ),
+                                    const SizedBox(height: 8),
                                 addAutomaticKeepAlives: false,
                                 cacheExtent: 100,
                                 padding: const EdgeInsets.only(bottom: 16),
