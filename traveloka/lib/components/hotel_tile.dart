@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../entity/hotel.dart';
-import 'package:traveloka/view/hotel_view.dart';
+import 'package:traveloka/entity/hotel.dart';
+import 'package:traveloka/view/booking/booking_detail_view.dart';
+import 'package:traveloka/view/hotel/hotel_view.dart';
 import '../config/ui_configs.dart';
 
 class HotelTile extends StatelessWidget {
@@ -8,8 +9,11 @@ class HotelTile extends StatelessWidget {
     super.key,
     this.hMargin,
     this.vMargin,
+    this.showBooking = false,
     required this.hotel,
   });
+
+  final bool showBooking;
 
   final double? hMargin;
 
@@ -23,14 +27,18 @@ class HotelTile extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MyHotelPage(hotel: hotel),
+          builder: (context) {
+            if (!showBooking) {
+              return MyHotelPage(hotel: hotel);
+            } else {
+              return BookingDetailPage(hotel: hotel);
+            }
+          },
         ),
       ),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         height: 80,
-        // curve: Curves.easeInQuart,
-        // margin: EdgeInsets.symmetric(vertical: 0, horizontal: hMargin ?? 16),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
           borderRadius: UIConfig.borderRadius,
@@ -73,7 +81,6 @@ class HotelTile extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                       fontFamily: 'Roboto',
-                      // letterSpacing: .1,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -97,6 +104,41 @@ class HotelTile extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class HeroImage extends StatelessWidget {
+  const HeroImage({
+    Key? key,
+    required this.hotelID,
+    required this.imageURL,
+  }) : super(key: key);
+
+  final String imageURL;
+  final String hotelID;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(
+          flex: 1,
+          child: Hero(
+            tag: 'hotel_${hotelID}_image',
+            child: Container(
+              height: 150,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(imageURL),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

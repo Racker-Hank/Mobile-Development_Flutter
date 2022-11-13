@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import './button.dart';
 import './round_icon_button.dart';
 
 import '../config/ui_configs.dart';
-import '../view/search_view.dart';
+import '../view/search/search_view.dart';
 import 'input_box.dart';
-import 'new_page_route.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
@@ -46,6 +44,7 @@ class _SearchBarState extends State<SearchBar> {
   void dispose() {
     // hotelBoxFocusNode.dispose();
     // guestsBoxFocusNode.dispose();
+    // _animationController.dispose();
     _hotel.dispose();
     _guests.dispose();
     super.dispose();
@@ -95,30 +94,6 @@ class _SearchBarState extends State<SearchBar> {
                       labelText: 'Search for a location',
                       // focusNode: hotelBoxFocusNode,
                       focussed: () {
-                        // print("test");
-                        // setState(() {
-                        //   leftIcon = Icon(
-                        //     Icons.arrow_back_rounded,
-                        //     color: UIConfig.darkGrey,
-                        //   );
-                        //   rightIcon = Icon(
-                        //     Icons.tune_rounded,
-                        //     color: UIConfig.primaryColor,
-                        //     size: 20,
-                        //   );
-                        //   // print(searchBoxFocusNode.hasFocus);
-                        // });
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const MySearchPage(),
-                        //   ),
-                        // );
-                        // Navigator.of(context).push(
-                        //   NewPageRoute(
-                        //     child: const MySearchPage(),
-                        //   ),
-                        // );
                         Navigator.of(context).push(
                           CupertinoPageRoute(
                             builder: ((context) => const MySearchPage()),
@@ -132,10 +107,7 @@ class _SearchBarState extends State<SearchBar> {
               const SizedBox(width: 16),
               RightRoundIconButton(
                 icon: rightIcon,
-                function: () {
-                  // rightIconButtonFocusNode.requestFocus();
-                },
-                // focusNode: rightIconButtonFocusNode,
+                function: () {},
               ),
             ],
           ),

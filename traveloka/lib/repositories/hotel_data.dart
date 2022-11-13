@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:traveloka/config/UI_configs.dart';
-
-import '../entity/hotel.dart';
+import 'package:traveloka/config/ui_configs.dart';
+import 'package:traveloka/entity/hotel.dart';
 
 class HotelFirebase {
   static Stream<List<Hotel>> readHotels() {
@@ -21,11 +20,17 @@ class HotelFirebase {
             .toList());
   }
 
+  static Future<Hotel> getHotelById(String id) async {
+    return await FirebaseFirestore.instance
+        .collection('hotels')
+        .doc(id)
+        .get()
+        .then((doc) {
+      return Hotel.fromJson(doc.data()!, doc.id);
+    });
+  }
+
   static Stream<List<Hotel>> searchHotelByName(String name) {
-    // if (name.isEmpty) {
-    //   // print('test');
-    //   return readHotelsLimit(1);
-    // }
     name = UIConfig.capitalize(name);
     return FirebaseFirestore.instance
         .collection('hotels')
@@ -39,11 +44,7 @@ class HotelFirebase {
   }
 
   static Stream<List<Hotel>> searchHotelByLocation(String location) {
-    // if (location.isEmpty) {
-    //   return readHotelsLimit(1);
-    // }
     location = UIConfig.capitalize(location);
-    print(location);
     return FirebaseFirestore.instance
         .collection('hotels')
         .orderBy('location')

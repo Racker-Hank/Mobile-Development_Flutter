@@ -4,14 +4,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:traveloka/entity/hotel.dart';
 import 'package:traveloka/repositories/hotel_data.dart';
 
-import '../components/button.dart';
-import '../components/hotel_card.dart';
-import '../components/input_box.dart';
-import '../components/search_bar.dart';
-import '../config/ui_configs.dart';
-import '../entity/hotel.dart';
+import '../../components/button.dart';
+import '../../components/hotel_card.dart';
+import '../../components/input_box.dart';
+import '../../components/search_bar.dart';
+import '../../config/ui_configs.dart';
+// import '../entity/hotel.dart';
 
 class MySearchPage extends StatefulWidget {
   const MySearchPage({Key? key}) : super(key: key);
@@ -41,27 +42,16 @@ class _MySearchPageState extends State<MySearchPage>
   late final TextEditingController _hotel;
   late final TextEditingController _dateRange;
   late final TextEditingController _guests;
-  // late final AnimationController _animationController;
-  // final Stream<List<Hotel>> hotelsStream = HotelFirebase.readHotels();
+  final Stream<List<Hotel>> hotelsStream = HotelFirebase.readHotels();
   late List<Hotel> hotelsSnapshot = [];
   late List<Hotel> hotels = List.from(hotelsSnapshot);
 
   late final PageController _pageController;
 
-  // List hotels = Hotel.hotels;
-
   double cardWidth = 284;
 
   @override
   void initState() {
-    // _animationController = AnimationController(
-    //   vsync: this,
-    //   duration: const Duration(milliseconds: 150),
-    // );
-    // Timer(
-    //     const Duration(milliseconds: 0), () => _animationController.forward());
-    // _animationController.forward();
-
     hotelBoxFocusNode.requestFocus();
     _hotel = TextEditingController();
     _dateRange = TextEditingController();
@@ -74,7 +64,6 @@ class _MySearchPageState extends State<MySearchPage>
   }
 
   Future<void> _searchByHotel() async {
-    //print(_hotel.text);
     if (_hotel.text.isNotEmpty) {
       List<Hotel> searchByName = [];
       List<Hotel> searchByLocation = [];
@@ -88,10 +77,6 @@ class _MySearchPageState extends State<MySearchPage>
     }
 
     setState(() {
-      // hotels = hotelsSnapshot
-      //     .where((element) =>
-      //         element.name.toLowerCase().contains(_hotel.text.toLowerCase()))
-      //     .toList();
       hotels = hotelsSnapshot;
     });
   }
@@ -164,10 +149,8 @@ class _MySearchPageState extends State<MySearchPage>
       dateRange = newDateRange;
     });
 
-    String dateFormat =
-        dateRange.start.year == dateRange.end.year ? 'MMMd' : 'MMM d, yy';
-    _dateRange.text =
-        '${DateFormat(dateFormat).format(dateRange.start)} - ${DateFormat(dateFormat).format(dateRange.end)}';
+    String dateFormat = dateRange.start.year == dateRange.end.year ? 'MMMd' : 'MMM d, yy';
+    _dateRange.text = '${DateFormat(dateFormat).format(dateRange.start)} - ${DateFormat(dateFormat).format(dateRange.end)}';
   }
 
   @override
@@ -187,9 +170,7 @@ class _MySearchPageState extends State<MySearchPage>
                     LeftRoundIconButton(
                       icon: leftIcon,
                       function: () {
-                        // _animationController
-                        //     .reverse()
-                        //     .whenComplete(() => Navigator.pop(context));
+                        FocusScope.of(context).unfocus();
                         Navigator.pop(context);
                       },
                     ),
@@ -226,9 +207,11 @@ class _MySearchPageState extends State<MySearchPage>
                 ),
                 const SizedBox(height: 24),
                 Button(
+                  label: 'Search',
                   function: () {
                     debugPrint(
                         '${_hotel.text} ${_dateRange.text} ${_guests.text}');
+                    FocusScope.of(context).unfocus();
                     setState(() {
                       isShowResult = true;
                     });
@@ -245,7 +228,6 @@ class _MySearchPageState extends State<MySearchPage>
                 stream: HotelFirebase.readHotelsLimit(1),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    // print(snapshot.error.toString());
                     return Text(snapshot.error.toString());
                   } else if (snapshot.connectionState ==
                       ConnectionState.active) {
@@ -269,8 +251,6 @@ class _MySearchPageState extends State<MySearchPage>
                                 : hotelsSnapshot[0],
                             width: min(cardWidth,
                                 .77 * MediaQuery.of(context).size.width),
-                            // width: 328,
-                            height: 420,
                             hMargin: 8,
                             showFacilities: true,
                           ),
@@ -319,7 +299,7 @@ class _MySearchPageState extends State<MySearchPage>
                                             hotel: hotels[i],
                                             width: cardWidth,
                                             // width: 328,
-                                            height: 420,
+                                            // height: 420,
                                             hMargin: 8,
                                             showFacilities: true,
                                           ),

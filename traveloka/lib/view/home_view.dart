@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../components/bottom_nav_bar.dart';
-import 'explore_view.dart';
-import 'booking_view.dart';
-import 'profile_view.dart';
-import 'saved_view.dart';
-// import 'search_view.dart';
+import 'explore/explore_view.dart';
+import 'booking/booking_view.dart';
+import 'profile/profile_view.dart';
+import 'saved/saved_view.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -35,9 +34,7 @@ class _HomeState extends State<Home> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Center(
-          child: _viewOption.elementAt(_selectedIndex),
-        ),
+        body: _viewOption.elementAt(_selectedIndex),
         bottomNavigationBar: BottomNavBar(
             selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
       ),

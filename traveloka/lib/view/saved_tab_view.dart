@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:traveloka/entity/hotel.dart';
 import '../components/hotel_tile.dart';
 import '../components/search_bar.dart';
 import '../config/UI_configs.dart';
-import '../entity/hotel.dart';
 import '../repositories/hotel_data.dart';
 
 class MySavedPage extends StatefulWidget {

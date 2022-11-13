@@ -5,7 +5,7 @@ import 'dart:math' as math;
 class Button extends StatefulWidget {
   const Button({
     super.key,
-    this.label = 'Search',
+    required this.label,
     this.icon = const Icon(Icons.search, size: 24, color: Colors.white),
     this.showIcon = false,
     required this.function,
@@ -80,10 +80,6 @@ class _ButtonState extends State<Button> {
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 4),
           decoration: BoxDecoration(
             borderRadius: UIConfig.borderRadius,
-            // gradient: LinearGradient(
-            //   colors: [UIConfig.accentColor, UIConfig.primaryColor],
-            //   transform: const GradientRotation(math.pi / 4),
-            // ),
             gradient: gradient,
             boxShadow: const [
               BoxShadow(
