@@ -26,10 +26,8 @@ class _MyProfilePageState extends State<MyProfilePage> {
           case ConnectionState.none:
             return Text(snapshot.connectionState.toString());
           // case ConnectionState.waiting:
-          //   // TODO: Handle this case.
           //   break;
           // case ConnectionState.active:
-          //   // TODO: Handle this case.
           //   break;
           case ConnectionState.done:
             final user = FirebaseAuth.instance.currentUser;

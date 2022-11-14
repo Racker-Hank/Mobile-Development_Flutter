@@ -59,7 +59,6 @@ class Traveloka extends StatelessWidget {
               return const Home();
             } else {
               return const SignInPage();
-              return const SignUpPage();
             }
           default:
             return const Center(child: CircularProgressIndicator.adaptive());

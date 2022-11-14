@@ -121,6 +121,7 @@ class _SignInPageState extends State<SignInPage> {
                           );
                           print(userCred);
                           // await FirebaseAuth.instance.signOut();
+                          // ignore: use_build_context_synchronously
                           Navigator.of(context).pushAndRemoveUntil(
                               CupertinoPageRoute(
                                 builder: ((context) => const Home()),

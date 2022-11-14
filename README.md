@@ -22,6 +22,7 @@
 -  [Week 8: Profile Page](#week-8-profile-page)
 -  [Week 9: Auth](#week-9-auth)
 -  [Week 10](#week-10)
+-  [Week 11](#week-11)
 
 ### Week 1: Holiday
 
@@ -86,3 +87,10 @@
 
 -  Testing :
    -  [Monkey Test](./traveloka/test/monkey_test_logs.txt)
+
+### Week 11:
+
+-  API used:
+   -  Firebase Auth
+   -  Firestore
+-  App screenshots: see above
