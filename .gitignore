@@ -53,4 +53,8 @@ render.experimental.xml
 =======
 genhtml.perl
 coverage/
+<<<<<<< HEAD
 >>>>>>> ff7b54111442a3aaeb5c0eda3f9e0538460e3a10
+=======
+traveloka/lib/config/UI_configs.dart
+>>>>>>> d39d9950a4b87d680fab087c9c8f3673a4cc6d70

@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:traveloka/components/button.dart';
+import 'package:traveloka/entity/booking.dart';
 import 'package:traveloka/repositories/user_data.dart';
 import 'package:traveloka/view/hotel/hotel_view_header_buttons.dart';
 import 'dart:math' as math;
@@ -8,15 +10,20 @@ import '../../components/hotel_card.dart';
 import '../../config/primitive_wrapper.dart';
 import '../../config/ui_configs.dart';
 import '../../entity/hotel.dart';
+import '../../repositories/booking_data.dart';
 import '../booking/booking_detail_view.dart';
 
 class MyHotelPage extends StatefulWidget {
   const MyHotelPage({
     super.key,
     required this.hotel,
+    this.defaultDateRange,
+    this.defaultGuests,
   });
 
   final Hotel hotel;
+  final DateTimeRange? defaultDateRange;
+  final int? defaultGuests;
 
   @override
   State<MyHotelPage> createState() => _MyHotelPageState();
@@ -26,12 +33,24 @@ class _MyHotelPageState extends State<MyHotelPage> {
   late bool isSaved = false;
   String heroImageURL = '';
   double imageSpacing = 4;
+  late DateTimeRange dateRange;
+  late int guests;
 
   final reviewsKey = GlobalKey();
   final descriptionKey = GlobalKey();
   @override
   void initState() {
     heroImageURL = widget.hotel.imageURLs[0];
+    dateRange = widget.defaultDateRange ??
+        DateTimeRange(
+          start: DateTime.now(),
+          end: DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day + 7,
+          ),
+        );
+    guests = widget.defaultGuests ?? 2;
     UserFirebase.isSaved(widget.hotel.id).then((value) => setState(() {
           isSaved = value;
         }));
@@ -102,7 +121,6 @@ class _MyHotelPageState extends State<MyHotelPage> {
                       moreStyle: UIConfig.indicationTextStyle,
                       lessStyle: UIConfig.indicationTextStyle,
                     ),
-
                     const SizedBox(height: 16),
                     Facilities(
                       showFacilities: true,
@@ -110,15 +128,6 @@ class _MyHotelPageState extends State<MyHotelPage> {
                       facilities: widget.hotel.facilities,
                     ),
                     const SizedBox(height: 16),
-                    // const GoogleMap(
-                    //   initialCameraPosition: CameraPosition(
-                    //     target: LatLng(25.782337702478927, -80.14071738317143),
-                    //   ),
-                    // ),
-                    // Container(
-                    //   height: 300,
-                    //   child: map(),
-                    // ),
                     Directions(widget: widget),
                     const SizedBox(height: 16),
                     // Container(
@@ -137,12 +146,27 @@ class _MyHotelPageState extends State<MyHotelPage> {
           BookingCTA(
               widget: widget,
               function: () {
-                Navigator.push(
+                BookingFirebase.createBooking(
+                  Booking(
+                    '',
+                    dateRange.start,
+                    dateRange.end,
+                    DateTime.now(),
+                    FirebaseAuth.instance.currentUser!.uid,
+                    widget.hotel.id,
+                    guests,
+                    widget.hotel.price * dateRange.duration.inDays,
+                    false,
+                  ),
+                ).then((booking) => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          BookingDetailPage(hotel: widget.hotel),
-                    )).then((value) => setState(() {}));
+                      builder: (context) => BookingDetailPage(
+                        hotel: widget.hotel,
+                        booking: booking,
+                        defaultDateRange: dateRange,
+                      ),
+                    )).then((value) => setState(() {})));
               }),
         ],
       ),
@@ -227,13 +251,13 @@ class _MyHotelPageState extends State<MyHotelPage> {
                       Container(
                         width: smallImageWidth,
                         height: smallImageWidth,
-                        color: UIConfig.black.withOpacity(.5),
+                        color: const Color(0XFF000000).withOpacity(.5),
                         child: Center(
                           child: Text(
                             '+${widget.hotel.imageURLs.length - 4}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
-                              color: UIConfig.white,
+                              color: Color(0XFFFFFFFF),
                               fontFamily: 'Roboto',
                             ),
                           ),
@@ -248,56 +272,6 @@ class _MyHotelPageState extends State<MyHotelPage> {
       ),
     );
   }
-
-  // Container headerButtons(BuildContext context) {
-  //   return Container(
-  //     margin: const EdgeInsets.only(top: 20),
-  //     padding: const EdgeInsets.all(16.0),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       children: [
-  //         GestureDetector(
-  //           onTap: () => Navigator.pop(context),
-  //           child: Icon(
-  //             Icons.arrow_back_rounded,
-  //             color: UIConfig.white,
-  //           ),
-  //         ),
-  //         Row(
-  //           children: [
-  //             GestureDetector(
-  //               onTap: () async {
-  //                 await UserFirebase.saveHotel(widget.hotel.id, isSaved);
-  //                 setState(() {
-  //                   isSaved = !isSaved;
-  //                 });
-  //               },
-  //               child: AnimatedCrossFade(
-  //                 firstChild: Icon(
-  //                   Icons.bookmark_border_rounded,
-  //                   color: UIConfig.white,
-  //                 ),
-  //                 secondChild: Icon(
-  //                   Icons.bookmark_rounded,
-  //                   color: UIConfig.white,
-  //                 ),
-  //                 crossFadeState: isSaved
-  //                     ? CrossFadeState.showSecond
-  //                     : CrossFadeState.showFirst,
-  //                 duration: const Duration(milliseconds: 200),
-  //               ),
-  //             ),
-  //             const SizedBox(width: 16),
-  //             Icon(
-  //               Icons.share_rounded,
-  //               color: UIConfig.white,
-  //             ),
-  //           ],
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
 }
 
 class AnchorButtons extends StatelessWidget {
@@ -444,8 +418,6 @@ class Directions extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          // clipBehavior: Clip.antiAliasWithSaveLayer,
-          // child: Image.network(widget.hotel.mapURL),
         ),
       ],
     );

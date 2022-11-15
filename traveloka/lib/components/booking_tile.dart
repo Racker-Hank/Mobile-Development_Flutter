@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:traveloka/entity/hotel.dart';
-import 'package:traveloka/view/booking/booking_detail_view.dart';
-import 'package:traveloka/view/hotel/hotel_view.dart';
 import '../config/ui_configs.dart';
 
-class HotelTile extends StatelessWidget {
-  const HotelTile({
+class BookingTile extends StatelessWidget {
+  const BookingTile({
     super.key,
     this.hMargin,
     this.vMargin,
-    this.showBooking = false,
     required this.hotel,
-    this.bookingId,
   });
-
-  final bool showBooking;
 
   final double? hMargin;
 
   final double? vMargin;
 
   final Hotel hotel;
-
-  final String? bookingId;
 
   @override
   Widget build(BuildContext context) {

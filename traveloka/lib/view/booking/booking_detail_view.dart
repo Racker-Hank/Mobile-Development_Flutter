@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import 'package:traveloka/entity/booking.dart';
 import '../../components/button.dart';
 import '../../components/hotel_card.dart';
 import '../../config/primitive_wrapper.dart';
 import '../../entity/hotel.dart';
 import '../../config/ui_configs.dart';
+import '../../repositories/booking_data.dart';
 import '../../repositories/user_data.dart';
 import '../hotel/hotel_view_header_buttons.dart';
 
@@ -12,9 +15,15 @@ class BookingDetailPage extends StatefulWidget {
   const BookingDetailPage({
     super.key,
     required this.hotel,
+    this.booking,
+    this.defaultDateRange,
+    this.defaultGuests,
   });
 
   final Hotel hotel;
+  final Booking? booking;
+  final DateTimeRange? defaultDateRange;
+  final int? defaultGuests;
 
   @override
   State<BookingDetailPage> createState() => _BookingDetailPageState();
@@ -24,16 +33,34 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
   bool isSaved = false;
   double imageSpacing = 4;
 
+  late DateTimeRange dateRange;
+  late int guests;
+  late int price;
+
   late final TextEditingController _guests;
   late FocusNode guestFocusNode;
 
   @override
   void initState() {
     _guests = TextEditingController();
-    _guests.text = '2';
+    _guests.text = widget.defaultGuests.toString() != 'null' ? widget.defaultGuests.toString() : '2';
     guestFocusNode = FocusNode();
 
-    UserFirebase.isSaved(widget.hotel.id).then((value) => setState(() {
+    dateRange = widget.defaultDateRange ??
+        DateTimeRange(
+          start: DateTime.now(),
+          end: DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day + 7,
+          ),
+        );
+    guests = widget.defaultGuests ?? 2;
+    price = widget.hotel.price * dateRange.duration.inDays;
+
+
+    UserFirebase.isSaved(widget.hotel.id)
+        .then((value) => setState(() {
           isSaved = value;
         }));
 
@@ -47,13 +74,6 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
 
     super.dispose();
   }
-
-  DateTimeRange dateRange = DateTimeRange(
-    start: DateTime.now(),
-    end: DateTime(
-      DateTime.now().year, DateTime.now().month, DateTime.now().day + 7
-    )
-  );
 
   Future pickDateRange() async {
     DateTimeRange? newDateRange = await showDateRangePicker(
@@ -103,7 +123,10 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
 
     setState(() {
       dateRange = newDateRange;
+      price = dateRange.duration.inDays * widget.hotel.price;
     });
+
+    BookingFirebase.updateBookingDate(widget.booking!.id, dateRange, price);
   }
 
   @override
@@ -229,7 +252,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.hotel.id,
+                                widget.booking!.id,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontFamily: 'Roboto',
@@ -310,13 +333,14 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                                 ],
                               ),
                             ),
-                            GestureDetector(
-                              onTap: pickDateRange,
-                              child: Icon(
-                                Icons.border_color_rounded,
-                                color: UIConfig.primaryColor,
-                              ),
-                            )
+                            if (!widget.booking!.status)
+                              GestureDetector(
+                                onTap: pickDateRange,
+                                child: Icon(
+                                  Icons.border_color_rounded,
+                                  color: UIConfig.primaryColor,
+                                ),
+                              )
                           ],
                         ),
                         const SizedBox(height: 16),
@@ -345,6 +369,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                                     controller: _guests,
                                     focusNode: guestFocusNode,
                                     keyboardType: TextInputType.number,
+                                    readOnly: widget.booking!.status,
                                     decoration: const InputDecoration.collapsed(
                                       hintText: 'Insert number of guests',
                                       hintStyle: TextStyle(
@@ -358,18 +383,26 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                                         fontSize: 18,
                                         fontFamily: 'Roboto',
                                         fontWeight: FontWeight.bold,
-                                        color: UIConfig.black),
+                                        color: UIConfig.black
+                                    ),
+                                    onEditingComplete: () {
+                                      setState(() {
+                                        guests = int.parse(_guests.text);
+                                        BookingFirebase.updateBookingGuests(widget.booking!.id, guests);
+                                      });
+                                    },
                                   )
                                 ],
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () => guestFocusNode.requestFocus(),
-                              child: Icon(
-                                Icons.border_color_rounded,
-                                color: UIConfig.primaryColor,
-                              ),
-                            )
+                            if (!widget.booking!.status)
+                              GestureDetector(
+                                onTap: () => guestFocusNode.requestFocus(),
+                                child: Icon(
+                                  Icons.border_color_rounded,
+                                  color: UIConfig.primaryColor,
+                                ),
+                              )
                           ],
                         ),
                       ],
@@ -393,7 +426,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                           ),
                         ),
                         Text(
-                          '\$${dateRangeInDay * widget.hotel.price}',
+                          '\$$price',
                           style: TextStyle(
                             fontSize: 20,
                             fontFamily: 'Roboto',
@@ -405,62 +438,60 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                     ),
                   ],
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          dateRange = DateTimeRange(
-                            start: DateTime.now(),
-                            end: DateTime(
-                              DateTime.now().year,
-                              DateTime.now().month,
-                              DateTime.now().day + 7,),
-                          );
-
-                          _guests.text = '2';
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 32, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFDC362E),
-                          borderRadius: UIConfig.borderRadius,
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color.fromARGB(70, 0, 0, 0),
-                              offset: Offset(0, 2),
-                              blurRadius: 3,
-                            ),
-                            BoxShadow(
-                              color: Color.fromARGB(30, 0, 0, 0),
-                              offset: Offset(0, 6),
-                              blurRadius: 10,
-                              spreadRadius: 4,
-                            )
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Cancel',
-                              style: UIConfig.buttonTextStyle,
-                            ),
-                          ],
+                if (!widget.booking!.status)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          BookingFirebase.cancelBooking(widget.booking!.id);
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFDC362E),
+                            borderRadius: UIConfig.borderRadius,
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color.fromARGB(70, 0, 0, 0),
+                                offset: Offset(0, 2),
+                                blurRadius: 3,
+                              ),
+                              BoxShadow(
+                                color: Color.fromARGB(30, 0, 0, 0),
+                                offset: Offset(0, 6),
+                                blurRadius: 10,
+                                spreadRadius: 4,
+                              )
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Cancel',
+                                style: UIConfig.buttonTextStyle,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Button(
-                      label: 'Confirm',
-                      function: () {},
-                    )
-                  ],
-                )
+                      Button(
+                        label: 'Confirm',
+                        function: () {
+                          BookingFirebase.confirmBooking(widget.booking!.id);
+                          setState(() {
+                            widget.booking!.status = true;
+                          });
+                          // Navigator.of(context).pop();
+                        },
+                      )
+                    ],
+                  )
               ],
             ),
           ),

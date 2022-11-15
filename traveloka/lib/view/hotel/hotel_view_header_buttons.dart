@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:traveloka/entity/hotel.dart';
 
 import '../../config/primitive_wrapper.dart';
-import '../../config/ui_configs.dart';
 import '../../repositories/user_data.dart';
 
 class HotelViewHeaderButtons extends StatefulWidget {
@@ -32,44 +31,46 @@ class _HotelViewHeaderButtonsState extends State<HotelViewHeaderButtons> {
         children: [
           GestureDetector(
             onTap: () => Navigator.pop(widget.parentWidgetContext),
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_rounded,
-              color: UIConfig.white,
+              color: Color(0xFFFFFFFF),
             ),
           ),
           Row(
             children: [
               FutureBuilder(
-                  future: UserFirebase.isSaved(widget.hotel.id),
-                  builder: (context, snapshot) {
-                    return GestureDetector(
-                      onTap: () async {
-                        await UserFirebase.saveHotel(
-                            widget.hotel.id, widget.isSaved.value);
-                        setState(() {
-                          widget.isSaved.value = !widget.isSaved.value;
-                        });
-                      },
-                      child: AnimatedCrossFade(
-                        firstChild: Icon(
-                          Icons.bookmark_border_rounded,
-                          color: UIConfig.white,
-                        ),
-                        secondChild: Icon(
-                          Icons.bookmark_rounded,
-                          color: UIConfig.white,
-                        ),
-                        crossFadeState: snapshot.data ?? widget.isSaved.value
-                            ? CrossFadeState.showSecond
-                            : CrossFadeState.showFirst,
-                        duration: const Duration(milliseconds: 200),
+                future: UserFirebase.isSaved(widget.hotel.id),
+                builder: (context, snapshot) {
+                  return GestureDetector(
+                    onTap: () async {
+                      print('clicked');
+                      await UserFirebase.saveHotel(
+                          widget.hotel.id, widget.isSaved.value);
+                      setState(() {
+                        widget.isSaved.value = !widget.isSaved.value;
+                      });
+                    },
+                    child: AnimatedCrossFade(
+                      firstChild: const Icon(
+                        Icons.bookmark_border_rounded,
+                        color: Color(0xFFFFFFFF),
                       ),
-                    );
-                  }),
+                      secondChild: const Icon(
+                        Icons.bookmark_rounded,
+                        color: Color(0xFFFFFFFF),
+                      ),
+                      crossFadeState: snapshot.data ?? widget.isSaved.value
+                          ? CrossFadeState.showSecond
+                          : CrossFadeState.showFirst,
+                      duration: const Duration(milliseconds: 200),
+                    ),
+                  );
+                }
+              ),
               const SizedBox(width: 16),
-              Icon(
+              const Icon(
                 Icons.share_rounded,
-                color: UIConfig.white,
+                color: Color(0xFFFFFFFF),
               ),
             ],
           )
