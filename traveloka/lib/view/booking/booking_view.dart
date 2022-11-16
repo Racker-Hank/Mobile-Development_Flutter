@@ -44,7 +44,8 @@ class _MyBookingPageState extends State<MyBookingPage> {
                 if (snapshot.hasError) {
                   return Text(snapshot.error.toString());
                 } else if (snapshot.connectionState == ConnectionState.active) {
-                  final bookedHotelIds = snapshot.data!
+                  final bookings = snapshot.data!;
+                  final bookedHotelIds = bookings
                       .where((booking) => booking.bookingFromDate.compareTo(DateTime.now()) > 0)
                       .map((booking) => booking.hotelId).toList();
 
@@ -112,6 +113,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                                     itemBuilder: ((context, i) {
                                       return HotelTile(
                                         hotel: hotels[i],
+                                        booking: bookings[i],
                                         showBooking: true,
                                       );
                                     }),
@@ -139,6 +141,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                 if (snapshot.hasError) {
                   return Text(snapshot.error.toString());
                 } else if (snapshot.connectionState == ConnectionState.active) {
+                  final bookings = snapshot.data!;
                   final bookedHotelIds = snapshot.data!.map((booking) => booking.hotelId).toList();
 
                   return bookedHotelIds.isEmpty
@@ -190,6 +193,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                                     itemBuilder: ((context, i) {
                                       return HotelTile(
                                         hotel: hotels[i],
+                                        booking: bookings[i],
                                         showBooking: true,
                                       );
                                     }),

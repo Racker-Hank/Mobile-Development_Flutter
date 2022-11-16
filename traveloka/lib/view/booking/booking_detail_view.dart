@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,14 +18,14 @@ class BookingDetailPage extends StatefulWidget {
     super.key,
     required this.hotel,
     this.booking,
-    this.defaultDateRange,
-    this.defaultGuests,
+    this.dateRangeFromSearch,
+    this.guestsFromSearch,
   });
 
   final Hotel hotel;
   final Booking? booking;
-  final DateTimeRange? defaultDateRange;
-  final int? defaultGuests;
+  final DateTimeRange? dateRangeFromSearch;
+  final int? guestsFromSearch;
 
   @override
   State<BookingDetailPage> createState() => _BookingDetailPageState();
@@ -33,6 +35,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
   bool isSaved = false;
   double imageSpacing = 4;
 
+  late Booking booking;
   late DateTimeRange dateRange;
   late int guests;
   late int price;
@@ -43,10 +46,11 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
   @override
   void initState() {
     _guests = TextEditingController();
-    _guests.text = widget.defaultGuests.toString() != 'null' ? widget.defaultGuests.toString() : '2';
+    _guests.text = widget.booking!.status ? widget.booking!.guests.toString()
+      : (widget.guestsFromSearch.toString() != 'null' ? widget.guestsFromSearch.toString() : '2');
     guestFocusNode = FocusNode();
 
-    dateRange = widget.defaultDateRange ??
+    dateRange = widget.dateRangeFromSearch ??
         DateTimeRange(
           start: DateTime.now(),
           end: DateTime(
@@ -55,9 +59,21 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
             DateTime.now().day + 7,
           ),
         );
-    guests = widget.defaultGuests ?? 2;
+    guests = widget.guestsFromSearch ?? 2;
     price = widget.hotel.price * dateRange.duration.inDays;
-
+    booking = (widget.booking!.status ?
+      widget.booking! :
+      Booking(
+        widget.booking!.id,
+        dateRange.start,
+        dateRange.end,
+        DateTime.now(),
+        FirebaseAuth.instance.currentUser!.uid,
+        widget.hotel.id,
+        guests,
+        price,
+        false
+      ));
 
     UserFirebase.isSaved(widget.hotel.id)
         .then((value) => setState(() {
@@ -123,7 +139,11 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
 
     setState(() {
       dateRange = newDateRange;
+      booking.bookingFromDate = dateRange.start;
+      booking.bookingToDate = dateRange.end;
+
       price = dateRange.duration.inDays * widget.hotel.price;
+      widget.booking!.price = price;
     });
 
     BookingFirebase.updateBookingDate(widget.booking!.id, dateRange, price);
@@ -131,7 +151,8 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    var dateRangeInDay = dateRange.duration.inDays;
+    // var dateRangeInDay = dateRange.duration.inDays;
+    var dateRangeInDay = DateTimeRange(start: booking.bookingFromDate, end: booking.bookingToDate).duration.inDays;
 
     return Scaffold(
       body: ListView(
@@ -172,7 +193,6 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                   ),
                 ),
               ),
-              // headerButtons(context)
               HotelViewHeaderButtons(
                 parentWidgetContext: context,
                 isSaved: PrimitiveWrapper(isSaved),
@@ -252,7 +272,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.booking!.id,
+                                booking.id,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontFamily: 'Roboto',
@@ -263,7 +283,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                               const SizedBox(height: 8),
                               Text(
                                 DateFormat('MMM d, yyyy')
-                                    .format(DateTime.now()),
+                                    .format(booking.bookingTimestamp),
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontFamily: 'Roboto',
@@ -313,7 +333,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    '${DateFormat('MMM d, yyyy').format(dateRange.start)} - ${DateFormat('MMM d, yyyy').format(dateRange.end)}',
+                                    '${DateFormat('MMM d, yyyy').format(booking.bookingFromDate)} - ${DateFormat('MMM d, yyyy').format(booking.bookingToDate)}',
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: 'Roboto',
@@ -426,7 +446,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                           ),
                         ),
                         Text(
-                          '\$$price',
+                          '\$${widget.booking!.price}',
                           style: TextStyle(
                             fontSize: 20,
                             fontFamily: 'Roboto',

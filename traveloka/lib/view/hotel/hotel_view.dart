@@ -164,7 +164,7 @@ class _MyHotelPageState extends State<MyHotelPage> {
                       builder: (context) => BookingDetailPage(
                         hotel: widget.hotel,
                         booking: booking,
-                        defaultDateRange: dateRange,
+                        dateRangeFromSearch: dateRange,
                       ),
                     )).then((value) => setState(() {})));
               }),

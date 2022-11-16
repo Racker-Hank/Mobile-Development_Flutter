@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:traveloka/entity/booking.dart';
 import 'package:traveloka/entity/hotel.dart';
 import 'package:traveloka/view/booking/booking_detail_view.dart';
-import 'package:traveloka/view/hotel/hotel_view.dart';
 import '../config/ui_configs.dart';
+import '../view/hotel/hotel_view.dart';
 
 class HotelTile extends StatelessWidget {
   const HotelTile({
@@ -11,7 +12,8 @@ class HotelTile extends StatelessWidget {
     this.vMargin,
     this.showBooking = false,
     required this.hotel,
-    this.bookingId,
+    // this.bookingId,
+    this.booking,
   });
 
   final bool showBooking;
@@ -22,24 +24,26 @@ class HotelTile extends StatelessWidget {
 
   final Hotel hotel;
 
-  final String? bookingId;
+  final Booking? booking;
+
+  // final String? bookingId;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () => Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) {
-      //       if (!showBooking) {
-      //         return MyHotelPage(hotel: hotel);
-      //       } else {
-      //         return BookingDetailPage(hotel: hotel);
-      //       }
-      //     },
-      //   ),
-      // ),
-      onTap: () {},
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            if (!showBooking) {
+              return MyHotelPage(hotel: hotel);
+            } else {
+              return BookingDetailPage(hotel: hotel, booking: booking);
+            }
+          },
+        ),
+      ),
+      // onTap: () {},
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         height: 80,
