@@ -12,10 +12,10 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      print("All states: ");
-      for (var s in tester.allStates) {
-        print(s);
-      }
+      // print('All states: ');
+      // for (var s in tester.allStates) {
+      //   print(s);
+      // }
 
       // setup
       final Finder emailTextField = find.byIcon(Icons.email_rounded);

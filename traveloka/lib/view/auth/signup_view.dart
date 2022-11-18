@@ -82,25 +82,20 @@ class _SignUpPageState extends State<SignUpPage> {
                       );
                       // .then((cred) async =>
                       //     await cred.user?.updateDisplayName('test'));
-                      userCred.user?.updateDisplayName(_userName.text);
-                      await userCred.user?.reload();
-                      print(FirebaseAuth.instance.currentUser);
+                      await userCred.user!.updateDisplayName(_userName.text);
+                      // .whenComplete(() => userCred.user!.reload());
+                      // print(FirebaseAuth.instance.currentUser);
                       // await userCred.user?.updatre
                       // print(userCred);
-                      // await FirebaseAuth.instance.signOut();
-                      await UserFirebase.initUser(userCred).whenComplete(
+                      UserFirebase.initUser(userCred).whenComplete(
                           () => Navigator.of(context).pushAndRemoveUntil(
                               CupertinoPageRoute(
                                 builder: ((context) => const Home()),
                               ),
                               (route) => false));
-                      // Navigator.of(context).pushAndRemoveUntil(
-                      //     CupertinoPageRoute(
-                      //       builder: ((context) => const Home()),
-                      //     ),
-                      //     (route) => false);
                     } on Exception catch (e) {
-                      print(e);
+                      // print(e);
+                      return Text(e.toString());
                     }
                   },
                   label: 'Sign Up',

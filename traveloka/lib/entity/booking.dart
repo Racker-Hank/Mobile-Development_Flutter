@@ -7,6 +7,7 @@ class Booking {
   late DateTime bookingTimestamp;
   late String userId;
   late String hotelId;
+  late int guests;
   late int price;
   late bool status;
 
@@ -17,6 +18,7 @@ class Booking {
     this.bookingTimestamp,
     this.userId,
     this.hotelId,
+    this.guests,
     this.price,
     this.status,
   );
@@ -35,6 +37,7 @@ class Booking {
         (json['bookingTimestamp'] as Timestamp).toDate().toString());
     booking.userId = json['userId'];
     booking.hotelId = json['hotelId'];
+    booking.guests = json['guests'];
     booking.price = json['price'];
     booking.status = json['status'];
 

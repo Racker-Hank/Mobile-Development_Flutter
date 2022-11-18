@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:traveloka/entity/booking.dart';
 import 'package:traveloka/entity/hotel.dart';
 import 'package:traveloka/view/booking/booking_detail_view.dart';
-// import '../entity/hotel.dart';
-import 'package:traveloka/view/hotel/hotel_view.dart';
 import '../config/ui_configs.dart';
+import '../view/hotel/hotel_view.dart';
 
 class HotelTile extends StatelessWidget {
   const HotelTile({
@@ -12,6 +13,8 @@ class HotelTile extends StatelessWidget {
     this.vMargin,
     this.showBooking = false,
     required this.hotel,
+    // this.bookingId,
+    this.booking,
   });
 
   final bool showBooking;
@@ -21,6 +24,10 @@ class HotelTile extends StatelessWidget {
   final double? vMargin;
 
   final Hotel hotel;
+
+  final Booking? booking;
+
+  // final String? bookingId;
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +39,15 @@ class HotelTile extends StatelessWidget {
             if (!showBooking) {
               return MyHotelPage(hotel: hotel);
             } else {
-              return BookingDetailPage(hotel: hotel);
+              return BookingDetailPage(hotel: hotel, booking: booking!);
             }
           },
         ),
       ),
+      // onTap: () {},
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         height: 80,
-        // curve: Curves.easeInQuart,
-        // margin: EdgeInsets.symmetric(vertical: 0, horizontal: hMargin ?? 16),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
           borderRadius: UIConfig.borderRadius,
@@ -64,7 +70,9 @@ class HotelTile extends StatelessWidget {
         child: Row(
           children: [
             Hero(
-              tag: 'hotel_${hotel.id}_image',
+              tag: showBooking
+                  ? 'booking_${booking!.id}_image'
+                  : 'hotel_${hotel.id}_image',
               child: Image.network(
                 hotel.imageURLs[0],
                 height: 80,
@@ -78,18 +86,44 @@ class HotelTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    hotel.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      fontFamily: 'Roboto',
-                      // letterSpacing: .1,
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 24,
+                        child: Text(
+                          hotel.name,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            fontFamily: 'Roboto',
+                          ),
+                        ),
+                      ),
+                      // const SizedBox(width: 4),
+                      if (showBooking && booking!.status)
+                        Tooltip(
+                          message: 'Confirmed',
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 2,
+                              horizontal: 4,
+                            ),
+                            child: Icon(
+                              Icons.check_circle_rounded,
+                              color: UIConfig.primaryColor,
+                              size: 16,
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '📍 ${hotel.location}',
+                    showBooking
+                        ? '📅 ${DateFormat('MMM d, yyyy').format(booking!.bookingTimestamp)}'
+                        : '📍 ${hotel.location}',
                     style: const TextStyle(
                       fontSize: 14,
                       fontFamily: 'Roboto',
@@ -107,15 +141,6 @@ class HotelTile extends StatelessWidget {
             ),
           ],
         ),
-
-        // child: ListTile(
-        //   contentPadding: EdgeInsets.zero,
-        //   title: Text(hotel.name),
-        //   subtitle: Text('📍 ${hotel.location}'),
-        //   leading: ConstrainedBox(
-        //     constraints: const BoxConstraints(minHeight: 80, maxWidth: 80),
-        //     child: Image.network(hotel.imageURLs[0]),
-        //   ),
       ),
     );
   }

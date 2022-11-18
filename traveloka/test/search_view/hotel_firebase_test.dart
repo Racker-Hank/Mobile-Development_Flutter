@@ -11,11 +11,11 @@ class MockHotelFirebase extends Mock implements HotelFirebase {}
 
 void main() {
   // late HotelFirebase sut;
-  late MockHotelFirebase mockHotelFirebase;
   // final MySearchPageState mySearchPageState = test
+  // late MockHotelFirebase mockHotelFirebase;
 
   setUp(() {
-    mockHotelFirebase = MockHotelFirebase();
+    // mockHotelFirebase = MockHotelFirebase();
   });
 
   group('app', () {
@@ -70,7 +70,7 @@ void main() {
       );
       const MySearchPage mySearchPage = MySearchPage(key: mySearchPageKey);
       await tester.pumpWidget(testWidget);
-      await tester.pumpAndSettle(Duration(seconds: 5));
+      await tester.pumpAndSettle(const Duration(seconds: 5));
       // final State<MySearchPage> mySearchPageState =
       //     tester.state(find.byType(MySearchPage));
       // expect(mySearchPageState.widget, equals(mySearchPage));

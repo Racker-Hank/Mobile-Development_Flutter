@@ -42,7 +42,6 @@ class _MySearchPageState extends State<MySearchPage>
   late final TextEditingController _hotel;
   late final TextEditingController _dateRange;
   late final TextEditingController _guests;
-  // late final AnimationController _animationController;
   final Stream<List<Hotel>> hotelsStream = HotelFirebase.readHotels();
   late List<Hotel> hotelsSnapshot = [];
   late List<Hotel> hotels = List.from(hotelsSnapshot);
@@ -55,14 +54,6 @@ class _MySearchPageState extends State<MySearchPage>
 
   @override
   void initState() {
-    // _animationController = AnimationController(
-    //   vsync: this,
-    //   duration: const Duration(milliseconds: 150),
-    // );
-    // Timer(
-    //     const Duration(milliseconds: 0), () => _animationController.forward());
-    // _animationController.forward();
-
     hotelBoxFocusNode.requestFocus();
     _hotel = TextEditingController();
     _dateRange = TextEditingController();
@@ -70,12 +61,11 @@ class _MySearchPageState extends State<MySearchPage>
     _pageController = PageController(viewportFraction: .77);
 
     _hotel.addListener(_searchByHotel);
-    // isShowResult = false;
+    _guests.addListener(_searchByHotel);
     super.initState();
   }
 
   Future<void> _searchByHotel() async {
-    //print(_hotel.text);
     if (_hotel.text.isNotEmpty) {
       List<Hotel> searchByName = [];
       List<Hotel> searchByLocation = [];
@@ -88,11 +78,13 @@ class _MySearchPageState extends State<MySearchPage>
       hotelsSnapshot = {...searchByName, ...searchByLocation}.toList();
     }
 
+    if (_guests.text.isNotEmpty) {
+      hotelsSnapshot = hotelsSnapshot
+          .where((hotel) => hotel.maxRoomCapacity >= int.parse(_guests.text))
+          .toList();
+    }
+
     setState(() {
-      // hotels = hotelsSnapshot
-      //     .where((element) =>
-      //         element.name.toLowerCase().contains(_hotel.text.toLowerCase()))
-      //     .toList();
       hotels = hotelsSnapshot;
     });
   }
@@ -208,7 +200,8 @@ class _MySearchPageState extends State<MySearchPage>
                                 const SizedBox(height: 24),
                                 dateSearchBox(),
                                 const SizedBox(height: 24),
-                                GuestsSearchBox(guests: _guests),
+                                // GuestsSearchBox(guests: _guests),
+                                guestsSearchBox(),
                               ],
                             ),
                           ),
@@ -417,22 +410,16 @@ class _MySearchPageState extends State<MySearchPage>
           '${DateFormat('MMMd').format(dateRange.start)} - ${DateFormat('MMMd').format(dateRange.end)}',
     );
   }
-}
 
-class GuestsSearchBox extends StatelessWidget {
-  const GuestsSearchBox({
-    Key? key,
-    required TextEditingController guests,
-  })  : _guests = guests,
-        super(key: key);
-
-  final TextEditingController _guests;
-
-  @override
-  Widget build(BuildContext context) {
+  InputBox guestsSearchBox() {
     return InputBox(
       controller: _guests,
       focussed: () {},
+      onChanged: (_) {
+        setState(() {
+          isShowResult = false;
+        });
+      },
       prefixIcon: Icon(
         Icons.people_rounded,
         color: UIConfig.primaryColor,
@@ -481,3 +468,16 @@ class GuestsSearchBox extends StatelessWidget {
     );
   }
 }
+
+// class GuestsSearchBox extends StatelessWidget {
+//   const GuestsSearchBox({
+//     Key? key,
+//     required TextEditingController guests,
+//   })  : _guests = guests,
+//         super(key: key);
+
+//   final TextEditingController _guests;
+
+//   @override
+//   Widget build(BuildContext context) {
+// }

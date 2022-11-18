@@ -114,20 +114,33 @@ class _SignInPageState extends State<SignInPage> {
                     Button(
                       function: () async {
                         try {
-                          final userCred = await FirebaseAuth.instance
+                          // final userCred = await FirebaseAuth.instance
+                          //     .signInWithEmailAndPassword(
+                          //   email: _email.text,
+                          //   password: _password.text,
+                          // );
+                          // print(userCred);
+                          // // await FirebaseAuth.instance.signOut();
+                          // Navigator.of(context).pushAndRemoveUntil(
+                          //     CupertinoPageRoute(
+                          //       builder: ((context) => const Home()),
+                          //     ),
+                          //     (route) => false);
+
+                          await FirebaseAuth.instance
                               .signInWithEmailAndPassword(
-                            email: _email.text,
-                            password: _password.text,
-                          );
-                          print(userCred);
-                          // await FirebaseAuth.instance.signOut();
-                          Navigator.of(context).pushAndRemoveUntil(
-                              CupertinoPageRoute(
-                                builder: ((context) => const Home()),
-                              ),
-                              (route) => false);
+                                email: _email.text,
+                                password: _password.text,
+                              )
+                              .whenComplete(() =>
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      CupertinoPageRoute(
+                                        builder: ((context) => const Home()),
+                                      ),
+                                      (route) => false));
                         } on Exception catch (e) {
-                          print(e);
+                          // print(e);
+                          return Text(e.toString());
                         }
                       },
                       label: 'Sign In',

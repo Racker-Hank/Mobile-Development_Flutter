@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:traveloka/components/new_page_route.dart';
 import 'package:traveloka/entity/hotel.dart';
 import 'package:traveloka/view/hotel/hotel_view.dart';
 import '../config/ui_configs.dart';
 
 // import '../entity/hotel.dart';
-import '../view/booking/booking_view.dart';
-import '../view/search/search_view.dart';
+// import '../view/booking/booking_view.dart';
+// import '../view/search/search_view.dart';
 // import 'package:hello_world/entity/Hotel.dart';
 
 class HotelCard extends StatelessWidget {

@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../entity/booking.dart';
 
@@ -12,6 +14,7 @@ class BookingFirebase {
       'bookingTimestamp': booking.bookingTimestamp,
       'userId': booking.userId,
       'hotelId': booking.hotelId,
+      'guests': booking.guests,
       'price': booking.price,
       'status': booking.status,
     });
@@ -28,20 +31,41 @@ class BookingFirebase {
     });
   }
 
-  // static void updateBooking(BookingHotel bookingHotel, String bookingId) {
-  //   FirebaseFirestore.instance.collection('bookings')
-  //     .doc(bookingId)
-  //     .set(bookingHotel)
-  //     .then((e) -> {return "success"})
-  //   return "failed"
-  // }
+  static Stream<List<Booking>> readBookingsByUserId(String userId) {
+    return FirebaseFirestore.instance
+        .collection('bookings')
+        .where('userId', isEqualTo: userId)
+        .orderBy('bookingTimestamp', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => Booking.fromJson(doc.data(), doc.id))
+            .toList());
+  }
 
-  // static Stream<List<BookingHotel>> getBookingForUser(String userId) {
-  //   return FirebaseFirestore.instance.collection('bookings')
-  //     .where("userId", isEqualTo: userId)
-  //     .snapshot()
-  //     .map((snapshot) => snapshot.docs
-  //       .map((doc) => BookingHotel.fromJson(doc.data(), doc.id))
-  //       .toList());
-  // }
+  static void updateBookingDate(
+      String bookingId, DateTimeRange dateRange, int price) {
+    FirebaseFirestore.instance.collection('bookings').doc(bookingId).update({
+      'bookingFromDate': dateRange.start,
+      'bookingToDate': dateRange.end,
+      'price': price
+    });
+  }
+
+  static void updateBookingGuests(String bookingId, int guests) {
+    FirebaseFirestore.instance
+        .collection('bookings')
+        .doc(bookingId)
+        .update({'guests': guests});
+  }
+
+  static Future<bool> hasStayed(String hotelId) {
+    return FirebaseFirestore.instance
+        .collection('bookings')
+        .where('hotelId', isEqualTo: hotelId)
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where('bookingToDate', isLessThan: Timestamp.now())
+        // .limit(1)
+        .get()
+        .then((res) => res.docs.isNotEmpty);
+  }
 }

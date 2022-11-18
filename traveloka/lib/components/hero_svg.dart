@@ -28,7 +28,7 @@ class _HeroSvgState extends State<HeroSvg> {
               EdgeInsets.only(top: MediaQuery.of(context).size.height / 15),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * .35,
                 child: SvgPicture.asset(
                   '$path$svgIndex.svg',

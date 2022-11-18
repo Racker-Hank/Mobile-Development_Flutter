@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:traveloka/config/ui_configs.dart';
 import 'package:traveloka/entity/hotel.dart';
-import 'package:traveloka/repositories/user_data.dart';
+import 'package:traveloka/entity/review.dart';
 
 // import '../entity/hotel.dart';
 
@@ -57,5 +57,17 @@ class HotelFirebase {
         .map((snapshot) => snapshot.docs
             .map((doc) => Hotel.fromJson(doc.data(), doc.id))
             .toList());
+  }
+
+  static void addReview(String hotelId, Review review) {
+    FirebaseFirestore.instance.collection('hotels').doc(hotelId).update({
+      'reviews': FieldValue.arrayUnion([
+        {
+          'content': review.content,
+          'rating': review.rating,
+          'userId': review.userId,
+        },
+      ])
+    });
   }
 }

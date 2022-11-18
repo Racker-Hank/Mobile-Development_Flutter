@@ -1,24 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:traveloka/config/ui_configs.dart';
 import 'view/auth/signin_view.dart';
 import 'firebase_options.dart';
 import 'view/home_view.dart';
-import 'view/auth/signup_view.dart';
-// import 'package:traveloka/components/bottom_nav_bar.dart';
-// import 'view/booking_view.dart';
-// import 'view/explore_view.dart';
-// import 'view/profile_view.dart';
-// import 'view/saved_view.dart';
-// import 'view/search_view.dart';
+// import 'view/auth/signup_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
   runApp(MaterialApp(
     title: 'Traveloka',
     theme: ThemeData(
@@ -59,13 +49,12 @@ class Traveloka extends StatelessWidget {
               return const Home();
             } else {
               return const SignInPage();
-              return const SignUpPage();
+              // return const SignUpPage();
             }
           default:
             return const Center(child: CircularProgressIndicator.adaptive());
         }
       }),
     );
-    // return Home();
   }
 }

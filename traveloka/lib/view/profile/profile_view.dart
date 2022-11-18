@@ -102,7 +102,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                             ),
                             const SizedBox(width: 16),
                             Padding(
-                              padding: EdgeInsets.only(right: 16),
+                              padding: const EdgeInsets.only(right: 16),
                               child: GestureDetector(
                                 onTap: () {
                                   setState(() {

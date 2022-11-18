@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:traveloka/components/button.dart';
 import 'package:traveloka/entity/booking.dart';
+import 'package:traveloka/entity/review.dart';
+import 'package:traveloka/repositories/hotel_data.dart';
 import 'package:traveloka/repositories/user_data.dart';
 import 'package:traveloka/view/hotel/hotel_view_header_buttons.dart';
 import 'dart:math' as math;
@@ -34,6 +36,8 @@ class MyHotelPage extends StatefulWidget {
 
 class _MyHotelPageState extends State<MyHotelPage> {
   late bool isSaved = false;
+  late bool hasStayed = false;
+  late bool hasReviewed = false;
   String heroImageURL = '';
   double imageSpacing = 4;
   late DateTimeRange dateRange;
@@ -85,6 +89,13 @@ class _MyHotelPageState extends State<MyHotelPage> {
     UserFirebase.isSaved(widget.hotel.id).then((value) => setState(() {
           isSaved = value;
         }));
+    BookingFirebase.hasStayed(widget.hotel.id).then((value) => setState(() {
+          hasStayed = value;
+        }));
+    hasReviewed = widget.hotel.reviews
+        .where(
+            (review) => review.userId == FirebaseAuth.instance.currentUser!.uid)
+        .isNotEmpty;
     super.initState();
   }
 
@@ -94,7 +105,6 @@ class _MyHotelPageState extends State<MyHotelPage> {
         (MediaQuery.of(context).size.width - imageSpacing * 4) / 5;
 
     return Scaffold(
-      // appBar: AppBar(title: const Text('Search')),
       body: Stack(
         children: [
           ListView(
@@ -176,9 +186,25 @@ class _MyHotelPageState extends State<MyHotelPage> {
                     //   height: 1,
                     //   color: UIConfig.primaryColor,
                     // ),
-                    Reviews(
-                      reviewsKey: reviewsKey,
-                      widget: widget,
+                    Column(
+                      key: reviewsKey,
+                      children: [
+                        // if (hasStayed && !hasReviewed)
+                        UserReview(
+                          widget: widget,
+                          // onSubmit: () {
+                          //   setState(() {
+                          //     hasReviewed = true;
+                          //   });
+                          // }),
+                          hasReviewed: hasReviewed,
+                          hasStayed: hasStayed,
+                        ),
+                        Reviews(
+                          // reviewsKey: reviewsKey,
+                          widget: widget,
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -196,6 +222,7 @@ class _MyHotelPageState extends State<MyHotelPage> {
                     DateTime.now(),
                     FirebaseAuth.instance.currentUser!.uid,
                     widget.hotel.id,
+                    2,
                     widget.hotel.price,
                     false,
                   ),
@@ -205,7 +232,7 @@ class _MyHotelPageState extends State<MyHotelPage> {
                       builder: (context) => BookingDetailPage(
                         hotel: widget.hotel,
                         booking: booking,
-                        defaultDateRange: dateRange,
+                        // defaultDateRange: dateRange,
                       ),
                     )).then((value) => setState(() {})));
               }),
@@ -310,6 +337,182 @@ class _MyHotelPageState extends State<MyHotelPage> {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class UserReview extends StatefulWidget {
+  const UserReview({
+    Key? key,
+    required this.widget,
+    required this.hasStayed,
+    required this.hasReviewed,
+    // required this.onSubmit,
+  }) : super(key: key);
+
+  final MyHotelPage widget;
+  // final Function() onSubmit;
+  final bool hasStayed;
+  final bool hasReviewed;
+
+  @override
+  State<UserReview> createState() => _UserReviewState();
+}
+
+class _UserReviewState extends State<UserReview> {
+  int rating = 5;
+  var user = FirebaseAuth.instance.currentUser!;
+  late TextEditingController _content;
+  late bool hasReviewed;
+
+  @override
+  void initState() {
+    _content = TextEditingController();
+    hasReviewed = widget.hasReviewed;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String displayName = user.displayName ?? user.email!;
+
+    return Visibility(
+      visible: widget.hasStayed && !hasReviewed,
+      child: Container(
+        margin: const EdgeInsets.only(top: 16, bottom: 32),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      foregroundColor: UIConfig.white,
+                      backgroundColor: UIConfig.primaryColor,
+                      maxRadius: 20,
+                      child: user.photoURL != null
+                          ? Image.network(user.photoURL!)
+                          : Text(UIConfig.capitalize(displayName[0])),
+                    ),
+                    const SizedBox(width: 16),
+                    Text(
+                      displayName,
+                      style: UIConfig.bodyMediumTextStyle
+                          .copyWith(fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                const SizedBox(width: 8),
+                Row(
+                  children: [
+                    for (var i = 0; i < rating; i++)
+                      GestureDetector(
+                        onTap: () => setState(() {
+                          rating = i + 1;
+                        }),
+                        child: Icon(
+                          Icons.star_rounded,
+                          color: UIConfig.primaryColor,
+                          size: 20,
+                        ),
+                      ),
+                    for (var i = rating; i < 5; i++)
+                      GestureDetector(
+                        onTap: () => setState(() {
+                          rating = i + 1;
+                        }),
+                        child: Icon(
+                          Icons.star_rounded,
+                          color: UIConfig.darkGrey,
+                          size: 20,
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: UIConfig.borderRadius,
+                      color: UIConfig.white,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color.fromARGB(30, 0, 0, 0),
+                          offset: Offset(0, 2),
+                          blurRadius: 3,
+                        ),
+                        BoxShadow(
+                          color: Color.fromARGB(20, 0, 0, 0),
+                          offset: Offset(0, 6),
+                          blurRadius: 10,
+                          spreadRadius: 4,
+                        ),
+                      ],
+                    ),
+                    child: TextField(
+                      keyboardType: TextInputType.multiline,
+                      controller: _content,
+                      minLines: 1,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        hintText: 'Leave us a review!',
+                        hintStyle: const TextStyle(
+                          color: Color(0xFFB9B9B9),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: UIConfig.borderRadius,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: UIConfig.primaryColor),
+                          borderRadius: UIConfig.borderRadius,
+                        ),
+                        // labelText: 'Leave us a review',
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 8,
+                        ),
+                        // contentPadding: const EdgeInsets.fromLTRB(0, 4, 16, 4),
+                        prefixIcon: Icon(
+                          Icons.rate_review_rounded,
+                          color: UIConfig.black,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                GestureDetector(
+                  onTap: () {
+                    HotelFirebase.addReview(
+                        widget.widget.hotel.id,
+                        Review(
+                          user.uid,
+                          _content.text,
+                          rating,
+                        ));
+                    // widget.onSubmit.call();
+                    setState(() {
+                      hasReviewed = true;
+                    });
+                  },
+                  child: Icon(
+                    Icons.send_rounded,
+                    color: UIConfig.primaryColor,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -485,6 +688,7 @@ class BookingCTA extends StatelessWidget {
       child: Container(
         height: 50,
         padding: const EdgeInsets.symmetric(horizontal: 16),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -492,6 +696,10 @@ class BookingCTA extends StatelessWidget {
               UIConfig.accentColor,
             ],
             transform: const GradientRotation(math.pi * 0.14),
+          ),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
           ),
         ),
         child: Row(
@@ -522,16 +730,6 @@ class BookingCTA extends StatelessWidget {
               ),
             ),
             Button(
-              // function: () {
-              // print('test');
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) =>
-              //         BookingDetailPage(hotel: widget.hotel),
-              //   ),
-              // ).then((_) => widget.createState());
-              // },
               function: function,
               label: 'Book Now',
               icon: Icon(
@@ -550,11 +748,11 @@ class BookingCTA extends StatelessWidget {
 class Reviews extends StatelessWidget {
   const Reviews({
     Key? key,
-    required this.reviewsKey,
+    // required this.reviewsKey,
     required this.widget,
   }) : super(key: key);
 
-  final GlobalKey<State<StatefulWidget>> reviewsKey;
+  // final GlobalKey<State<StatefulWidget>> reviewsKey;
   final MyHotelPage widget;
 
   @override
@@ -573,49 +771,67 @@ class Reviews extends StatelessWidget {
         ),
       ),
       child: Column(
-        key: reviewsKey,
+        // key: reviewsKey,
         children: widget.hotel.reviews
-            .map((e) => ListTile(
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                  leading: const CircleAvatar(radius: 20),
-                  title: Padding(
-                    padding: const EdgeInsets.only(bottom: 4),
-                    child: Row(
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Expanded(
-                          child: Text('UserName'),
-                        ),
-                        Row(
-                          children: [
-                            for (var i = 0; i < e.rating; i++)
-                              Icon(
-                                Icons.star_rounded,
-                                color: UIConfig.accentColor,
-                                size: 20,
+            .map((e) => FutureBuilder(
+                  future: UserFirebase.getUserById(e.userId),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.done) {
+                      var user = snapshot.data!;
+                      return ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 0, vertical: 8),
+                        leading: const CircleAvatar(radius: 20),
+                        title: Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
+                          child: Row(
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  // 'UserName',
+                                  user['displayName'],
+                                  style: UIConfig.bodyMediumTextStyle,
+                                ),
                               ),
-                            for (var i = e.rating; i < 5; i++)
-                              Icon(
-                                Icons.star_rounded,
-                                color: UIConfig.darkGrey,
-                                size: 20,
+                              Row(
+                                children: [
+                                  for (var i = 0; i < e.rating; i++)
+                                    Icon(
+                                      Icons.star_rounded,
+                                      color: UIConfig.accentColor,
+                                      size: 20,
+                                    ),
+                                  for (var i = e.rating; i < 5; i++)
+                                    Icon(
+                                      Icons.star_rounded,
+                                      color: UIConfig.darkGrey,
+                                      size: 20,
+                                    ),
+                                ],
                               ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                  subtitle: SelectableText(
-                    e.content,
-                    style: UIConfig.bodyMediumTextStyle,
-                  ),
+                        subtitle: SelectableText(
+                          e.content,
+                          style: UIConfig.bodyMediumTextStyle,
+                        ),
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      );
+                    }
+                  },
                 ))
             .toList(),
       ),
     );
-    // return const Text('Reviews');
   }
 }
 
