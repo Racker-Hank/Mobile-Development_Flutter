@@ -24,7 +24,7 @@ class _MyExplorePageState extends State<MyExplorePage> {
             stream: HotelFirebase.readHotelsLimit(20),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                print(snapshot.error.toString());
+                // print(snapshot.error.toString());
                 return Text(snapshot.error.toString());
               } else if (snapshot.connectionState == ConnectionState.active) {
                 final hotels = snapshot.data!;

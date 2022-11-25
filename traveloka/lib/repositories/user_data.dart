@@ -6,9 +6,11 @@ class UserFirebase {
   static Future<void> initUser(UserCredential userCred) async {
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(userCred.user?.uid)
+        .doc(userCred.user!.uid)
         .set(
       {
+        'displayName': FirebaseAuth.instance.currentUser!.displayName,
+        'photoURL': '',
         'savedHotels': [],
         'app-theme': 1,
       },
@@ -38,7 +40,7 @@ class UserFirebase {
   }
 
   static Future<bool> isSaved(String hotelId) async {
-    return await FirebaseFirestore.instance
+    return FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
         .get()
@@ -46,5 +48,13 @@ class UserFirebase {
             .map((e) => e as String)
             .toList()
             .contains(hotelId)));
+  }
+
+  static Future<Map<String, dynamic>> getUserById(String userId) {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then((snapshot) => snapshot.data()!);
   }
 }

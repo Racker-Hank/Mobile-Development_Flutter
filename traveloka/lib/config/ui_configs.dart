@@ -49,7 +49,7 @@ class UIConfig {
     String cap = '';
     for (var e in splitted) {
       if (e.isNotEmpty) {
-        cap += e.trim()[0].toUpperCase() + e.trim().substring(1) + ' ';
+        cap += '${e.trim()[0].toUpperCase()}${e.trim().substring(1)} ';
       }
     }
     return cap.trim();

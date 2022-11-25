@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:traveloka/entity/hotel.dart';
 
 import '../../config/primitive_wrapper.dart';
+
 import '../../repositories/user_data.dart';
 
 class HotelViewHeaderButtons extends StatefulWidget {

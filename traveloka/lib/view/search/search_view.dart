@@ -59,7 +59,7 @@ class _MySearchPageState extends State<MySearchPage>
     _pageController = PageController(viewportFraction: .77);
 
     _hotel.addListener(_searchByHotel);
-    // isShowResult = false;
+    _guests.addListener(_searchByHotel);
     super.initState();
   }
 
@@ -74,6 +74,12 @@ class _MySearchPageState extends State<MySearchPage>
         searchByName.addAll(e);
       });
       hotelsSnapshot = {...searchByName, ...searchByLocation}.toList();
+    }
+
+    if (_guests.text.isNotEmpty) {
+      hotelsSnapshot = hotelsSnapshot
+          .where((hotel) => hotel.maxRoomCapacity >= int.parse(_guests.text))
+          .toList();
     }
 
     setState(() {
@@ -186,7 +192,8 @@ class _MySearchPageState extends State<MySearchPage>
                                 const SizedBox(height: 24),
                                 dateSearchBox(),
                                 const SizedBox(height: 24),
-                                GuestsSearchBox(guests: _guests),
+                                // GuestsSearchBox(guests: _guests),
+                                guestsSearchBox(),
                               ],
                             ),
                           ),
@@ -392,22 +399,16 @@ class _MySearchPageState extends State<MySearchPage>
           '${DateFormat('MMMd').format(dateRange.start)} - ${DateFormat('MMMd').format(dateRange.end)}',
     );
   }
-}
 
-class GuestsSearchBox extends StatelessWidget {
-  const GuestsSearchBox({
-    Key? key,
-    required TextEditingController guests,
-  })  : _guests = guests,
-        super(key: key);
-
-  final TextEditingController _guests;
-
-  @override
-  Widget build(BuildContext context) {
+  InputBox guestsSearchBox() {
     return InputBox(
       controller: _guests,
       focussed: () {},
+      onChanged: (_) {
+        setState(() {
+          isShowResult = false;
+        });
+      },
       prefixIcon: Icon(
         Icons.people_rounded,
         color: UIConfig.primaryColor,

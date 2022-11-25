@@ -22,15 +22,17 @@
 -  [Week 8: Profile Page](#week-8-profile-page)
 -  [Week 9: Auth](#week-9-auth)
 -  [Week 10](#week-10)
+-  [Week 11](#week-11)
+-  [Week 12](#week-12)
 
-### Week 1: Holiday
+### **Week 1:** Holiday
 
-### Week 2: Hello World
+### **Week 2:** Hello World
 
 <!-- ![hello_world_screenshot](./res/img/hello_world.png) -->
 <img height="400" src="./res/img/hello_world.png" alt="hello_world_screenshot">
 
-### Week 3: Hello World
+### **Week 3:** Hello World
 
 <<<<<<< HEAD
 ![w3 screenshot](./res/img/w3.png)
@@ -82,13 +84,13 @@
 <!-- ![w3 screenshot](./res/img/w3.png) -->
 <img height="400" src="./res/img/w3.png" alt="w3">
 
-### Week 4: Explore Page
+### **Week 4:** Explore Page
 
 <!-- ![w4](./res/img/w4.png) -->
 <img height="400" src="./res/img/w4.png" alt="w4">
 >>>>>>> ff7b54111442a3aaeb5c0eda3f9e0538460e3a10
 
-### Week 5:
+### **Week 5:**
 
 -  Search Page
 -  Create database
@@ -96,7 +98,7 @@
 <!-- ![w5](./res/img/w5.png) -->
 <img height="400" src="./res/img/w5.png" alt="w5">
 
-### Week 6:
+### **Week 6:**
 
 -  Hotel Page
 -  Read from database
@@ -104,7 +106,7 @@
 <!-- ![w6](./res/img/w6.png) -->
 <img height="400" src="./res/img/w6.png" alt="w6">
 
-### Week 7:
+### **Week 7:**
 
 -  Booking Page
 -  Saved Page
@@ -114,12 +116,12 @@
     <img  height="400" src="./res/img/w7_2.png" alt="w7_2">
 </p>
 
-### Week 8: Profile Page
+### **Week 8:** Profile Page
 
 <!-- ![w8](./res/img/w8.png) -->
 <img height="400" src="./res/img/w8.png" alt="w8">
 
-### Week 9: Auth
+### **Week 9:** Auth
 
 -  Sign up
 -  Sign in
@@ -130,7 +132,29 @@
     <img  height="400" src="./res/img/w9_2.png" alt="w9_2">
 </p>
 
-### Week 10:
+### **Week 10:**
 
 -  Testing :
    -  [Monkey Test](./traveloka/test/monkey_test_logs.txt)
+
+### **Week 11:**
+
+-  API used:
+   -  Firebase Auth
+   -  Firestore
+-  App screenshots: see above
+
+### **Week 12:**
+
+-  Booking page (with database)
+
+<img height="400" src="./res/img/w12_1.png" alt="w12_1">
+
+-  Saved page (with database)
+
+<img height="400" src="./res/img/w12_2.png" alt="w12_2">
+  
+-  Create Booking (booking detail page)
+  
+<img height="400" src="./res/img/w12_3.png" alt="w12_3">
+<img height="400" src="./res/img/w12_4.png" alt="w12_4">
